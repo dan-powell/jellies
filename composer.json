@@ -1,0 +1,28 @@
+{
+    "name": "dan-powell/jellies",
+    "description": "A jellyrific MMO game for Laravel 5",
+    "keywords": ["mmo", "game", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dan Powell",
+            "email": "dan@dan-powell.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "laravel/framework": "5.4.*",
+        "fzaninotto/faker": "^1.6",
+        "laravelcollective/html": "^5.4",
+        "nubs/random-name-generator": "^2.1",
+        "edvinaskrucas/notification": "^5.2"
+    },
+    "require-dev": {
+        "codeception/codeception": "*"
+    },
+    "autoload": {
+		"psr-4": {
+			"DanPowell\\Jellies\\": "/src"
+		}
+	}
+}
