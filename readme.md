@@ -27,10 +27,13 @@ Krucas\Notification\NotificationServiceProvider::class,
 #### Add aliases to `config/app.php`
 
 ```
-    'Str' => Illuminate\Support\Str::class,
-    'Markdown'  => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
-    'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class
-    'Notification' => Krucas\Notification\Facades\Notification::class,
+// Jellies
+'Utilities' => DanPowell\Jellies\Helpers\Utilities::class,
+
+// Third Party
+'Form' => Collective\Html\FormFacade::class,
+'Html' => Collective\Html\HtmlFacade::class,
+'Notification' => Krucas\Notification\Facades\Notification::class,
 ```
 
 #### Add middleware to `app/Http/Kernel.php`
