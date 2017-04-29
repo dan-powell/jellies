@@ -22,7 +22,7 @@ return [
         'title' => 'Your Minions',
         'tooltip' => '',
         'help' => '',
-        'none' => 'You have no minions, summon or resurrect some more.',
+        'empty' => 'You have no minions, summon or resurrect some more.',
     ],
 
     'indexdeleted' => [
@@ -30,7 +30,7 @@ return [
         'title' => 'Your Dead Minions',
         'tooltip' => '',
         'help' => '',
-        'none' => 'You have no dead minions.',
+        'empty' => 'You have no dead minions.',
     ],
 
     'show' => [

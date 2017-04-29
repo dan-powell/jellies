@@ -56,162 +56,118 @@
         {!! Form::close() !!}
     @endif
 
-    @if(count($model->encounters))
+    <h3>{{ trans('jellies::incursion.show.log') }}</h3>
 
-        <h3>Encounter Log</h3>
+    @forelse($model->encounters->sortByDesc('created_at') as $encounter)
 
-        <ul class="timeline">
-
-            @foreach($model->encounters->sortByDesc('created_at') as $encounter)
-
-                <!-- timeline item -->
-                <li>
-                    <!-- timeline icon -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <i class="fa fa-clock-o"></i>
+                    {{ $encounter->created_at->format(config('jellies.ui.time_format')) }}
 
                     @if($encounter->victory)
-                        <i class="fa fa-check bg-blue"></i>
+                        <i class="fa fa-check fa-lg text-primary"></i>
                     @else
-                        <i class="fa fa-times bg-red"></i>
+                        <i class="fa fa-times fa-lg text-danger"></i>
+                    @endif
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>{{ trans('jellies::encounter.attribute.minions') }}</th>
+                    <th>{{ trans('jellies::encounter.attribute.enemies') }}</th>
+                    <th>{{ trans('jellies::encounter.attribute.victory') }}</th>
+                    <th>{{ trans('jellies::encounter.attribute.rounds') }}</th>
+                    <th>{{ trans('jellies::encounter.attribute.damage_minion') }}</th>
+                    <th>{{ trans('jellies::encounter.attribute.damage_enemy') }}</th>
+                    <th>{{ trans('jellies::encounter.attribute.points') }}</th>
+                </tr>
+                <tr>
+                    <td>
+                        {{ count($encounter->minions) }}
+                    </td>
+                    <td>
+                        {{ count($encounter->enemies) }}
+                    </td>
+                    <td>
+                        @if($encounter->victory)
+                            <span class="fa fa-check"></span>
+                        @endif
+                    </td>
+                    <td>
+                        {{ $encounter->rounds }}
+                    </td>
+                    <td>
+                        {{ $encounter->minion_damage }}
+                    </td>
+                    <td>
+                        {{ $encounter->enemy_damage }}
+                    </td>
+                    <td>
+                        {{ $encounter->points }}
+                    </td>
+                </tr>
+            </table>
+            <div class="panel-body">
+                <div class="panel-group" id="#encounter_{{ $encounter->id }}">
+
+                    @if(isset($encounter->minions) && count($encounter->minions))
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#minions_{{ $encounter->id }}" data-toggle="collapse" data-target="#minions_{{ $encounter->id }}" data-parent="#encounter_{{ $encounter->id }}">
+                                        {{ trans('jellies::encounter.attribute.minions') }} <span class="fa fa-plus pull-right"></span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="minions_{{ $encounter->id }}" class="collapse">
+                                @include('jellies::minion.list.minionList', ['minions' => $encounter->minions])
+                            </div>
+                        </div>
                     @endif
 
-                    <div class="timeline-item">
-
-                        <h3 class="timeline-header">
-                            <i class="fa fa-clock-o"></i>
-                            {{ $encounter->created_at->format(config('jellies.ui.time_format')) }}
-                        </h3>
-
-                        <div class="timeline-body">
-
-                            <table class="table table-striped table-hover">
-                                <tr>
-                                    <th>Minions</th>
-                                    <th>Enemies</th>
-                                    <th>Victorious?</th>
-                                    <th>Rounds</th>
-                                    <th>Damage Inflicted by Minion</th>
-                                    <th>Damage Inflicted by Enemy</th>
-                                    <th>Souls gained</th>
-                                </tr>
-                                    <tr>
-                                        <td>
-                                            {{ count($encounter->minions) }}
-                                        </td>
-                                        <td>
-                                            {{ count($encounter->enemies) }}
-                                        </td>
-                                        <td>
-                                            @if($encounter->victory)
-                                                <span class="fa fa-check"></span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{ $encounter->rounds }}
-                                        </td>
-                                        <td>
-                                            {{ $encounter->minion_damage }}
-                                        </td>
-                                        <td>
-                                            {{ $encounter->enemy_damage }}
-                                        </td>
-                                        <td>
-                                            {{ $encounter->points }}
-                                        </td>
-                                    </tr>
-                            </table>
-
-                            @if(isset($encounter->minions) && count($encounter->minions))
-                                <div class="box box-success collapsed-box">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">
-                                            Minions
-                                        </h3>
-
-                                        <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <!-- /.box-tools -->
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body" style="display: none;">
-                                        @include('jellies::minion.list.minionList', ['minions' => $encounter->minions])
-                                    </div>
-                                    <!-- /.box-body -->
-                                </div>
-                            @endif
-
-                            @if(isset($encounter->enemies) && count($encounter->enemies))
-                                <div class="box box-danger collapsed-box">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">
-                                            Enemies
-                                        </h3>
-
-                                        <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <!-- /.box-tools -->
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body" style="display: none;">
-                                        @include('jellies::enemy.list.enemyList', ['enemies' => $encounter->enemies])
-                                    </div>
-                                    <!-- /.box-body -->
-                                </div>
-                            @endif
-
-                            @if(isset($encounter->log) && count($encounter->log))
-
-                                <div class="box box-info collapsed-box">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">
-                                            Battle Log
-                                        </h3>
-
-                                        <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <!-- /.box-tools -->
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body" style="display: none;">
-                                        <!-- List group -->
-                                         <ul class="list-group">
-                                           @foreach($encounter->log as $item)
-                                               <li class="list-group-item">{{ $item }}</li>
-                                           @endforeach
-                                         </ul>
-                                    </div>
-                                    <!-- /.box-body -->
-                                </div>
-
-                            @endif
-
+                    @if(isset($encounter->enemies) && count($encounter->enemies))
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#enemies_{{ $encounter->id }}" data-toggle="collapse" data-target="#enemies_{{ $encounter->id }}" data-parent="#encounter_{{ $encounter->id }}">
+                                        {{ trans('jellies::encounter.attribute.enemies') }} <span class="fa fa-plus pull-right"></span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="enemies_{{ $encounter->id }}" class="collapse">
+                                @include('jellies::enemy.list.enemyList', ['enemies' => $encounter->enemies])
+                            </div>
                         </div>
+                    @endif
 
-                        {{-- <div class="timeline-footer">
+                    @if(isset($encounter->log) && count($encounter->log))
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="#log_{{ $encounter->id }}" data-toggle="collapse" data-target="#log_{{ $encounter->id }}" data-parent="#encounter_{{ $encounter->id }}">
+                                        {{ trans('jellies::encounter.attribute.log') }} <span class="fa fa-plus pull-right"></span>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="log_{{ $encounter->id }}" class="collapse">
+                                 <ul class="list-group">
+                                   @foreach($encounter->log as $item)
+                                       <li class="list-group-item">{{ $item }}</li>
+                                   @endforeach
+                                 </ul>
+                            </div>
+                        </div>
+                    @endif
 
-                        </div> --}}
+                </div>
+            </div>
+        </div>
 
-                    </div>
-                </li>
-                <!-- END timeline item -->
-            @endforeach
-
-            <!-- timeline time label -->
-            <li class="time-label">
-                <span class="bg-red">
-                    {{ $model->created_at->format(config('jellies.ui.date_time_format')) }}
-                </span>
-            </li>
-            <!-- /.timeline-label -->
-
-
-        </ul>
-
-    @endif
+    @empty
+        <p>{{ trans('jellies::incursion.show.empty') }}</p>
+    @endforelse
 
 @endsection

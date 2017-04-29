@@ -1,11 +1,10 @@
-@extends('jellies::base')
+@extends('jellies::message.messageBase')
 
 @section('main')
-                <h2>{{ $model->subject }}</h2>
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        {{ $model->message }}
-                    </div>
-                </div>
+    <h1>{{ $model->subject }}</h1>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ $model->message }}
+        </div>
+    </div>
 @endsection

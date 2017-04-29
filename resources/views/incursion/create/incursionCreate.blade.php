@@ -11,6 +11,7 @@
         {!! Form::open(['route' => 'incursion.store']) !!}
 
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <strong>{{ trans_choice('jellies::incursion.create.choose', count($minions)) }}</strong>
@@ -27,7 +28,7 @@
 
                 <div class="panel-footer">
                     <button type="submit" class="btn btn-primary">
-                        {{ trans('jellies::incursion.store.action') }} ({{ config('jellies.incursion.cost') }} {{ trans_choice('jellies::game.point', config('jellies.incursion.cost')) }})
+                        {{ trans('jellies::incursion.create.action') }}
                     </button>
                 </div>
 
@@ -37,7 +38,7 @@
 
     @else
         <div class="alert alert-warning">
-            {{ trans('jellies::minion.index.message.none') }}
+            {{ trans('jellies::minion.index.empty') }}
         </div>
     @endif
 

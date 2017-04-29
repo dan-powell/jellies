@@ -45,7 +45,7 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="{{ route('dashboard') }}">Dashboard <span class="sr-only">(current)</span></a></li>
+                            <li class=""><a href="{{ route('dashboard') }}">Dashboard <span class="sr-only">(current)</span></a></li>
                             <li class="dropdown">
                                 <a href="{{ route('minion.index') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     Minions <span class="caret"></span>
@@ -96,16 +96,14 @@
 
                                     <ul class="dropdown-menu">
                                         <li><a href="{{ route('message.index') }}">View all messages</a></li>
-                                        <li role="separator" class="divider"></li>
                                         @if(isset($messages) && count($messages))
+                                            <li role="separator" class="divider"></li>
                                             @foreach($messages as $message)
                                                 <li>
                                                     <a href="{{ route('message.show', $message->id) }}">
                                                     {{ $message->subject }}</a>
                                                 </li>
                                             @endforeach
-                                        @else
-                                            <li>No messages</li>
                                         @endif
                                     </ul>
                                 </li>

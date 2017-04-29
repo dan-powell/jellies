@@ -122,7 +122,7 @@ class EncounterCombat
 
         // Save to log
         $this->log(
-            trans('encounter.log.attack',
+            trans('jellies::encounter.log.attack',
                 [
                     'attacker' => $attacker->name,
                     'defender' => $defender->name,
@@ -142,7 +142,7 @@ class EncounterCombat
 
         // Save to log
         $this->log(
-            trans('encounter.log.counter',
+            trans('jellies::encounter.log.counter',
                 [
                     'attacker' => $defender->name,
                     'defender' => $attacker->name,
@@ -158,7 +158,7 @@ class EncounterCombat
         foreach($creatures as $creature) {
             if($creature->hp <= 0) {
                 // Save to log
-                $this->log(trans('encounter.log.death',['creature' => $creature->name,]));
+                $this->log(trans('jellies::encounter.log.death',['creature' => $creature->name,]));
             }
         }
     }

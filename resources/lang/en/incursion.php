@@ -16,9 +16,7 @@ return [
         'title' => 'Your Active Incursions',
         'tooltip' => '',
         'help' => '',
-        'message' => [
-            'none' => 'You have no active incursions',
-        ],
+        'empty' => 'You have no active incursions',
     ],
 
     'indexdeleted' => [
@@ -26,7 +24,7 @@ return [
         'title' => 'Your Previous Incursions',
         'tooltip' => '',
         'help' => '',
-        'none' => 'You have no previous incursions.',
+        'empty' => 'You have no previous incursions.',
     ],
 
     'show' => [
@@ -35,6 +33,9 @@ return [
         'tooltip' => '',
         'help' => '',
         'active' => 'This incursion is currently happening',
+        'inactive' => 'This incursion is now complete',
+        'empty' => 'No encounters yet',
+        'log' => 'Encounter Log',
     ],
 
     'create' => [
@@ -42,6 +43,7 @@ return [
         'title' => 'Create Incursion',
         'tooltip' => '',
         'help' => '',
+        'choose' => 'Choose your minions',
         'success' => 'Incursion successfully created',
         'error' => 'Incursion failed. Do you have enough points?',
     ],

@@ -2,9 +2,11 @@
 
 return [
 
-    'point' => 'soul|souls',
 
-    'points' => 'souls',
+
+    
+    'point' => 'soul|souls',
+    'points' => 'soul|souls',
 
 
 ];

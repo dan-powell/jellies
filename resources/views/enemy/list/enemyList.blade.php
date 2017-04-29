@@ -2,10 +2,10 @@
     <table class="table table-striped table-hover">
         <tr>
             <th></th>
-            <th>{{ trans('jellies::minion.name') }}</th>
-            <th>{{ trans('jellies::minion.level') }}</th>
+            <th>{{ trans('jellies::enemy.attribute.name') }}</th>
+            <th>{{ trans('jellies::enemy.attribute.level') }}</th>
             @foreach(config('jellies.enemy.stats') as $stat)
-                <th>{{ $stat }}</th>
+                <th>{{ trans('jellies::enemy.attribute.' . $stat) }}</th>
             @endforeach
         </tr>
 

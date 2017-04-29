@@ -1,19 +1,17 @@
-@extends('jellies::base')
+@extends('jellies::message.messageBase')
 
 @section('main')
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Messages</div>
-
-                <div class="panel-body">
-
-                    @forelse ($models as $model)
-                        <p><a href="{{ route('message.show', $model->id) }}">{{ $model->subject }}</a></p>
-                    @empty
-                        <p>No messages</p>
-                    @endforelse
-
-                </div>
-            </div>
+    <h1>
+        {{ trans('jellies::message.index.title') }}
+    </h1>
+    <div class="panel panel-default">
+        <div class="list-group">
+            @forelse ($models as $model)
+                <a href="{{ route('message.show', $model->id) }}" class="list-group-item">{{ $model->subject }}</a>
+            @empty
+                <p>{{ trans('jellies::message.index.empty') }}</p>
+            @endforelse
+        </div>
+    </div>
 
 @endsection

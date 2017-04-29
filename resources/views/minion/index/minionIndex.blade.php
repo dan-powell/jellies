@@ -8,7 +8,7 @@
             @include('jellies::minion.list.minionList', ['minions' => $models])
         @else
             <div class="panel-body">
-                <p>{{ trans('jellies::minion.indexdeleted.none') }}</p>
+                <p>{{ trans('jellies::minion.index.empty') }}</p>
             </div>
         @endif
     </div>
