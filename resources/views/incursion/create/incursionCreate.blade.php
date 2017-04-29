@@ -1,38 +1,44 @@
-@extends('jellies::layout.slim.layoutSlim')
+@extends('jellies::base')
 
 @section('main')
 
-    <h2>
-        {{ trans('jellies::incursion.actions.create') }}
-    </h2>
+    <h1>
+        {{ trans('jellies::incursion.create.title') }}
+    </h1>
 
     @if(count($minions))
 
         {!! Form::open(['route' => 'incursion.store']) !!}
 
             <div class="panel panel-default">
-                <div class="panel-heading"><strong>Choose your {{ trans_choice('jellies::minion.sentence', count($minions)) }}</strong></div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>{{ trans_choice('jellies::incursion.create.choose', count($minions)) }}</strong>
+                    </h3>
+                </div>
 
-                <select multiple="multiple" id="minions" name="minions[]" class="form-control">
-                    @foreach($minions as $minion)
-                        <option value="{{ $minion->id }}">{{ $minion->firstname }}</option>
-                    @endforeach
-                </select>
+                <div class="panel-body">
+                    <select multiple="multiple" id="minions" name="minions[]" class="form-control">
+                        @foreach($minions as $minion)
+                            <option value="{{ $minion->id }}">{{ $minion->name }} - lvl {{ $minion->level }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-primary">
+                        {{ trans('jellies::incursion.store.action') }} ({{ config('jellies.incursion.cost') }} {{ trans_choice('jellies::game.point', config('jellies.incursion.cost')) }})
+                    </button>
+                </div>
 
             </div>
-
-            <button type="submit" class="btn btn-primary">
-                {{ trans('jellies::incursion.actions.store') }} ({{ config('jellies.incursion.cost') }} {{ trans_choice('jellies::game.point', config('jellies.incursion.cost')) }})
-            </button>
 
         {!! Form::close() !!}
 
     @else
-
         <div class="alert alert-warning">
-            {{ trans('jellies::incursion.errors.no_minions') }}
+            {{ trans('jellies::minion.index.message.none') }}
         </div>
-
     @endif
 
 @endsection

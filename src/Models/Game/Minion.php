@@ -28,9 +28,7 @@ class Minion extends Model
 
     protected $fillable = [
         // Details
-        'firstname',
-        'lastname',
-        'nickname',
+        'name',
 
         // Stats
         'attack',
@@ -48,8 +46,6 @@ class Minion extends Model
     ];
 
     protected $appends = [
-        'name',
-        'fullname',
         'level',
     ];
 
@@ -79,23 +75,6 @@ class Minion extends Model
     /****************
     * Attributes
     ****************/
-
-    // The full name
-    public function getNameAttribute()
-    {
-        return $this->firstname . ' ' . $this->lastname;
-    }
-
-    // The full name
-    public function getFullNameAttribute()
-    {
-        if(isset($this->nickname)) {
-            return $this->firstname . ' "' . $this->nickname .' "' . $this->lastname;
-        }
-        else {
-            return $this->firstname . ' ' . $this->lastname;
-        }
-    }
 
     // Returns just the stats of the character
     public function getStatsAttribute()

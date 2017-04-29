@@ -1,15 +1,16 @@
-@extends('jellies::layout.slim.layoutSlim')
+@extends('jellies::minion.minionBase')
 
 @section('main')
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Dead {{ trans_choice('jellies::minion.title', count($models)) }}</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="box-title">{{ trans('jellies::minion.indexdeleted.title') }}</h3>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
+        @if(isset($models) && count($models))
             @include('jellies::minion.list.minionList', ['minions' => $models])
-        </div>
-        <!-- /.box-body -->
+        @else
+            <div class="panel-body">
+                <p>{{ trans('jellies::minion.indexdeleted.none') }}</p>
+            </div>
+        @endif
     </div>
-    <!-- /.box -->
 @endsection

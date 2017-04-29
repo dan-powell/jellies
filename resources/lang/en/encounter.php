@@ -3,7 +3,7 @@
 return [
 
     'title' => 'Encounter|Encounters',
-    'sentence' => 'encounter|encounters',
+    'plural' => 'encounter|encounters',
 
     'log' => [
         'attack' => ':attacker attacked :defender for :damage damage.',
@@ -11,9 +11,6 @@ return [
         'death' => ':creature was killed.'
     ],
 
-    'actions' => [
-        'create' => 'Create Encounter',
-        'store' => 'Store Encounter'
-    ],
+    'rounds' => 'combat round|combat rounds',
 
 ];

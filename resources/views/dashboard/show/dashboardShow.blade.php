@@ -1,6 +1,6 @@
-@extends('jellies::layout.basic.layoutBasic')
+@extends('jellies::base')
 
-@section('body')
+@section('main')
 
     <section class="content">
 

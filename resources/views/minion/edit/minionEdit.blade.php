@@ -1,44 +1,41 @@
-@extends('jellies::layout.slim.layoutSlim')
+@extends('jellies::base')
 
 @section('title')
-Update Minion: {{ $model->firstname }}
+Update Minion:
 @endsection
 
 @section('main')
 
+    <h1>
+        {{ trans('jellies::minion.update.title') }}
+        <small>{{ $model->name }}</small>
+    </h1>
+
     {!! Form::model($model, ['route' => ['minion.update', $model->id], 'method' => 'put']) !!}
 
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Name</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ trans('jellies::minion.attribute.name') }}</h3>
             </div>
-            <div class="box-body">
+            <div class="panel-body">
                 <div class="form-group">
-                    {!! Form::label('firstname'); !!}
-                    {!! Form::text('firstname', null, ['class' => 'form-control']); !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('nickname'); !!}
-                    {!! Form::text('nickname', null, ['class' => 'form-control']); !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('lastname'); !!}
-                    {!! Form::text('lastname', null, ['class' => 'form-control']); !!}
+                    {!! Form::label('name'); !!}
+                    {!! Form::text('name', null, ['class' => 'form-control']); !!}
                 </div>
             </div>
             <!-- /.box-body -->
 
-            <div class="box-footer">
+            <div class="panel-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </div>
 
 
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Stats</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ trans('jellies::minion.attribute.stats') }}</h3>
             </div>
-            <div class="box-body">
+            <div class="panel-body">
                 @foreach($model->stats as $key => $stat)
                     <div class="form-group">
                         {!! Form::label($key); !!}
@@ -64,7 +61,7 @@ Update Minion: {{ $model->firstname }}
             </div>
             <!-- /.box-body -->
 
-            <div class="box-footer">
+            <div class="panel-footer">
                 <button type="submit" class="btn btn-primary">Add to stats</button>
             </div>
         </div>

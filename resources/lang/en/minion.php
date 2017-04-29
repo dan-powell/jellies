@@ -2,32 +2,84 @@
 
 return [
 
-    'title' => 'Minion|Minions',
-    'sentence' => 'minion|minions',
+    'title' => 'Minions',
+    'plural' => 'minion|minions',
 
-    'name' => 'Name',
-    'firstname' => 'First Name',
-    'lastname' => 'Last Name',
-    'nickname' => 'Nickname',
+    'attribute' => [
+        'name' => 'Name',
+        'stats' => 'Stats',
+        'attack' => 'Attack',
+        'defence' => 'Defence',
+        'initiative' => 'Initiative',
+        'health' => 'Health (max HP)',
+        'hp' => 'HP',
+        'level' => 'Level',
+        'active' => 'Raiding',
+    ],
 
-    // Stats
-    'attack' => 'Attack',
-    'defence' => 'Defence',
-    'initiative' => 'Initiative',
-    'hp' => 'HP',
+    'index' => [
+        'action' => 'View Minions',
+        'title' => 'Your Minions',
+        'tooltip' => '',
+        'help' => '',
+        'none' => 'You have no minions, summon or resurrect some more.',
+    ],
 
-    'level' => 'Level',
-    'active' => 'Raiding',
+    'indexdeleted' => [
+        'action' => 'View Dead Minions',
+        'title' => 'Your Dead Minions',
+        'tooltip' => '',
+        'help' => '',
+        'none' => 'You have no dead minions.',
+    ],
 
-    'active_message' => 'This minion is currently raiding',
+    'show' => [
+        'action' => 'View Minion',
+        'title' => 'Minion Details',
+        'tooltip' => '',
+        'help' => '',
+        'active' => 'This minion is currently engaged in an incursion',
+    ],
 
-    'create' => 'summon',
+    'create' => [
+        'action' => 'Summon Minion',
+        'title' => 'Summon Minion',
+        'tooltip' => '',
+        'help' => '',
+        'success' => 'Minion successfully summoned',
+        'error' => 'Minion summoning failed. Do you have enough points?',
+    ],
 
-    'created_successfully' => 'Minion successfully summoned',
-    'created_error' => 'Minion summoning failed. Do you have enough souls?',
+    'edit' => [
+        'action' => 'Edit Minion',
+        'title' => 'Editing Minion',
+        'tooltip' => '',
+        'help' => '',
+    ],
 
-    'actions' => [
-        'create' => 'Summon Minion'
-    ]
+    'update' => [
+        'action' => 'Edit Minion',
+        'title' => 'Edit Minion',
+        'tooltip' => '',
+        'help' => '',
+        'success' => 'Minion successfully updated',
+        'error' => 'Minion update failed. Do you have enough points?',
+    ],
+
+    'delete' => [
+        'action' => 'Kill Minion',
+        'title' => 'Kill Minion',
+        'tooltip' => '',
+        'help' => '',
+    ],
+
+    'heal' => [
+        'action' => 'Heal/Resurrect Minion',
+        'title' => 'Heal/Resurrect Minion',
+        'tooltip' => '',
+        'help' => '',
+        'success' => 'Minion successfully healed',
+        'error' => 'Minion healing failed. Do you have enough points?',
+    ],
 
 ];

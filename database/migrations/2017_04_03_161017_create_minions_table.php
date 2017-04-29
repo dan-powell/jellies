@@ -17,9 +17,7 @@ class CreateMinionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable()->default(null);
 
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('nickname')->nullable();
+            $table->string('name');
 
             $table->integer('attack')->unsigned();
             $table->integer('defence')->unsigned();

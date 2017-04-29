@@ -1,65 +1,46 @@
-@extends('jellies::layout.basic.layoutBasic')
-
-@section('title')
-    {{ trans('jellies::incursion.title') }}
-    <small>{{ $model->created_at->format(config('jellies.ui.date_time_format')) }}</small>
-@endsection
+@extends('jellies::base')
 
 @section('main')
 
+    <h1>
+        {{ trans('jellies::incursion.show.title') }}
+        <small>{{ $model->created_at->format(config('jellies.ui.date_time_format')) }}</small>
+    </h1>
+
     @if($model->active)
-        <div class="callout callout-success">
-            <h4>This incursion is currently underway</h4>
+        <div class="alert alert-info">
+            <h4>{{ trans('jellies::incursion.show.active') }}</h4>
         </div>
     @else
-        <div class="callout callout-info">
-            <h4>This incursion has finished</h4>
+        <div class="alert alert-success">
+            <h4>{{ trans('jellies::incursion.show.inactive') }}</h4>
         </div>
     @endif
 
     <div class="row">
         <div class="col-sm-4">
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="game-icon game-icon-swordman"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-number">{{ count($model->minions) }}</span>
-                    <span class="info-box-text">Minions remaining</span>
-                </div>
-                <!-- /.info-box-content -->
+            <div class="alert alert-success">
+                <span class="badge">{{ count($model->minions) }}</span>
+                {{ trans_choice('jellies::minion.plural', count($model->minions)) }} {{ trans('jellies::incursion.remaining') }}
             </div>
-            <!-- /.info-box -->
         </div>
-        <!-- /.col -->
 
         <div class="col-sm-4">
-            <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="game-icon game-icon-light-sabers"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-number">{{ count($model->encounters) }} {{ trans_choice('jellies::encounter.title', count($model->encounters))}}</span>
-                    <span class="info-box-text">{{ $model->rounds }} Combat rounds</span>
-                </div>
-                <!-- /.info-box-content -->
+            <div class="alert alert-danger">
+                <span class="badge">{{ count($model->encounters) }}</span>
+                {{ trans_choice('jellies::encounter.plural', count($model->encounters)) }}
+                <br/>
+                <span class="badge">{{ count($model->rounds) }}</span>
+                {{ trans_choice('jellies::encounter.rounds', count($model->rounds)) }}
             </div>
-            <!-- /.info-box -->
         </div>
-        <!-- /.col -->
 
         <div class="col-sm-4">
-            <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="game-icon game-icon-reaper-scythe"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-number">{{ $model->points }}</span>
-                    <span class="info-box-text">{{ trans_choice('jellies::game.point', $model->points)}} reaped</span>
-
-                </div>
-                <!-- /.info-box-content -->
+            <div class="alert alert-info">
+                <span class="badge">{{ count($model->points) }}</span>
+                {{ trans_choice('jellies::game.points', count($model->points)) }} {{ trans('jellies::incursion.gathered') }}
             </div>
-            <!-- /.info-box -->
         </div>
-        <!-- /.col -->
 
     </div>
 
@@ -70,7 +51,7 @@
     @else
         {!! Form::open(['route' => ['incursion.destroy', $model->id ], 'method' => 'delete']) !!}
             <button type="submit" class="btn btn-danger">
-                {{ trans('jellies::incursion.actions.destroy') }}
+                {{ trans('jellies::incursion.delete.action') }}
             </button>
         {!! Form::close() !!}
     @endif

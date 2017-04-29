@@ -1,23 +1,15 @@
-@extends('jellies::layout.slim.layoutSlim')
+@extends('jellies::minion.minionBase')
 
 @section('main')
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">{{ trans_choice('jellies::minion.title', count($models)) }}</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
+    <h1>{{ trans('jellies::minion.index.title') }}</h1>
+
+    <div class="panel panel-default">
+        @if(isset($models) && count($models))
             @include('jellies::minion.list.minionList', ['minions' => $models])
-        </div>
-        <!-- /.box-body -->
+        @else
+            <div class="panel-body">
+                <p>{{ trans('jellies::minion.indexdeleted.none') }}</p>
+            </div>
+        @endif
     </div>
-    <!-- /.box -->
-
-    {!! Form::open(['route' => 'minion.store']) !!}
-        <button type="submit" class="btn btn-primary">
-            {{ trans('jellies::minion.actions.create') }} ({{ config('jellies.minion.cost') }} {{ trans_choice('jellies::game.point', config('jellies.minion.cost')) }})
-        </button>
-    {!! Form::close() !!}
-
-    <a href="{{ route('minion.deleted') }}">View Dead Minions</a>
 @endsection

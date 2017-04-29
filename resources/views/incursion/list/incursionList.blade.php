@@ -1,9 +1,9 @@
 @if(isset($incursions) && count($incursions))
     <table class="table table-striped table-hover">
         <tr>
-            <th>{{ trans('jellies::incursion.date_start') }}</th>
-            <th>{{ trans('jellies::incursion.progress') }}</th>
-            <th>{{ trans('jellies::game.points') }}</th>
+            <th>{{ trans('jellies::incursion.attribute.created_at') }}</th>
+            <th>{{ trans('jellies::incursion.attribute.encounters') }}</th>
+            <th>{{ trans('jellies::incursion.attribute.points') }}</th>
         </tr>
 
         @foreach ($incursions as $model)
@@ -15,16 +15,12 @@
                     </a>
                 </td>
                 <td>
-                    {{ count($model->encounters) }}
-                    {{ trans_choice('jellies::encounter.sentence', count($model->encounters))}}
+                    <span class="game-icon game-icon-sword-clash"></span> {{ count($model->encounters) }}
                 </td>
                 <td>
-                    {{ $model->points }}
-                    {{ trans_choice('jellies::game.point', $model->points)}}
+                    <span class="fa fa-star"></span> {{ $model->points }}
                 </td>
             </tr>
         @endforeach
     </table>
-@else
-    <h3>No incursions to show</h3>
 @endif

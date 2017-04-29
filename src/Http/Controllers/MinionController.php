@@ -41,9 +41,9 @@ class MinionController extends Controller
         $success = $this->repo->store();
 
         if($success) {
-            \Notification::success(__('minion.created_successfully'));
+            \Notification::success(__('jellies::minion.create.success'));
         } else {
-            \Notification::error(__('minion.created_error'));
+            \Notification::error(__('jellies::minion.create.error'));
         }
 
         return redirect(route('minion.index'));
@@ -71,9 +71,9 @@ class MinionController extends Controller
         $success = $this->repo->update($id, $input);
 
         if($success) {
-            \Notification::success(__('minion.update.success'));
+            \Notification::success(__('jellies::minion.update.success'));
         } else {
-            \Notification::error(__('minion.update.error'));
+            \Notification::error(__('jellies::minion.update.error'));
         }
 
         return redirect(route('minion.show', $id));
@@ -85,9 +85,9 @@ class MinionController extends Controller
         $success = $this->repo->heal($id);
 
         if($success) {
-            \Notification::success(__('minion.heal.success'));
+            \Notification::success(__('jellies::minion.heal.success'));
         } else {
-            \Notification::error(__('minion.heal.error'));
+            \Notification::error(__('jellies::minion.heal.error'));
         }
 
         return redirect(route('minion.show', $id));

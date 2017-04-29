@@ -1,4 +1,4 @@
-@extends('jellies::layout.slim.layoutSlim')
+@extends('jellies::base')
 
 @section('main')
     <div class="box">

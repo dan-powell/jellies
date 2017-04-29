@@ -48,14 +48,8 @@ class MinionRepository extends AbstractModelRepository
         $minion = $this->query()->findOrFail($id);
 
         // Update Name
-        if(isset($input['firstname'])) {
-            $minion->firstname = $input['firstname'];
-        }
-        if(isset($input['nickname'])) {
-            $minion->nickname = $input['nickname'];
-        }
-        if(isset($input['lastname'])) {
-            $minion->lastname = $input['lastname'];
+        if(isset($input['name'])) {
+            $minion->name = $input['name'];
         }
 
         // Update Stats

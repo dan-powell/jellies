@@ -23,9 +23,7 @@ $factory->define(DanPowell\Jellies\Models\Game\Minion::class, function (Faker\Ge
         'created_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
         'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
 
-	    'firstname' => $faker->firstName(),
-        'lastname' => $faker->lastName(),
-        'nickname' => $randomNameGen->getName(),
+	    'name' => $faker->firstname(),
 
         'attack' => $stats['attack'],
         'defence' => $stats['defence'],

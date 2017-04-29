@@ -24,9 +24,7 @@ class MinionUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required',
-            'nickname' => 'required',
-            'lastname' => 'required',
+            'name' => 'required',
 
             'attack' => 'numeric|nullable',
             'defence' => 'numeric|nullable',
