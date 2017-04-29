@@ -157,7 +157,9 @@
             <div class="row">
                 @hasSection('sidebar')
                     <div class="col-sm-4">
-                        @yield('sidebar')
+                        <div class="well">
+                            @yield('sidebar')
+                        </div>
                     </div>
                     <div class="col-sm-8">
                         @yield('main')
