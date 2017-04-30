@@ -18,94 +18,53 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="alert alert-info">
+                <div class="alert alert-danger">
                     <i class="fa fa-star"></i>
                      {{ auth()->user()->points }} {{ trans_choice('jellies::game.points', auth()->user()->points) }}
                 </div>
             </div>
         </div>
         <div class="row">
+
             <div class="col-sm-6">
 
-                <div class="box box-blue">
-                    <div class="box-header">
-                        <h3 class="box-title">{{ trans('jellies::incursion.title_active') }}</h3>
+                @if(count($minions))
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('jellies::minion.index.title') }}</h3>
+                        </div>
+                        @include('jellies::minion.list.minionList', ['minions' => $minions])
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        @include('jellies::incursion.list.incursionList', ['incursions' => $incursions])
+
+                @else
+
+                    <div class="alert alert-info">
+                        {{ trans('jellies::minion.index.help') }}
                     </div>
-                    <!-- /.box-body -->
-                </div>
 
-                <div class="box box-widget widget-user-2">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <span class="info-box-icon"><i class="fa fa-envelope"></i></span>
-                    <div class="widget-user-header bg-yellow">
-                        <h3 class="widget-user-username">Messages</h3>
-                        <br/>
-                    </div>
-                    <div class="box-footer no-padding">
-                        <ul class="nav nav-stacked">
-
-                            @foreach($messages as $message)
-                                <li><!-- start message -->
-                                    <a href="{{ route('message.show', $message->id) }}" class="bg-{{ $message->type }}">
-                                        <div class="pull-left">
-
-                                        </div>
-                                        <h4>
-                                            @if(!$message->read)
-                                                <strong>
-                                            @endif
-                                                {{ $message->type }}
-                                            @if(!$message->read)
-                                                </strong>
-                                            @endif
-
-                                            <small><i class="fa fa-clock-o"></i> {{ $message->created_at->format('d M Y') }}</small>
-                                        </h4>
-                                        <p>{{ $message->subject }}</p>
-                                    </a>
-                                </li>
-                                <!-- end message -->
-                            @endforeach
-
-                        </ul>
-                    </div>
-                </div>
+                @endif
 
             </div>
 
             <div class="col-sm-6">
 
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Leaderboard (Top 10)</h3>
+                @if(count($minions))
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('jellies::incursion.index.title') }}</h3>
+                        </div>
+                        @include('jellies::incursion.list.incursionList', ['incursions' => $incursions])
                     </div>
 
-                    <table class="table">
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Souls</th>
-                        </tr>
-                        @foreach ($leaderboard as $user)
-                            <tr>
-                                <td>
-                                    <span class="fa fa-user"></span>
-                                </td>
-                                <td>
-                                    {{ $user->name }}
-                                </td>
-                                <td>
-                                    <span class="badge bg-blue">{{ $user->points }}</span>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+                @else
 
-                </div>
+                    <div class="alert alert-success">
+                        {{ trans('jellies::incursion.index.help') }}
+                    </div>
+
+                @endif
 
             </div>
 
@@ -117,13 +76,28 @@
 @endsection
 
 @section('sidebar')
-    <h2>Actions</h2>
-    <ul class="nav nav-pills nav-stacked">
-        <li role="presentation" class="">
-            <a href="{{ route('minion.create') }}">{{ trans('jellies::minion.create.action') }}</a>
-        </li>
-        <li role="presentation" class="">
-            <a href="{{ route('incursion.create') }}">{{ trans('jellies::incursion.create.action') }}</a>
-        </li>
-    </ul>
+
+    <h3 class="">{{ trans('jellies::leaderboard.title') }}</h3>
+
+    <table class="table">
+        <tr>
+            <th>{{ trans('jellies::leaderboard.attribute.rank') }}</th>
+            <th>{{ trans('jellies::leaderboard.attribute.name') }}</th>
+            <th>{{ trans('jellies::leaderboard.attribute.points') }}</th>
+        </tr>
+        @foreach ($leaderboard as $key => $user)
+            <tr>
+                <td>
+                    {{ $key }}
+                </td>
+                <td>
+                    <span class="fa fa-user"></span> {{ $user->name }}
+                </td>
+                <td>
+                    <span class="badge bg-blue">{{ $user->points }}</span>
+                </td>
+            </tr>
+        @endforeach
+    </table>
+
 @endsection

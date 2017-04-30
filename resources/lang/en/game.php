@@ -4,9 +4,12 @@ return [
 
 
 
-    
-    'point' => 'soul|souls',
+
+    'point' => 'Souls',
     'points' => 'soul|souls',
+
+
+
 
 
 ];
