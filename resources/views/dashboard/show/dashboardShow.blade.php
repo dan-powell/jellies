@@ -6,67 +6,22 @@
 
         <div class="row">
             <div class="col-sm-4">
-
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="game-icon"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-number">{{ count($incursions) }}</span>
-                        <span class="info-box-text">Active Incursions</span>
-
-                        <span class="progress-description"></span>
-                    </div>
+                <div class="alert alert-success">
+                    <i class="game-icon game-icon-swordman"></i>
+                    {{ count($incursions) }} {{ trans_choice('jellies::incursion.plural', count($incursions)) }}
                 </div>
-
             </div>
             <div class="col-sm-4">
-
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="game-icon"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-number">{{ count($minions) }}</span>
-                        <span class="info-box-text">Minions</span>
-
-                        <span class="progress-description"></span>
-                    </div>
+                <div class="alert alert-info">
+                    <i class="game-icon game-icon-slime"></i>
+                    {{ count($minions) }} {{ trans_choice('jellies::minion.plural', count($minions)) }}
                 </div>
-
             </div>
             <div class="col-sm-4">
-
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="game-icon"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-number">{{ auth()->user()->points }}</span>
-                        <span class="info-box-text">Souls</span>
-
-                        <span class="progress-description"></span>
-                    </div>
+                <div class="alert alert-info">
+                    <i class="fa fa-star"></i>
+                     {{ auth()->user()->points }} {{ trans_choice('jellies::game.points', auth()->user()->points) }}
                 </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-
-                <a href="{{ route('minion.index') }}" class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="game-icon"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-number">Summon new minions</span>
-                        <span class="progress-description"></span>
-                    </div>
-                </a>
-
-            </div>
-            <div class="col-sm-6">
-
-                <a href="{{ route('incursion.create') }}" class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="game-icon"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-number">Create new incursion</span>
-                        <span class="progress-description"></span>
-                    </div>
-                </a>
-
             </div>
         </div>
         <div class="row">
@@ -124,34 +79,32 @@
 
             <div class="col-sm-6">
 
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Leaderboard (Top 10)</h3>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Leaderboard (Top 10)</h3>
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <table class="table table-striped table-hover">
+
+                    <table class="table">
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Souls</th>
+                        </tr>
+                        @foreach ($leaderboard as $user)
                             <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Souls</th>
+                                <td>
+                                    <span class="fa fa-user"></span>
+                                </td>
+                                <td>
+                                    {{ $user->name }}
+                                </td>
+                                <td>
+                                    <span class="badge bg-blue">{{ $user->points }}</span>
+                                </td>
                             </tr>
-                            @foreach ($leaderboard as $user)
-                                <tr>
-                                    <td>
-                                        <span class="fa fa-user"></span>
-                                    </td>
-                                    <td>
-                                        {{ $user->name }}
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-blue">{{ $user->points }}</span>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
+                        @endforeach
+                    </table>
+
                 </div>
 
             </div>
@@ -161,4 +114,16 @@
 
     </section>
 
+@endsection
+
+@section('sidebar')
+    <h2>Actions</h2>
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="">
+            <a href="{{ route('minion.create') }}">{{ trans('jellies::minion.create.action') }}</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="{{ route('incursion.create') }}">{{ trans('jellies::incursion.create.action') }}</a>
+        </li>
+    </ul>
 @endsection

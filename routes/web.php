@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::resource('message', 'DanPowell\Jellies\Http\Controllers\MessageController');
         Route::resource('minion', 'DanPowell\Jellies\Http\Controllers\MinionController', ['only' => [
-            'index', 'show', 'store', 'edit', 'update'
+            'index', 'show', 'create', 'store', 'edit', 'update'
         ]]);
         Route::get('miniondeleted', 'DanPowell\Jellies\Http\Controllers\MinionController@indexDeleted')->name('minion.deleted');
         Route::post('minion/{id}/heal', 'DanPowell\Jellies\Http\Controllers\MinionController@heal')->name('minion.heal');

@@ -1,7 +1,7 @@
 @extends('jellies::base')
 
 @section('sidebar')
-    <h3>Navigation</h3>
+    <h2>{{ trans('jellies::minion.title') }}</h2>
     <ul class="nav nav-pills nav-stacked">
         <li role="presentation" class="">
             <a href="{{ route('minion.index') }}">{{ trans('jellies::minion.index.action') }}</a>
@@ -10,12 +10,9 @@
         <li role="presentation" class="">
             <a href="{{ route('minion.deleted') }}">{{ trans('jellies::minion.indexdeleted.action') }}</a>
         </li>
-    </ul>
 
-    <h3>Actions</h3>
-    {!! Form::open(['route' => 'minion.store']) !!}
-        <button type="submit" class="btn btn-primary btn-block">
-            {{ trans('jellies::minion.create.title') }}
-        </button>
-    {!! Form::close() !!}
+        <li role="presentation" class="">
+            <a href="{{ route('minion.create') }}">{{ trans('jellies::minion.create.action') }}</a>
+        </li>
+    </ul>
 @endsection

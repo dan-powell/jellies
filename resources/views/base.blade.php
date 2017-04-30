@@ -45,34 +45,10 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
-                            <li class=""><a href="{{ route('dashboard') }}">Dashboard <span class="sr-only">(current)</span></a></li>
-                            <li class="dropdown">
-                                <a href="{{ route('minion.index') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Minions <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ route('minion.index') }}">View all minions</a></li>
-                                    <li><a href="{{ route('minion.deleted') }}">View dead minions</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Incursions <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ route('incursion.index') }}">View all incursions</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="{{ route('incursion.create') }}">Create new incursion</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Enemies <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ route('enemy.index') }}">View all enemies</a></li>
-                                </ul>
-                            </li>
+                            <li class=""><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li class=""><a href="{{ route('minion.index') }}">{{ trans('jellies::minion.title') }}</a></li>
+                            <li class=""><a href="{{ route('incursion.index') }}">{{ trans('jellies::incursion.title') }}</a></li>
+                            <li class=""><a href="{{ route('enemy.index') }}">{{ trans('jellies::enemy.title') }}</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->
@@ -163,7 +139,7 @@
                         @yield('main')
                     </div>
                 @else
-                    <div class="col-sm-8 col-sm-offset-2">
+                    <div class="col-sm-12">
                         @yield('main')
                     </div>
                 @endif

@@ -1,4 +1,4 @@
-@extends('jellies::base')
+@extends('jellies::incursion.incursionBase')
 
 @section('main')
 

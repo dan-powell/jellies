@@ -35,6 +35,11 @@ class MinionController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('jellies::minion.create.minionCreate');
+    }
+
     public function store(MinionStoreRequest $request)
     {
 
