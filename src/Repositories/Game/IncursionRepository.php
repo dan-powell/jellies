@@ -10,6 +10,8 @@ use DanPowell\Jellies\Repositories\Game\MinionRepository;
 use DanPowell\Jellies\Repositories\Game\RealmRepository;
 use DanPowell\Jellies\Repositories\UserRepository;
 
+use DanPowell\Jellies\Helpers\Message;
+
 class IncursionRepository extends AbstractModelRepository
 {
 
@@ -56,6 +58,8 @@ class IncursionRepository extends AbstractModelRepository
 
             // Spend points
             $this->userRepo->subtractPoints(config('jellies.incursion.cost'));
+
+            app('message')->basic('Incursion Started', '');
 
             return $this->incursion;
         } else {

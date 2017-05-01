@@ -24,6 +24,8 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
         // Tell Laravel where to load the views from
         $this->app->register('DanPowell\Jellies\Providers\ViewComposerServiceProvider');
 
+        $this->app->singleton('message', 'DanPowell\Jellies\Services\MessageService');
+
     }
 
     /**

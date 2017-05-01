@@ -8,7 +8,13 @@
         <div class="panel panel-default">
             <div class="list-group">
                 @foreach ($models as $model)
-                    <a href="{{ route('message.show', $model->id) }}" class="list-group-item">{{ $model->subject }}</a>
+                    <a href="{{ route('message.show', $model->id) }}" class="list-group-item">
+                        <h4><strong>{{ $model->subject }}</strong></h4>
+                        <small>
+                            <i class="fa fa-calendar"></i> {{ $model->created_at->format(config('jellies.ui.date_format')) }}
+                            <i class="fa fa-clock-o"></i> {{ $model->created_at->format(config('jellies.ui.time_format')) }}
+                        </small>
+                    </a>
                 @endforeach
             </div>
         </div>
