@@ -48,7 +48,7 @@
                             <li class=""><a href="{{ route('dashboard') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::dashboard.show.tooltip') }}">Dashboard</a></li>
                             <li class=""><a href="{{ route('minion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::minion.index.tooltip') }}">{{ trans('jellies::minion.title') }}</a></li>
                             <li class=""><a href="{{ route('incursion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::incursion.index.tooltip') }}">{{ trans('jellies::incursion.title') }}</a></li>
-                            <li class=""><a href="{{ route('enemy.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::enemy.index.tooltip') }}">{{ trans('jellies::enemy.title') }}</a></li>
+                            <li class=""><a href="{{ route('realm.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::realm.index.tooltip') }}">{{ trans('jellies::realm.title') }}</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

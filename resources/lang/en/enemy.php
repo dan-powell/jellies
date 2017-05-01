@@ -17,7 +17,7 @@ return [
     ],
 
     'index' => [
-        'action' => 'View Enemies',
+        'action' => 'View All Enemies',
         'title' => 'Current Enemies',
         'tooltip' => '',
         'help' => 'Enemies are encountered during an incursion. Minions will fight enemies to the death. Defeating an enemy yields points.',

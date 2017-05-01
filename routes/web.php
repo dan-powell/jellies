@@ -25,6 +25,15 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('enemy', 'DanPowell\Jellies\Http\Controllers\EnemyController', ['only' => [
             'index', 'show'
         ]]);
+
+        Route::resource('realm', 'DanPowell\Jellies\Http\Controllers\RealmController', ['only' => [
+            'index', 'show'
+        ]]);
+
+        Route::resource('zone', 'DanPowell\Jellies\Http\Controllers\ZoneController', ['only' => [
+            'show'
+        ]]);
+
         Route::resource('incursion', 'DanPowell\Jellies\Http\Controllers\IncursionController', ['only' => [
             'index', 'show', 'create', 'store', 'destroy'
         ]]);

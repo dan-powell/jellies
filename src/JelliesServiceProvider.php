@@ -18,6 +18,8 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/minion.php', 'jellies.minion');
         $this->mergeConfigFrom(__DIR__ . '/../config/ui.php', 'jellies.ui');
         $this->mergeConfigFrom(__DIR__ . '/../config/user.php', 'jellies.user');
+        $this->mergeConfigFrom(__DIR__ . '/../config/realm.php', 'jellies.realm');
+        $this->mergeConfigFrom(__DIR__ . '/../config/zone.php', 'jellies.zone');
 
         // Tell Laravel where to load the views from
         $this->app->register('DanPowell\Jellies\Providers\ViewComposerServiceProvider');

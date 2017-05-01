@@ -45,6 +45,16 @@ class Incursion extends Model
         return $this->belongsTo('DanPowell\Jellies\Models\User');
     }
 
+    public function zone()
+    {
+        return $this->belongsTo('DanPowell\Jellies\Models\Zone');
+    }
+
+    public function previous_zones()
+    {
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Zone', 'incursion_previouszones', 'incursion_id', 'zone_id');
+    }
+
     public function encounters()
     {
         return $this->hasMany('DanPowell\Jellies\Models\Game\Encounter');
