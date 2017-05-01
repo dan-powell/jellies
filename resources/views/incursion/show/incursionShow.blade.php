@@ -31,17 +31,16 @@
                 {{ trans_choice('jellies::encounter.plural', count($model->encounters)) }}
                 <br/>
                 <span class="badge">{{ count($model->rounds) }}</span>
-                {{ trans_choice('jellies::encounter.rounds', count($model->rounds)) }}
+                {{ trans_choice('jellies::encounter.rounds.plural', count($model->rounds)) }}
             </div>
         </div>
 
         <div class="col-sm-4">
             <div class="alert alert-info">
                 <span class="badge">{{ count($model->points) }}</span>
-                {{ trans_choice('jellies::game.points', count($model->points)) }} {{ trans('jellies::incursion.gathered') }}
+                {{ trans_choice('jellies::game.point.plural', count($model->points)) }} {{ trans('jellies::incursion.gathered') }}
             </div>
         </div>
-
     </div>
 
     @if($model->active)
@@ -167,7 +166,17 @@
         </div>
 
     @empty
-        <p>{{ trans('jellies::incursion.show.empty') }}</p>
+        <div class="alert alert-warning">
+            <span class="fa fa-warning"></span> 
+            {{ trans('jellies::incursion.show.empty') }}
+        </div>
     @endforelse
 
+@endsection
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::incursion.show.help') }}
+    </div>
 @endsection

@@ -12,3 +12,13 @@
         @endif
     </div>
 @endsection
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::minion.indexdeleted.help') }}
+    </div>
+    <div class="alert alert-danger">
+        <span class="fa fa-exclamation-circle"></span> {{ trans('jellies::minion.indexdeleted.danger') }}
+    </div>
+@endsection

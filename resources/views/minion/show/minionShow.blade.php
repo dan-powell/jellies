@@ -84,3 +84,10 @@
     </div>
 
 @endsection
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::minion.show.help') }}
+    </div>
+@endsection

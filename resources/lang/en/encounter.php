@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'Encounter|Encounters',
+    'title' => 'Encounter',
     'plural' => 'encounter|encounters',
 
     'attribute' => [
@@ -26,6 +26,11 @@ return [
 
 
 
-    'rounds' => 'combat round|combat rounds',
+    'rounds' => [
+        'title' => 'Combat Round',
+        'plural' => 'combat round|combat rounds',
+    ]
+
+
 
 ];

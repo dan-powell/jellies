@@ -45,10 +45,10 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
-                            <li class=""><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class=""><a href="{{ route('minion.index') }}">{{ trans('jellies::minion.title') }}</a></li>
-                            <li class=""><a href="{{ route('incursion.index') }}">{{ trans('jellies::incursion.title') }}</a></li>
-                            <li class=""><a href="{{ route('enemy.index') }}">{{ trans('jellies::enemy.title') }}</a></li>
+                            <li class=""><a href="{{ route('dashboard') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::dashboard.show.tooltip') }}">Dashboard</a></li>
+                            <li class=""><a href="{{ route('minion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::minion.index.tooltip') }}">{{ trans('jellies::minion.title') }}</a></li>
+                            <li class=""><a href="{{ route('incursion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::incursion.index.tooltip') }}">{{ trans('jellies::incursion.title') }}</a></li>
+                            <li class=""><a href="{{ route('enemy.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::enemy.index.tooltip') }}">{{ trans('jellies::enemy.title') }}</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->
@@ -59,12 +59,12 @@
                                 <li><a href="{{ route('register') }}">Register</a></li>
                             @else
                                 <li class="dropdown">
-                                    <a href="#">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::game.point.title') }}">
                                         <span class="fa fa-star"></span> {{ auth()->user()->points }}
                                     </a>
                                 </li>
 
-                                <li class="dropdown">
+                                <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::message.index.tooltip') }}">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span class="fa fa-envelope"></span>
                                         @if(isset($messages)) {{ count($messages) }}@endif
@@ -134,12 +134,17 @@
                         <div class="well">
                             @yield('sidebar')
                         </div>
+
+                        @yield('help')
+
                     </div>
                     <div class="col-sm-8">
                         @yield('main')
                     </div>
                 @else
                     <div class="col-sm-12">
+                        @yield('help')
+
                         @yield('main')
                     </div>
                 @endif
@@ -149,5 +154,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
 </body>
 </html>

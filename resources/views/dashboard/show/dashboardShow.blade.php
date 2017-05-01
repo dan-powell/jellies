@@ -6,24 +6,34 @@
 
         <div class="row">
             <div class="col-sm-4">
-                <div class="alert alert-success">
-                    <i class="game-icon game-icon-swordman"></i>
-                    {{ count($incursions) }} {{ trans_choice('jellies::incursion.plural', count($incursions)) }}
-                </div>
-            </div>
-            <div class="col-sm-4">
                 <div class="alert alert-info">
                     <i class="game-icon game-icon-slime"></i>
                     {{ count($minions) }} {{ trans_choice('jellies::minion.plural', count($minions)) }}
                 </div>
             </div>
             <div class="col-sm-4">
+                <div class="alert alert-success">
+                    <i class="game-icon game-icon-swordman"></i>
+                    {{ count($incursions) }} {{ trans_choice('jellies::incursion.plural', count($incursions)) }}
+                </div>
+            </div>
+            <div class="col-sm-4">
                 <div class="alert alert-danger">
                     <i class="fa fa-star"></i>
-                     {{ auth()->user()->points }} {{ trans_choice('jellies::game.points', auth()->user()->points) }}
+                     {{ auth()->user()->points }} {{ trans_choice('jellies::game.point.plural', auth()->user()->points) }}
                 </div>
             </div>
         </div>
+
+        <div class="jumbotron">
+            <h1>{{ trans('jellies::dashboard.welcome.title', ['name' => auth()->user()->name]) }}</h1>
+            <p>{{ trans('jellies::dashboard.welcome.help') }}</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="{{ route('minion.create') }}" role="button">{{ trans('jellies::minion.create.action') }}</a>
+                <a class="btn btn-success btn-lg" href="{{ route('incursion.create') }}" role="button">{{ trans('jellies::incursion.create.action') }}</a>
+            </p>
+        </div>
+
         <div class="row">
 
             <div class="col-sm-6">
@@ -40,7 +50,7 @@
                 @else
 
                     <div class="alert alert-info">
-                        {{ trans('jellies::minion.index.help') }}
+                        {{ trans('jellies::minion.index.empty') }}
                     </div>
 
                 @endif
@@ -61,7 +71,7 @@
                 @else
 
                     <div class="alert alert-success">
-                        {{ trans('jellies::incursion.index.help') }}
+                        {{ trans('jellies::incursion.index.empty') }}
                     </div>
 
                 @endif
@@ -100,4 +110,11 @@
         @endforeach
     </table>
 
+@endsection
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::dashboard.show.help') }}
+    </div>
 @endsection

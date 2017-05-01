@@ -32,3 +32,11 @@
 
 
 @endsection
+
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::incursion.index.help') }}
+    </div>
+@endsection

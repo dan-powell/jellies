@@ -3,12 +3,12 @@
 return [
 
     'title' => 'Leaderboard (Top 10)',
+    'plural' => 'leaderboard|leaderboards',
 
     'attribute' => [
         'rank' => 'Rank',
-        'name' => trans('jellies::user.attribute.name'),
-        'points' => trans('jellies::user.attribute.points'),
+        'name' => 'Name',
+        'points' => 'Points',
     ]
-
 
 ];

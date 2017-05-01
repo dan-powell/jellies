@@ -1,8 +1,4 @@
-@extends('jellies::base')
-
-@section('title')
-Update Minion:
-@endsection
+@extends('jellies::minion.minionBase')
 
 @section('main')
 
@@ -68,4 +64,14 @@ Update Minion:
 
     {!! Form::close() !!}
 
+@endsection
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::minion.edit.help') }}
+    </div>
+    <div class="alert alert-danger">
+        <span class="fa fa-exclamation-circle"></span> {{ trans('jellies::minion.edit.danger') }}
+    </div>
 @endsection

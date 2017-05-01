@@ -2,11 +2,8 @@
 
 return [
 
-
-
-
-    'point' => 'Souls',
-    'points' => 'soul|souls',
+    'title' => 'User',
+    'plural' => 'user|users',
 
     'attribute' => [
         'name' => 'Name',

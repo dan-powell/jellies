@@ -12,7 +12,7 @@
 
             <div class="panel-footer">
                 <button type="submit" class="btn btn-primary">
-                    {{ trans('jellies::incursion.create.action') }}
+                    {{ trans('jellies::minion.create.action') }}
                 </button>
             </div>
 
@@ -20,4 +20,14 @@
 
     {!! Form::close() !!}
 
+@endsection
+
+@section('help')
+    @parent
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> {{ trans('jellies::minion.create.help') }}
+    </div>
+    <div class="alert alert-danger">
+        <span class="fa fa-exclamation-circle"></span> {{ trans('jellies::minion.create.danger') }}
+    </div>
 @endsection

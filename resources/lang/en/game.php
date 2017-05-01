@@ -3,12 +3,10 @@
 return [
 
 
-
-
-    'point' => 'Souls',
-    'points' => 'soul|souls',
-
-
+    'point' => [
+        'title' => 'Points',
+        'plural' => 'point|points'
+    ]
 
 
 
