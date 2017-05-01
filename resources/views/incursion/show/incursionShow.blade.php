@@ -37,8 +37,8 @@
 
         <div class="col-sm-4">
             <div class="alert alert-info">
-                <span class="badge">{{ count($model->points) }}</span>
-                {{ trans_choice('jellies::game.point.plural', count($model->points)) }} {{ trans('jellies::incursion.gathered') }}
+                <span class="badge">{{ $model->points }}</span>
+                {{ trans_choice('jellies::game.point.plural', $model->points) }} {{ trans('jellies::incursion.gathered') }}
             </div>
         </div>
     </div>

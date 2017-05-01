@@ -29,13 +29,13 @@ class EncounterRepository extends AbstractModelRepository
         $minions = $incursion->minions;
         $enemies = $this->enemyRepo->getRandomEnemies(rand(1,5));
 
+        $this->model->minions = $minions;
+        $this->model->enemies = $enemies;
+
         $encounterCombat = new EncounterCombat($minions, $enemies);
         $details = $encounterCombat->engage();
 
         $this->model->fill($details);
-
-        $this->model->minions = $minions;
-        $this->model->enemies = $enemies;
 
         $incursion->encounters()->save($this->model);
 

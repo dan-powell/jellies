@@ -18,7 +18,7 @@
     @if($model->hp < $model->health)
         {!! Form::open(['route' => ['minion.heal', $model->id], 'method' => 'post']) !!}
         <button type="submit" class="btn btn-danger">
-            {{ trans('jellies::minion.heal.action') }} ({{ $model->health - $model->hp }} {{ trans_choice('jellies::game.point', $model->health - $model->hp) }})
+            {{ trans('jellies::minion.heal.action') }}
         </button>
         {!! Form::close() !!}
     @endif
