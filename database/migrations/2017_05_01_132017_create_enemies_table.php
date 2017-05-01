@@ -16,8 +16,6 @@ class CreateEnemiesTable extends Migration
         Schema::create('enemies', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('realm_id')->unsigned();
-
             $table->string('name');
 
             $table->integer('attack')->unsigned();
@@ -28,7 +26,6 @@ class CreateEnemiesTable extends Migration
             $table->integer('hp')->unsigned();
 
             $table->timestamps();
-            $table->foreign('realm_id')->references('id')->on('realms')->onDelete('cascade');
         });
 
         Schema::create('zone_enemies', function (Blueprint $table) {

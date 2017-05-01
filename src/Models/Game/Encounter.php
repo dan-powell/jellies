@@ -8,6 +8,19 @@ use DanPowell\Jellies\Models\Scopes\OwnedByUserScope;
 class Encounter extends Model
 {
 
+    /**
+    * The "booting" method of the model.
+    *
+    * @return void
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Only return characters that are owned by user
+        static::addGlobalScope(new OwnedByUserScope('incursion'));
+    }
+
     protected $fillable = [
         'minions',
         'enemies',

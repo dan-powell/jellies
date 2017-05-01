@@ -9,8 +9,8 @@ return [
     'cost_heal' => null,
 
     'points' => [
-        'min' => '50',
-        'max' => '100'
+        'min' => '5',
+        'max' => '15'
     ],
 
     // Various settings for character stats

@@ -17,14 +17,16 @@ class IncursionRepository extends AbstractModelRepository
 
     private $minionRepo;
     private $realmRepo;
+    private $zoneRepo;
     private $userRepo;
 
-    public function __construct(MinionRepository $minionRepo, RealmRepository $realmRepo, UserRepository $userRepo)
+    public function __construct(MinionRepository $minionRepo, RealmRepository $realmRepo, ZoneRepository $zoneRepo, UserRepository $userRepo)
     {
         $this->model = new Incursion();
 
         $this->minionRepo = $minionRepo;
         $this->realmRepo = $realmRepo;
+        $this->zoneRepo = $zoneRepo;
         $this->userRepo = $userRepo;
     }
 
@@ -33,13 +35,13 @@ class IncursionRepository extends AbstractModelRepository
         return auth()->user()->incursions();
     }
 
-    public function store($minions, $realm)
+    public function store($minions, $realm_id)
     {
         // Get the minions
         $minions = $this->minionRepo->query()->find($minions);
 
         // Get realm
-        $zone = $this->realmRepo->getFirstZone($realm);
+        $zone = $this->realmRepo->getFirstZone($realm_id);
 
         // Check if the user has enough points
         if(auth()->user()->points >= config('jellies.incursion.cost')) {
@@ -61,6 +63,8 @@ class IncursionRepository extends AbstractModelRepository
 
             app('message')->basic('Incursion Started', '');
 
+
+
             return $this->incursion;
         } else {
             return false;
@@ -72,11 +76,11 @@ class IncursionRepository extends AbstractModelRepository
     public function proceed($id)
     {
         // Get the incursion
-        $incursion = $this->query()->find($id);
+        $incursion = $this->query()->with('previous_zones')->find($id);
 
         $last = $incursion->previous_zones->last();
 
-        $next_zone = $this->realmRepo->getNextZone($last);
+        $next_zone = $this->zoneRepo->getNextZone($last);
 
         if($next_zone) {
             $incursion->zone_id = $next_zone->id;

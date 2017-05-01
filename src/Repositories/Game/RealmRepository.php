@@ -16,56 +16,65 @@ class RealmRepository extends AbstractModelRepository
     public function __construct(ZoneRepository $zoneRepo)
     {
         $this->model = new Realm();
+        $this->zoneRepo = $zoneRepo;
     }
 
     // Returns the first
-    public function getFirstZone($realm_id) {
-
-        $realm = $this->query()->with('zones.enemies')->find($realm_id);
-
-        // Sort the zones (Those with less enemy hp first)
-        $sorted = $this->getZoneOrder($realm->zones);
-
-        return $sorted->first();
+    public function getFirstZone($realm_id)
+    {
+        return $this->zoneRepo->query()->where('realm_id', $realm_id)->where('number', 1)->get()->first();
     }
 
+    public function generate($num = 1)
+    {
 
-    public function getNextZone($previous_zone) {
+        // Generate some realms
+        $realms = factory(\DanPowell\Jellies\Models\Game\Realm::class, $num)->create();
 
-        $zones = $previous_zone->realm->zones;
+        $realms->each(function($realm) {
 
-        $zones = $this->getZoneOrder($zones);
-
-        $key = $zones->get($previous_zone->id);
-
-        $next_zone = null;
-
-        $next = false;
-        foreach($zones as $zone) {
-            if($next == true) {
-                $next = false;
-                $next_zone = $zone;
+            // Generate some zones
+            $zones = [];
+            for($i=1; $i <= 10; $i++) {
+                $zones[] = factory(\DanPowell\Jellies\Models\Game\Zone::class)->make([
+                    'number' => $i,
+                    'level' => $i * 10
+                ]);
             }
-            if($zone->id == $zones[$key->id]->id) {
-                $next = true;
-            }
-        }
 
-        return $next_zone;
-    }
+            // Save 'em
+            foreach($zones as $zone) {
+                $realm->zones()->save($zone);
 
+                $points = $zone->level;
+                $stats_array = config('jellies.enemy.stats');
+                $distribution = \Utilities::distributePoints(count($stats_array), $points);
+                $stats = [];
+                for($i = 0; $i < count($stats_array); $i++) {
+                    $stats[$stats_array[$i]] = $distribution[$i];
+                }
 
-    public function getZoneOrder($zones) {
+                //Generate some enemies
+                $enemies = [];
+                for($i = 0; $i < rand(10,20); $i++) {
+                    $enemies[] = $zone->enemies()->attach(factory(\DanPowell\Jellies\Models\Game\Enemy::class)->create(
+                        $stats
+                    ));
+                }
 
-        // Sort the zones (Those with less enemy hp first)
-        $sorted = $zones->sort(function($a, $b) {
-            if($a->enemies->sum('hp') == $b->enemies->sum('hp')) {
-                return 0;
-            }
-            return ($a->enemies->sum('hp') < $b->enemies->sum('hp')) ? -1 : 1;
+                // Add some incursions
+                $incursions = factory(\DanPowell\Jellies\Models\Game\Incursion::class, rand(0,3))->create();
+
+                $incursions->each(function($i) use ($zone) {
+                    // Add some minions
+                    $minions = factory(\DanPowell\Jellies\Models\Game\Minion::class, rand(1,10))->create();
+                    $i->minions()->attach($minions);
+
+                    $zone->incursions()->save($i);
+                });
+
+            };
         });
-
-        return $sorted;
     }
 
 }

@@ -26,7 +26,9 @@ class CreateRealmsTable extends Migration
             $table->integer('realm_id')->unsigned();
 
             $table->string('name');
+            $table->integer('number');
             $table->integer('size');
+            $table->integer('level');
 
             $table->timestamps();
             $table->foreign('realm_id')->references('id')->on('realms')->onDelete('cascade');

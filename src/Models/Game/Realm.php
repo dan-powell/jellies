@@ -25,11 +25,6 @@ class Realm extends Model
         return $this->hasMany('DanPowell\Jellies\Models\Game\Zone');
     }
 
-    public function enemies()
-    {
-        return $this->hasMany('DanPowell\Jellies\Models\Game\Enemy');
-    }
-
     /****************
     * Attributes
     ****************/
