@@ -7,14 +7,18 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="alert alert-info">
-                    <i class="game-icon game-icon-slime"></i>
-                    {{ count($minions) }} {{ trans_choice('jellies::minion.plural', count($minions)) }}
+                    <a href="{{ route('minion.index') }}" class="alert-link">
+                        <i class="game-icon game-icon-slime"></i>
+                        {{ count($minions) }} {{ trans_choice('jellies::minion.plural', count($minions)) }}
+                    </a>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="alert alert-success">
-                    <i class="game-icon game-icon-swordman"></i>
-                    {{ count($incursions) }} {{ trans_choice('jellies::incursion.plural', count($incursions)) }}
+                    <a href="{{ route('incursion.index') }}" class="alert-link">
+                        <i class="game-icon game-icon-swordman"></i>
+                        {{ count($incursions) }} {{ trans_choice('jellies::incursion.plural', count($incursions)) }}
+                    </a>
                 </div>
             </div>
             <div class="col-sm-4">

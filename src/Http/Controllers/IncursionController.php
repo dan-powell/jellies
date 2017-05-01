@@ -60,10 +60,10 @@ class IncursionController extends Controller
         $incursion = $this->repo->store($minions);
 
         if($incursion)  {
-            \Notification::success(trans('incursion.create.success'));
+            \Notification::success(trans('jellies::incursion.create.success'));
             return redirect(route('incursion.show', $incursion->id));
         } else {
-            \Notification::error(trans('incursion.create.error'));
+            \Notification::error(trans('jellies::incursion.create.error'));
             return redirect(route('incursion.create'));
         }
 
@@ -77,10 +77,10 @@ class IncursionController extends Controller
         $destroy = $this->repo->destroy($id);
 
         if($destroy)  {
-            \Notification::success(trans('incursion.destroy.success'));
+            \Notification::success(trans('jellies::incursion.destroy.success'));
             return redirect(route('incursion.index'));
         } else {
-            \Notification::error(trans('incursion.destroy.error'));
+            \Notification::error(trans('jellies::incursion.destroy.error'));
             return redirect(route('incursion.show', $id));
         }
     }
