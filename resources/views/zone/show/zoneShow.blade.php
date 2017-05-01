@@ -8,10 +8,10 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{{ trans('jellies::zone.attribute.encounters') }}</h3>
+            <h3 class="panel-title">{{ trans('jellies::zone.attribute.size') }}</h3>
         </div>
         <div class="panel-body">
-            <p>{{ $model->encounters }} {{ trans('jellies::zone.attribute.encounters') }}
+            <p>{{ $model->size }} {{ trans('jellies::zone.attribute.size') }}
         </div>
     </div>
 

@@ -64,6 +64,27 @@ class IncursionRepository extends AbstractModelRepository
 
     }
 
+
+    public function proceed($id)
+    {
+        // Get the incursion
+        $incursion = $this->query()->find($id);
+
+        $last = $incursion->previous_zones->last();
+
+        $next_zone = $this->realmRepo->getNextZone($last);
+
+        if($next_zone) {
+            $incursion->zone_id = $next_zone->id;
+            $incursion->save();
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
     public function destroy($id)
     {
         $incursion = $this->query()->find($id);

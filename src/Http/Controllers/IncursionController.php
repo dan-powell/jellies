@@ -9,6 +9,7 @@ use DanPowell\Jellies\Repositories\Game\MinionRepository;
 use DanPowell\Jellies\Repositories\Game\RealmRepository;
 
 use DanPowell\Jellies\Http\Requests\Incursion\IncursionStoreRequest;
+use DanPowell\Jellies\Http\Requests\Incursion\IncursionProceedRequest;
 use DanPowell\Jellies\Http\Requests\Incursion\IncursionDestroyRequest;
 
 class IncursionController extends Controller
@@ -30,11 +31,19 @@ class IncursionController extends Controller
         $incursions = $this->repo->query()->with('encounters')->get();
 
         $active = $incursions->filter(function($incursion){return $incursion->active;});
-        $inactive = $incursions->reject(function($incursion){return $incursion->active;});
+        $waiting = $incursions->filter(function($incursion){return $incursion->waiting;});
+        $inactive = $incursions->reject(function($incursion){
+            if ($incursion->active || $incursion->waiting) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
         return view('jellies::incursion.index.incursionIndex')->with([
             'incursions' => $incursions,
             'incursions_active' => $active,
+            'incursions_waiting' => $waiting,
             'incursions_inactive' => $inactive
         ]);
     }
@@ -71,6 +80,21 @@ class IncursionController extends Controller
             \Notification::error(trans('jellies::incursion.create.error'));
             return redirect(route('incursion.create'));
         }
+
+    }
+
+    public function proceed($id, IncursionProceedRequest $request)
+    {
+
+        $incursion = $this->repo->proceed($id);
+
+        if($incursion)  {
+            \Notification::success(trans('jellies::incursion.proceed.success'));
+        } else {
+            \Notification::error(trans('jellies::incursion.proceed.error'));
+        }
+
+        return redirect(route('incursion.show', $id));
 
     }
 

@@ -33,6 +33,11 @@ class Encounter extends Model
         return $this->belongsTo('DanPowell\Jellies\Models\Game\Incursion');
     }
 
+    public function zone()
+    {
+        return $this->belongsTo('DanPowell\Jellies\Models\Game\Zone');
+    }
+
     /****************
     * Mutators
     ****************/

@@ -47,10 +47,20 @@
         <a href="{{ route('test.processIncursion', $model->id) }}" class="btn btn-danger">
             Process Incursion
         </a>
-    @else
+    @endif
+
+    @if(!$model->active || $model->waiting)
         {!! Form::open(['route' => ['incursion.destroy', $model->id ], 'method' => 'delete']) !!}
-            <button type="submit" class="btn btn-danger">
+            <button type="submit" class="btn btn-info">
                 {{ trans('jellies::incursion.delete.action') }}
+            </button>
+        {!! Form::close() !!}
+    @endif
+
+    @if($model->waiting)
+        {!! Form::open(['route' => ['incursion.proceed', $model->id ]]) !!}
+            <button type="submit" class="btn btn-danger">
+                {{ trans('jellies::incursion.proceed.action') }}
             </button>
         {!! Form::close() !!}
     @endif
@@ -167,7 +177,7 @@
 
     @empty
         <div class="alert alert-warning">
-            <span class="fa fa-warning"></span> 
+            <span class="fa fa-warning"></span>
             {{ trans('jellies::incursion.show.empty') }}
         </div>
     @endforelse

@@ -7,7 +7,7 @@ return [
 
     'attribute' => [
         'name' => 'Name',
-        'encounters' => 'Encounters',
+        'size' => 'Size',
     ],
 
     'index' => [

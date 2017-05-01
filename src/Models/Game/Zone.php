@@ -9,7 +9,7 @@ class Zone extends Model
 
     protected $fillable = [
         'name',
-        'encounters',
+        'size',
     ];
 
     protected $dates = [
@@ -29,6 +29,11 @@ class Zone extends Model
     public function incursions()
     {
         return $this->hasMany('DanPowell\Jellies\Models\Game\Incursion');
+    }
+
+    public function encounters()
+    {
+        return $this->hasMany('DanPowell\Jellies\Models\Game\Encounter');
     }
 
     public function enemies()

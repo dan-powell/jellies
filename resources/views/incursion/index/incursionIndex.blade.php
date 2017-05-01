@@ -17,6 +17,21 @@
 
     <hr/>
 
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ trans('jellies::incursion.index.title') }}</h3>
+        </div>
+        @if(isset($incursions_waiting) && count($incursions_waiting))
+            @include('jellies::incursion.list.incursionList', ['incursions' => $incursions_waiting])
+        @else
+            <div class="panel-body">
+                <p>{{ trans('jellies::incursion.indexdeleted.empty') }}</p>
+            </div>
+        @endif
+    </div>
+
+    <hr>
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">{{ trans('jellies::incursion.indexdeleted.title') }}</h3>

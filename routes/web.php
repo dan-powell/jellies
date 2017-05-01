@@ -37,6 +37,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('incursion', 'DanPowell\Jellies\Http\Controllers\IncursionController', ['only' => [
             'index', 'show', 'create', 'store', 'destroy'
         ]]);
+        Route::post('incursion/{id}/proceed', 'DanPowell\Jellies\Http\Controllers\IncursionController@proceed')->name('incursion.proceed');
     });
 
 });

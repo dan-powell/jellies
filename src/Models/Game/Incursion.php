@@ -67,6 +67,11 @@ class Incursion extends Model
 
     public function scopeActive($query)
     {
+        return $query->has('minions')->has('zone');
+    }
+
+    public function scopeWaiting($query)
+    {
         return $query->has('minions');
     }
 
@@ -86,7 +91,16 @@ class Incursion extends Model
 
     public function getActiveAttribute()
     {
-        if(count($this->minions)){
+        if(count($this->minions) && $this->zone){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getWaitingAttribute()
+    {
+        if(count($this->minions) && !$this->zone){
             return true;
         } else {
             return false;

@@ -30,6 +30,31 @@ class RealmRepository extends AbstractModelRepository
     }
 
 
+    public function getNextZone($previous_zone) {
+
+        $zones = $previous_zone->realm->zones;
+
+        $zones = $this->getZoneOrder($zones);
+
+        $key = $zones->get($previous_zone->id);
+
+        $next_zone = null;
+
+        $next = false;
+        foreach($zones as $zone) {
+            if($next == true) {
+                $next = false;
+                $next_zone = $zone;
+            }
+            if($zone->id == $zones[$key->id]->id) {
+                $next = true;
+            }
+        }
+
+        return $next_zone;
+    }
+
+
     public function getZoneOrder($zones) {
 
         // Sort the zones (Those with less enemy hp first)
