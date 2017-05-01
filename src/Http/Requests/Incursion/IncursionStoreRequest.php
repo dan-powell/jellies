@@ -13,7 +13,7 @@ class IncursionStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -24,7 +24,8 @@ class IncursionStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'minions' => 'required'
+            'minions' => 'required',
+            'realm' => 'required'
         ];
     }
 }

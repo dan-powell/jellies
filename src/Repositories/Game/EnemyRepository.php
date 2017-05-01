@@ -4,21 +4,27 @@ namespace DanPowell\Jellies\Repositories\Game;
 
 use DanPowell\Jellies\Repositories\AbstractModelRepository;
 
+use DanPowell\Jellies\Repositories\Game\ZoneRepository;
+
 use DanPowell\Jellies\Models\Game\Enemy;
 
 class EnemyRepository extends AbstractModelRepository
 {
 
-    public function __construct()
+    private $zoneRepo;
+
+    public function __construct(ZoneRepository $zoneRepo)
     {
         $this->model = new Enemy();
+        $this->zoneRepo = $zoneRepo;
     }
 
     // Returns a random collection of enemies
     public function getRandomEnemies($num = 1, $zone_id = null) {
 
         if($zone_id) {
-            $types = $this->query()->where('zone_id', $zone_id)->get();
+            $zone = $this->zoneRepo->query()->with('enemies')->find($zone_id);
+            $types = $zone->enemies;
         } else {
             $types = $this->query()->get();
         }

@@ -27,7 +27,8 @@ class EncounterRepository extends AbstractModelRepository
     {
         // Setup
         $minions = $incursion->minions;
-        $enemies = $this->enemyRepo->getRandomEnemies(rand(1,5));
+
+        $enemies = $this->enemyRepo->getRandomEnemies(rand(1,5), $incursion->zone->id);
 
         $this->model->minions = $minions;
         $this->model->enemies = $enemies;

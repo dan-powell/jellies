@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use DanPowell\Jellies\Repositories\Game\IncursionRepository;
 use DanPowell\Jellies\Repositories\Game\MinionRepository;
+use DanPowell\Jellies\Repositories\Game\RealmRepository;
 
 use DanPowell\Jellies\Http\Requests\Incursion\IncursionStoreRequest;
 use DanPowell\Jellies\Http\Requests\Incursion\IncursionDestroyRequest;
@@ -15,11 +16,13 @@ class IncursionController extends Controller
 
     protected $repo;
     protected $minionRepo;
+    protected $realmRepo;
 
-    public function __construct(IncursionRepository $repo, MinionRepository $minionRepo)
+    public function __construct(IncursionRepository $repo, MinionRepository $minionRepo, RealmRepository $realmRepo)
     {
         $this->repo = $repo;
         $this->minionRepo = $minionRepo;
+        $this->realmRepo = $realmRepo;
     }
 
     public function index()
@@ -46,7 +49,8 @@ class IncursionController extends Controller
     public function create()
     {
         return view('jellies::incursion.create.incursionCreate')->with([
-            'minions' => $this->minionRepo->query()->available()->get()
+            'minions' => $this->minionRepo->query()->available()->get(),
+            'realms' => $this->realmRepo->query()->get()
         ]);
     }
 
@@ -56,8 +60,9 @@ class IncursionController extends Controller
         // TODO add better (more secure) validation
 
         $minions = $request->input('minions');
+        $realm = $request->input('realm');
 
-        $incursion = $this->repo->store($minions);
+        $incursion = $this->repo->store($minions, $realm);
 
         if($incursion)  {
             \Notification::success(trans('jellies::incursion.create.success'));

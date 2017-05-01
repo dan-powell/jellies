@@ -47,7 +47,7 @@ class Incursion extends Model
 
     public function zone()
     {
-        return $this->belongsTo('DanPowell\Jellies\Models\Zone');
+        return $this->belongsTo('DanPowell\Jellies\Models\Game\Zone');
     }
 
     public function previous_zones()
