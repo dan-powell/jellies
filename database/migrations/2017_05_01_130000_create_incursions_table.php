@@ -20,8 +20,8 @@ class CreateIncursionsTable extends Migration
             $table->integer('zone_id')->unsigned()->nullable();
 
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('zone_id')->references('id')->on('zones');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
         });
 
         Schema::create('incursion_minion', function (Blueprint $table) {

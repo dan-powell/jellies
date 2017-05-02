@@ -30,8 +30,8 @@ class CreateEncountersTable extends Migration
             $table->integer('points')->unsigned()->default(0);
 
             $table->timestamps();
-            $table->foreign('incursion_id')->references('id')->on('incursions')->onDelete('cascade');
             $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
+            $table->foreign('incursion_id')->references('id')->on('incursions')->onDelete('cascade');
         });
     }
 
