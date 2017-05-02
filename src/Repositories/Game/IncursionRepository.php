@@ -8,6 +8,7 @@ use DanPowell\Jellies\Models\Game\Incursion;
 
 use DanPowell\Jellies\Repositories\Game\MinionRepository;
 use DanPowell\Jellies\Repositories\Game\RealmRepository;
+use DanPowell\Jellies\Repositories\Game\EncounterRepository;
 use DanPowell\Jellies\Repositories\UserRepository;
 
 use DanPowell\Jellies\Helpers\Message;
@@ -18,15 +19,22 @@ class IncursionRepository extends AbstractModelRepository
     private $minionRepo;
     private $realmRepo;
     private $zoneRepo;
+    private $encounterRepo;
     private $userRepo;
 
-    public function __construct(MinionRepository $minionRepo, RealmRepository $realmRepo, ZoneRepository $zoneRepo, UserRepository $userRepo)
+    public function __construct(
+        MinionRepository $minionRepo,
+        RealmRepository $realmRepo,
+        ZoneRepository $zoneRepo,
+        EncounterRepository $encounterRepo,
+        UserRepository $userRepo)
     {
         $this->model = new Incursion();
 
         $this->minionRepo = $minionRepo;
         $this->realmRepo = $realmRepo;
         $this->zoneRepo = $zoneRepo;
+        $this->encounterRepo = $encounterRepo;
         $this->userRepo = $userRepo;
     }
 
@@ -63,8 +71,6 @@ class IncursionRepository extends AbstractModelRepository
 
             app('message')->basic('Incursion Started', '');
 
-
-
             return $this->incursion;
         } else {
             return false;
@@ -72,26 +78,21 @@ class IncursionRepository extends AbstractModelRepository
 
     }
 
-
+    // Proceed to the next zone
     public function proceed($id)
     {
         // Get the incursion
         $incursion = $this->query()->with('previous_zones')->find($id);
 
-        $last = $incursion->previous_zones->last();
+        $previous_zone = $incursion->previous_zones->first();
 
-        $next_zone = $this->zoneRepo->getNextZone($last);
+        $next_zone = $this->zoneRepo->getNextZone($previous_zone);
 
-        if($next_zone) {
-            $incursion->zone_id = $next_zone->id;
-            $incursion->save();
-            return true;
-        } else {
-            return false;
-        }
+        $incursion->zone_id = $next_zone->id;
+        $incursion->save();
+        return true;
 
     }
-
 
     public function destroy($id)
     {
@@ -107,6 +108,14 @@ class IncursionRepository extends AbstractModelRepository
 
     }
 
+    // HACK Temporary method for manually processing encounters
+    public function process($id) {
 
+        // Get all active incursions
+        $incursion = $this->queryAll()->active()->find($id);
+
+        $this->encounterRepo->encounter($incursion);
+
+    }
 
 }

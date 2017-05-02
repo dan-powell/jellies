@@ -22,7 +22,7 @@ class RealmRepository extends AbstractModelRepository
     // Returns the first
     public function getFirstZone($realm_id)
     {
-        return $this->zoneRepo->query()->where('realm_id', $realm_id)->where('number', 1)->get()->first();
+        return $this->zoneRepo->query()->where('realm_id', $realm_id)->where('number', 1)->first();
     }
 
     public function generate($num = 1)

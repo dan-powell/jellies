@@ -23,6 +23,9 @@
                 <span class="badge">{{ count($model->minions) }}</span>
                 {{ trans_choice('jellies::minion.plural', count($model->minions)) }} {{ trans('jellies::incursion.remaining') }}
             </div>
+            <div class="alert alert-success">
+                <strong>{{ $model->zone->name or 'No zone' }}</strong>
+            </div>
         </div>
 
         <div class="col-sm-4">
@@ -44,7 +47,7 @@
     </div>
 
     @if($model->active)
-        <a href="{{ route('test.processIncursion', $model->id) }}" class="btn btn-danger">
+        <a href="{{ route('incursion.process', $model->id) }}" class="btn btn-danger">
             Process Incursion
         </a>
     @endif
@@ -122,17 +125,32 @@
             <div class="panel-body">
                 <div class="panel-group" id="#encounter_{{ $encounter->id }}">
 
-                    @if(isset($encounter->minions) && count($encounter->minions))
+                    @if(isset($encounter->minions_before) && count($encounter->minions_before))
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a href="#minions_{{ $encounter->id }}" data-toggle="collapse" data-target="#minions_{{ $encounter->id }}" data-parent="#encounter_{{ $encounter->id }}">
+                                    <a href="#minionsb_{{ $encounter->id }}" data-toggle="collapse" data-target="#minionsb_{{ $encounter->id }}" data-parent="#encounter_{{ $encounter->id }}">
                                         {{ trans('jellies::encounter.attribute.minions') }} <span class="fa fa-plus pull-right"></span>
                                     </a>
                                 </h4>
                             </div>
-                            <div id="minions_{{ $encounter->id }}" class="collapse">
-                                @include('jellies::minion.list.minionList', ['minions' => $encounter->minions])
+                            <div id="minionsb_{{ $encounter->id }}" class="collapse">
+                                @include('jellies::minion.list.minionList', ['minions' => $encounter->minions_before])
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(isset($encounter->minions_after) && count($encounter->minions_after))
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#minionsa_{{ $encounter->id }}" data-toggle="collapse" data-target="#minionsa_{{ $encounter->id }}" data-parent="#encounter_{{ $encounter->id }}">
+                                        {{ trans('jellies::encounter.attribute.minions') }} <span class="fa fa-plus pull-right"></span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="minionsa_{{ $encounter->id }}" class="collapse">
+                                @include('jellies::minion.list.minionList', ['minions' => $encounter->minions_after])
                             </div>
                         </div>
                     @endif

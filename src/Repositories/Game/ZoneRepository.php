@@ -29,7 +29,13 @@ class ZoneRepository extends AbstractModelRepository
 
         $next_zone = $zones->where('number', $num+1);
 
-        return $next_zone->first();
+        $zone = $next_zone->first();
+
+        if ($zone) {
+            return $zone;
+        } else {
+            return $zones->where('number', 1)->first();
+        }
     }
 
     public function getZoneOrder($zones) {

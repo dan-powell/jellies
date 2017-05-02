@@ -30,7 +30,7 @@ class EncounterRepository extends AbstractModelRepository
 
         $enemies = $this->enemyRepo->getRandomEnemies(rand(1,5), $incursion->zone->id);
 
-        $this->model->minions = $minions;
+        $this->model->minions_before = $minions;
         $this->model->enemies = $enemies;
         $this->model->zone_id = $incursion->zone->id;
 
@@ -38,6 +38,8 @@ class EncounterRepository extends AbstractModelRepository
         $details = $encounterCombat->engage();
 
         $this->model->fill($details);
+
+        $this->model->minions_after = $minions;
 
         $incursion->encounters()->save($this->model);
 
@@ -53,9 +55,9 @@ class EncounterRepository extends AbstractModelRepository
         $this->postEncounterCheck($incursion);
     }
 
-    public function postEncounterCheck($incursion)
+    private function postEncounterCheck($incursion)
     {
-        if(count($incursion->zone->encounters) >= $incursion->zone->size) {
+        if(count($incursion->encounters->where('zone_id', $incursion->zone->id)) >= $incursion->zone->size) {
             $incursion->previous_zones()->attach($incursion->zone);
 
             $incursion->zone_id = null;

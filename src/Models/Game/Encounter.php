@@ -22,7 +22,8 @@ class Encounter extends Model
     }
 
     protected $fillable = [
-        'minions',
+        'minions_before',
+        'minions_after',
         'enemies',
         'log',
         'victory',
@@ -55,9 +56,14 @@ class Encounter extends Model
     * Mutators
     ****************/
 
-    public function setMinionsAttribute($value)
+    public function setMinionsBeforeAttribute($value)
     {
-        $this->attributes['minions'] = json_encode($value);
+        $this->attributes['minions_before'] = json_encode($value);
+    }
+
+    public function setMinionsAfterAttribute($value)
+    {
+        $this->attributes['minions_after'] = json_encode($value);
     }
 
     public function setEnemiesAttribute($value)
@@ -74,7 +80,12 @@ class Encounter extends Model
     * Attributes
     ****************/
 
-    public function getMinionsAttribute($value)
+    public function getMinionsBeforeAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getMinionsAfterAttribute($value)
     {
         return json_decode($value);
     }

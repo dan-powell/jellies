@@ -115,4 +115,16 @@ class IncursionController extends Controller
     }
 
 
+    // HACK Temporary method for manually processing encounters
+    public function process($id)
+    {
+
+        $this->repo->process($id);
+
+        \Notification::success(trans('jellies::incursion.proceed.success'));
+
+        return redirect(route('incursion.show', $id));
+
+    }
+
 }

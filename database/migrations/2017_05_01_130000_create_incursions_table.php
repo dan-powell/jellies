@@ -20,6 +20,7 @@ class CreateIncursionsTable extends Migration
             $table->integer('zone_id')->unsigned()->nullable();
 
             $table->timestamps();
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
         });
@@ -35,6 +36,8 @@ class CreateIncursionsTable extends Migration
         Schema::create('incursion_previouszones', function (Blueprint $table) {
             $table->integer('incursion_id')->unsigned();
             $table->integer('zone_id')->unsigned();
+
+            $table->timestamps();
 
             $table->foreign('incursion_id')->references('id')->on('incursions')->onDelete('cascade');
             $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');

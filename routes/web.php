@@ -12,9 +12,6 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('dashboard', 'DanPowell\Jellies\Http\Controllers\DashboardController@index')->name('dashboard');
 
-        Route::get('test/processIncursion/{id}', 'DanPowell\Jellies\Http\Controllers\TestController@processIncursion')->name('test.processIncursion');
-
-
         Route::resource('message', 'DanPowell\Jellies\Http\Controllers\MessageController');
         Route::resource('minion', 'DanPowell\Jellies\Http\Controllers\MinionController', ['only' => [
             'index', 'show', 'create', 'store', 'edit', 'update'
@@ -38,6 +35,7 @@ Route::group(['middleware' => ['web']], function () {
             'index', 'show', 'create', 'store', 'destroy'
         ]]);
         Route::post('incursion/{id}/proceed', 'DanPowell\Jellies\Http\Controllers\IncursionController@proceed')->name('incursion.proceed');
+        Route::get('incursion/{id}/process', 'DanPowell\Jellies\Http\Controllers\IncursionController@process')->name('incursion.process');
     });
 
 });

@@ -22,7 +22,6 @@ class Incursion extends Model
     }
 
     protected $fillable = [
-        'running',
         'points',
     ];
 
@@ -52,7 +51,7 @@ class Incursion extends Model
 
     public function previous_zones()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Zone', 'incursion_previouszones', 'incursion_id', 'zone_id');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Zone', 'incursion_previouszones', 'incursion_id', 'zone_id')->withTimestamps()->orderByDesc('pivot_created_at');
     }
 
     public function encounters()

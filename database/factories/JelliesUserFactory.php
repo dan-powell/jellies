@@ -17,7 +17,8 @@ $factory->define(DanPowell\Jellies\Models\User::class, function (Faker\Generator
 $factory->state(DanPowell\Jellies\Models\User::class, 'test', function ($faker) {
     return [
         'name' => 'Test User',
-        'email' => 'test@example.com'
+        'email' => 'test@example.com',
+        'points' => 100000,
     ];
 });
 
