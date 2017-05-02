@@ -118,7 +118,9 @@ class EncounterCombat
     {
         // Resolve attack
         $damage = $attacker->attack / $defender->defence;
-        $defender->hp = $defender->hp - $damage;
+
+        // Subtract health (make sure it doesn't go below 0)
+        $defender->hp = max($defender->hp - $damage, 0);
 
         // Save to log
         $this->log(
@@ -138,7 +140,9 @@ class EncounterCombat
     {
         // Resolve retaliation
         $damage = $defender->attack / $attacker->defence;
-        $attacker->hp = $attacker->hp - $damage;
+
+        // Subtract health (make sure it doesn't go below 0)
+        $attacker->hp = max($attacker->hp - $damage, 0);
 
         // Save to log
         $this->log(

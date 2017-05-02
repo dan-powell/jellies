@@ -16,7 +16,7 @@ $factory->define(DanPowell\Jellies\Models\Game\Minion::class, function (Faker\Ge
     $distribution = Utilities::distributePoints(count($stats_array), $points);
     $stats = [];
     for($i = 0; $i < count($stats_array); $i++) {
-        $stats[$stats_array[$i]] = $distribution[$i];
+        $stats[$stats_array[$i]] = $distribution[$i] +1;
     }
 
     return [

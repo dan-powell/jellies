@@ -51,7 +51,7 @@ class RealmRepository extends AbstractModelRepository
                 $distribution = \Utilities::distributePoints(count($stats_array), $points);
                 $stats = [];
                 for($i = 0; $i < count($stats_array); $i++) {
-                    $stats[$stats_array[$i]] = $distribution[$i];
+                    $stats[$stats_array[$i]] = $distribution[$i] + 1;
                 }
 
                 //Generate some enemies
