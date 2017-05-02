@@ -64,7 +64,9 @@ class EncounterRepository extends AbstractModelRepository
 
             $incursion->save();
 
-            app('message')->basic('Incursion zone completed', '', $incursion->user->id);
+            if(isset($incursion->user)) {
+                app('message')->basic('Incursion zone completed', '', $incursion->user->id);
+            }
 
         }
 
