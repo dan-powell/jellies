@@ -36,6 +36,10 @@ Route::group(['middleware' => ['web']], function () {
         ]]);
         Route::post('incursion/{id}/proceed', 'DanPowell\Jellies\Http\Controllers\IncursionController@proceed')->name('incursion.proceed');
         Route::get('incursion/{id}/process', 'DanPowell\Jellies\Http\Controllers\IncursionController@process')->name('incursion.process');
+
+        Route::resource('encounter', 'DanPowell\Jellies\Http\Controllers\EncounterController', ['only' => [
+            'show'
+        ]]);
     });
 
 });
