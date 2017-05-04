@@ -2,7 +2,7 @@
 
 return [
 
-    'cost' => 10,
+    'cost' => 0,
 
 
 
