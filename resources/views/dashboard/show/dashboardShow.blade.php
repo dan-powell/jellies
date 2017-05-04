@@ -63,19 +63,24 @@
 
             <div class="col-sm-6">
 
-                @if(count($minions))
+                @if(count($incursions_waiting))
+
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('jellies::incursion.index.waiting') }}</h3>
+                        </div>
+                        @include('jellies::incursion.list.incursionList', ['incursions' => $incursions_waiting])
+                    </div>
+
+                @endif
+
+                @if(count($incursions))
 
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ trans('jellies::incursion.index.title') }}</h3>
                         </div>
                         @include('jellies::incursion.list.incursionList', ['incursions' => $incursions])
-                    </div>
-
-                @else
-
-                    <div class="alert alert-success">
-                        {{ trans('jellies::incursion.index.empty') }}
                     </div>
 
                 @endif

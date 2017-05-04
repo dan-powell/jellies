@@ -42,7 +42,8 @@ class DashboardController extends Controller
     public function index()
     {
         return view('jellies::dashboard.show.dashboardShow')->with([
-            'incursions' => $this->incursionRepo->query()->active()->get(),
+            'incursions' => $this->incursionRepo->query()->get(),
+            'incursions_waiting' => $this->incursionRepo->query()->waiting()->get(),
             'minions' => $this->minionRepo->query()->get(),
             'enemies' => $this->enemyRepo->query()->get(),
             'messages' => $this->messageRepo->query()->get(),

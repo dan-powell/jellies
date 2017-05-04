@@ -17,7 +17,7 @@
         </div>
     @elseif($model->waiting && !$model->completed)
         <div class="alert alert-success">
-            <h4>{{ trans('jellies::incursion.show.complete') }}</h4>
+            <h4>{{ trans('jellies::incursion.show.zone') }}</h4>
         </div>
     @else
         <div class="alert alert-info">
@@ -61,36 +61,40 @@
     </div>
 
     @if($model->active)
-        <a href="{{ route('incursion.process', $model->id) }}" class="btn btn-danger">
-            Process Incursion
+        <a href="{{ route('incursion.process', $model->id) }}" class="btn btn-default pull-right">
+            Process Incursion (Cheat)
         </a>
     @endif
 
-    @if($model->defeated)
-        {!! Form::open(['route' => ['incursion.destroy', $model->id ], 'method' => 'delete']) !!}
-            <button type="submit" class="btn btn-info">
-                {{ trans('jellies::incursion.delete.action') }}
-            </button>
-        {!! Form::close() !!}
-    @endif
+    <div class="row">
 
-    @if($model->waiting && !$model->complete)
-        {!! Form::open(['route' => ['incursion.proceed', $model->id ]]) !!}
-            <button type="submit" class="btn btn-danger">
-                {{ trans('jellies::incursion.proceed.action') }}
-            </button>
-        {!! Form::close() !!}
-    @endif
+        @if($model->defeated)
+            {!! Form::open(['route' => ['incursion.destroy', $model->id ], 'method' => 'delete', 'class' => 'col-sm-3']) !!}
+                <button type="submit" class="btn btn-danger">
+                    {{ trans('jellies::incursion.delete.action') }}
+                </button>
+            {!! Form::close() !!}
+        @endif
 
-    @if($model->complete || $model->waiting)
-        {!! Form::open(['route' => ['incursion.finish', $model->id ], 'method' => 'delete']) !!}
-            <button type="submit" class="btn btn-info">
-                {{ trans('jellies::incursion.finish.action') }}
-            </button>
-        {!! Form::close() !!}
-    @endif
+        @if($model->waiting && !$model->complete)
+            {!! Form::open(['route' => ['incursion.proceed', $model->id ], 'class' => 'col-sm-3']) !!}
+                <button type="submit" class="btn btn-primary">
+                    {{ trans('jellies::incursion.proceed.action') }}
+                </button>
+            {!! Form::close() !!}
+        @endif
 
+        @if($model->complete || $model->waiting)
+            {!! Form::open(['route' => ['incursion.finish', $model->id ], 'method' => 'delete', 'class' => 'col-sm-3']) !!}
+                <button type="submit" class="btn btn-info">
+                    {{ trans('jellies::incursion.finish.action') }}
+                </button>
+            {!! Form::close() !!}
+        @endif
 
+    </div>
+
+    <hr class="clear"/>
 
     <div class="panel panel-default">
         <div class="panel-heading">

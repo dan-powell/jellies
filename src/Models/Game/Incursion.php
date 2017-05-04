@@ -71,7 +71,7 @@ class Incursion extends Model
 
     public function scopeWaiting($query)
     {
-        return $query->has('minions');
+        return $query->has('minions')->doesntHave('zone');
     }
 
     public function scopeDefeated($query)
