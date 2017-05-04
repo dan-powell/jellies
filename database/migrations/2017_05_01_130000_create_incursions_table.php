@@ -18,9 +18,10 @@ class CreateIncursionsTable extends Migration
             $table->integer('user_id')->unsigned()->nullable()->default(null);
 
             $table->integer('zone_id')->unsigned()->nullable();
+            $table->boolean('complete')->default(false);
 
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
         });

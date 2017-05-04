@@ -34,7 +34,7 @@ class ZoneRepository extends AbstractModelRepository
         if ($zone) {
             return $zone;
         } else {
-            return $zones->where('number', 1)->first();
+            return false;
         }
     }
 

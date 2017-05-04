@@ -11,12 +11,16 @@
         <div class="alert alert-info">
             <h4>{{ trans('jellies::incursion.show.active') }}</h4>
         </div>
-    @elseif($model->waiting)
+    @elseif($model->defeated)
         <div class="alert alert-danger">
-            <h4>{{ trans('jellies::incursion.show.waiting') }}</h4>
+            <h4>{{ trans('jellies::incursion.show.defeated') }}</h4>
+        </div>
+    @elseif($model->waiting && !$model->completed)
+        <div class="alert alert-success">
+            <h4>{{ trans('jellies::incursion.show.complete') }}</h4>
         </div>
     @else
-        <div class="alert alert-success">
+        <div class="alert alert-info">
             <h4>{{ trans('jellies::incursion.show.inactive') }}</h4>
         </div>
     @endif
@@ -62,7 +66,7 @@
         </a>
     @endif
 
-    @if(!$model->active || $model->waiting)
+    @if($model->defeated)
         {!! Form::open(['route' => ['incursion.destroy', $model->id ], 'method' => 'delete']) !!}
             <button type="submit" class="btn btn-info">
                 {{ trans('jellies::incursion.delete.action') }}
@@ -70,10 +74,18 @@
         {!! Form::close() !!}
     @endif
 
-    @if($model->waiting)
+    @if($model->waiting && !$model->complete)
         {!! Form::open(['route' => ['incursion.proceed', $model->id ]]) !!}
             <button type="submit" class="btn btn-danger">
                 {{ trans('jellies::incursion.proceed.action') }}
+            </button>
+        {!! Form::close() !!}
+    @endif
+
+    @if($model->complete || $model->waiting)
+        {!! Form::open(['route' => ['incursion.finish', $model->id ], 'method' => 'delete']) !!}
+            <button type="submit" class="btn btn-info">
+                {{ trans('jellies::incursion.finish.action') }}
             </button>
         {!! Form::close() !!}
     @endif

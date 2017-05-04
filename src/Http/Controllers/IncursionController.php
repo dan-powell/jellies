@@ -114,6 +114,22 @@ class IncursionController extends Controller
         }
     }
 
+    public function finish($id, IncursionDestroyRequest $request)
+    {
+
+        // TODO add better (more secure) validation
+
+        $finish = $this->repo->finish($id);
+
+        if($finish)  {
+            \Notification::success(trans('jellies::incursion.finish.success'));
+            return redirect(route('incursion.index'));
+        } else {
+            \Notification::error(trans('jellies::incursion.finish.error'));
+            return redirect(route('incursion.show', $id));
+        }
+    }
+
 
     // HACK Temporary method for manually processing encounters
     public function process($id)

@@ -62,6 +62,10 @@ class EncounterRepository extends AbstractModelRepository
 
             $incursion->zone_id = null;
 
+            if (count($incursion->previous_zones) >= 10) {
+                $incursion->complete = true;
+            }
+
             $incursion->save();
 
             if(isset($incursion->user)) {

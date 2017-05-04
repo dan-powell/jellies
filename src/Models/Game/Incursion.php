@@ -74,6 +74,11 @@ class Incursion extends Model
         return $query->has('minions');
     }
 
+    public function scopeDefeated($query)
+    {
+        return $query->doesntHave('minions');
+    }
+
     /****************
     * Attributes
     ****************/
@@ -100,6 +105,15 @@ class Incursion extends Model
     public function getWaitingAttribute()
     {
         if(count($this->minions) && !$this->zone){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getDefeatedAttribute()
+    {
+        if(count($this->minions) < 1){
             return true;
         } else {
             return false;

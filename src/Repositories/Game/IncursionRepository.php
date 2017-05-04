@@ -96,6 +96,20 @@ class IncursionRepository extends AbstractModelRepository
 
     public function destroy($id)
     {
+        $incursion = $this->query()->with('minions')->find($id);
+
+        foreach($incursion->minions as $minion) {
+            $minion->delete();
+        }
+
+        $incursion->delete();
+
+        return $incursion;
+
+    }
+
+    public function finish($id)
+    {
         $incursion = $this->query()->find($id);
 
         $points = $incursion->points;
