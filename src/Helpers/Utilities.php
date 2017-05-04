@@ -9,9 +9,11 @@ class Utilities
     public static function distributePoints($points, $amount = 1)
     {
 
+        // Create the array and distribute at least 1 amount to each point
         $array = [];
         for($i = 0; $i < $points; $i++) {
-            $array[$i] = 0;
+            $array[$i] = 1;
+            $amount--;
         }
 
         for($i = 0; $i < $amount; $i++) {

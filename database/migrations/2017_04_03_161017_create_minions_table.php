@@ -13,9 +13,20 @@ class CreateMinionsTable extends Migration
      */
     public function up()
     {
+        Schema::create('miniontypes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('attack')->unsigned();
+            $table->integer('defence')->unsigned();
+            $table->integer('initiative')->unsigned();
+            $table->integer('health')->unsigned();
+            $table->integer('cost')->unsigned();
+        });
+
         Schema::create('minions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable()->default(null);
+            $table->integer('miniontype_id')->unsigned()->nullable();
 
             $table->string('name');
 
@@ -29,6 +40,7 @@ class CreateMinionsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('miniontype_id')->references('id')->on('miniontypes')->onDelete('set null');
         });
     }
 
@@ -40,5 +52,6 @@ class CreateMinionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('minions');
+        Schema::dropIfExists('miniontypes');
     }
 }

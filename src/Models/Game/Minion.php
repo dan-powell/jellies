@@ -58,6 +58,11 @@ class Minion extends Model
         return $this->belongsTo('DanPowell\Jellies\Models\User');
     }
 
+    public function miniontype()
+    {
+        return $this->belongsTo('DanPowell\Jellies\Models\Game\Miniontype');
+    }
+
     public function incursions()
     {
         return $this->belongsToMany('DanPowell\Jellies\Models\Game\Incursion', 'incursion_minion', 'minion_id', 'incursion_id');

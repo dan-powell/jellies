@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use DanPowell\Jellies\Repositories\Game\MinionRepository;
+use DanPowell\Jellies\Repositories\Game\MiniontypeRepository;
 use DanPowell\Jellies\Http\Requests\Minion\MinionStoreRequest;
 use DanPowell\Jellies\Http\Requests\Minion\MinionUpdateRequest;
 use DanPowell\Jellies\Http\Requests\Minion\MinionHealRequest;
@@ -15,10 +16,12 @@ class MinionController extends Controller
 {
 
     protected $repo;
+    protected $miniontypeRepo;
 
-    public function __construct(MinionRepository $repo)
+    public function __construct(MinionRepository $repo, MiniontypeRepository $miniontypeRepo)
     {
         $this->repo = $repo;
+        $this->miniontypeRepo = $miniontypeRepo;
     }
 
     public function index()
@@ -31,27 +34,31 @@ class MinionController extends Controller
     public function show($id)
     {
         return view('jellies::minion.show.minionShow')->with([
-            'model' => $this->repo->query()->withTrashed()->with(['incursions'])->find($id)
+            'model' => $this->repo->query()->withTrashed()->with(['incursions', 'miniontype'])->find($id)
         ]);
     }
 
     public function create()
     {
-        return view('jellies::minion.create.minionCreate');
+        return view('jellies::minion.create.minionCreate')->with([
+            'models' => $this->miniontypeRepo->query()->get()
+        ]);
     }
 
     public function store(MinionStoreRequest $request)
     {
 
-        $success = $this->repo->store();
+        $id = $request->get('id');
 
-        if($success) {
+        $minion = $this->repo->store($id);
+
+        if($minion) {
             \Notification::success(__('jellies::minion.create.success'));
         } else {
             \Notification::error(__('jellies::minion.create.error'));
         }
 
-        return redirect(route('minion.index'));
+        return redirect(route('minion.show', $minion->id));
     }
 
     public function indexDeleted()

@@ -29,6 +29,13 @@
         <div class="alert alert-info"><strong><span class="game-icon game-icon-swordman fa-lg"></span> {{ trans('jellies::minion.show.active') }} </strong></div>
     @endif
 
+    @if($model->miniontype)
+        <div class="panel panel-default">
+            <div class="panel-heading">Type: <strong>{{ $model->miniontype->name }}</strong></div>
+        </div>
+    @endif
+
+
     <div class="panel panel-default">
         <div class="panel-heading"><strong>{{ trans('jellies::minion.attribute.hp') }}</strong></div>
         <div class="panel-body">

@@ -12,11 +12,13 @@ class MinionRepository extends AbstractModelRepository
 {
 
     protected $userRepo;
+    protected $miniontypeRepo;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(UserRepository $userRepo, MiniontypeRepository $miniontypeRepo)
     {
         $this->model = new Minion();
         $this->userRepo = $userRepo;
+        $this->miniontypeRepo = $miniontypeRepo;
     }
 
     // Get all if owned by user
@@ -25,17 +27,24 @@ class MinionRepository extends AbstractModelRepository
         return auth()->user()->minions();
     }
 
-    public function store()
+    public function store($id)
     {
+
+        $type = $this->miniontypeRepo->query()->findOrFail($id);
+
         // Check if the user has enough points
-        if(auth()->user()->points >= config('jellies.minion.cost')) {
+        if(auth()->user()->points >= $type->cost) {
 
-            $this->userRepo->subtractPoints(config('jellies.minion.cost'));
+            $this->userRepo->subtractPoints($type->cost);
 
-            factory(\DanPowell\Jellies\Models\Game\Minion::class)->create([
-                'user_id' => auth()->user()->id
+            return factory(\DanPowell\Jellies\Models\Game\Minion::class)->create([
+                'user_id' => auth()->user()->id,
+                'miniontype_id' => $id,
+                'attack' => $type->attack,
+                'defence' => $type->defence,
+                'initiative' => $type->initiative,
+                'health' => $type->health,
             ]);
-            return true;
         } else {
             return false;
         }

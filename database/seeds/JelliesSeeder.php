@@ -19,6 +19,7 @@ class JelliesSeeder extends Seeder
             $this->clearData();
         }
 
+        $this->call('MinionSeeder');
         $this->call('UserSeeder');
         $this->call('RealmSeeder');
         //$this->call('IncursionSeeder');
@@ -42,6 +43,7 @@ class JelliesSeeder extends Seeder
         DB::table('messages')->truncate();
         DB::table('settings')->truncate();
         DB::table('minions')->truncate();
+        DB::table('miniontypes')->truncate();
         DB::table('realms')->truncate();
         DB::table('zones')->truncate();
         DB::table('zone_enemies')->truncate();
