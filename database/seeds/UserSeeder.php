@@ -21,11 +21,6 @@ class UserSeeder extends Seeder
             $test->messages()->save($i);
         });
 
-        // Give them some minions
-        factory(DanPowell\Jellies\Models\Game\Minion::class, 1)->create()->each(function($i) use ($test) {
-            $test->minions()->save($i);
-        });
-
         // Create a new user with a blank account
         factory(DanPowell\Jellies\Models\User::class, 1)->states('new')->create();
 

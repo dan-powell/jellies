@@ -8,12 +8,18 @@
         <div class="panel panel-default">
             <div class="list-group">
                 @foreach ($models as $model)
-                    <a href="{{ route('message.show', $model->id) }}" class="list-group-item">
-                        <h4><strong>{{ $model->subject }}</strong></h4>
-                        <small>
+                    <a href="{{ route('message.show', $model->id) }}" class="list-group-item list-group-item-{{ $model->type }}">
+                        <small class="pull-right">
                             <i class="fa fa-calendar"></i> {{ $model->created_at->format(config('jellies.ui.date_format')) }}
                             <i class="fa fa-clock-o"></i> {{ $model->created_at->format(config('jellies.ui.time_format')) }}
                         </small>
+
+                        @if(!$model->read)
+                            <h4><span class="fa fa-envelope"></span> <strong>{{ $model->subject }}</strong></h4>
+                        @else
+                            <h4><span class="fa fa-envelope-open"></span> {{ $model->subject }}</h4>
+                        @endif
+                        
                     </a>
                 @endforeach
             </div>

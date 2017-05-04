@@ -5,13 +5,19 @@ namespace DanPowell\Jellies\Repositories\Ui;
 use DanPowell\Jellies\Repositories\AbstractModelRepository;
 
 use DanPowell\Jellies\Models\Ui\Message;
+use DanPowell\Jellies\Mail\MessageMail;
+
+use DanPowell\Jellies\Repositories\UserRepository;
 
 class MessageRepository extends AbstractModelRepository
 {
 
-    public function __construct()
+    private $userRepo;
+
+    public function __construct(UserRepository $userRepo)
     {
         $this->model = new Message();
+        $this->userRepo = $userRepo;
     }
 
     // Get all if owned by user
@@ -20,23 +26,43 @@ class MessageRepository extends AbstractModelRepository
         return auth()->user()->messages();
     }
 
+    public function show($id)
+    {
+        $message = $this->query()->find($id);
+        $message->read = true;
+        $message->save();
+        return $message;
+    }
 
-    public function store($subject, $message, $type = 'default', $id = null)
+    public function store($subject, $message, $type = 'default', $action_name = null, $action_url = null, $id = null, $email = false)
     {
 
         if(auth()->check() && !$id) {
             $id = auth()->user()->id;
+            $user = auth()->user();
         }
 
-        $this->message = new Message();
+        $this->model->user_id = $id;
+        $this->model->subject = $subject;
+        $this->model->message = $message;
+        $this->model->type = $type;
+        $this->model->action_name = $action_name;
+        $this->model->action_url = $action_url;
 
-        $this->message->user_id = $id;
-        $this->message->subject = $subject;
-        $this->message->message = $message;
-        $this->message->type = $type;
+        $this->model->save();
 
-        $this->message->save();
+        if($email) {
+
+            if(!isset($user)) {
+                $user = $this->userRepo->query()->find($id);
+            }
+
+            \Mail::to($user)->queue(new MessageMail($this->model));
+        }
+
 
     }
+
+
 
 }

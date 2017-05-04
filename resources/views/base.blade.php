@@ -64,7 +64,7 @@
                                     </a>
                                 </li>
 
-                                <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::message.index.tooltip') }}">
+                                <li class="dropdown" data-toggle="tooltip" data-placement="left" title="{{ trans('jellies::message.index.tooltip') }}">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span class="fa fa-envelope"></span>
                                         @if(isset($messages)) {{ count($messages) }}@endif

@@ -19,9 +19,13 @@ class CreateMessagesTable extends Migration
 
             $table->string('subject');
             $table->text('message');
-            $table->string('type');
+            $table->string('action_name')->nullable()->default(null);
+            $table->string('action_url')->nullable()->default(null);
+
+            $table->string('type')->nullable()->default(null);
             $table->boolean('read')->default(false);
 
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
         });

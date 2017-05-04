@@ -10,7 +10,7 @@ return [
 
     'points' => [
         'min' => '5',
-        'max' => '15'
+        'max' => '150'
     ],
 
     // Various settings for character stats

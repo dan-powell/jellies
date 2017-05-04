@@ -4,9 +4,12 @@ namespace DanPowell\Jellies\Models\Ui;
 
 use Illuminate\Database\Eloquent\Model;
 use DanPowell\Jellies\Models\Scopes\OwnedByUserScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
+
+    use SoftDeletes;
 
     /**
     * The "booting" method of the model.
@@ -27,7 +30,10 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
+        'subject',
         'message',
+        'action_name',
+        'action_url',
         'type',
         'read'
     ];

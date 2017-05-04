@@ -32,7 +32,7 @@ class MessageController extends Controller
     public function show($id)
     {
         return view('jellies::message.show.messageShow')->with([
-            'model' => $this->repo->query()->find($id)
+            'model' => $this->repo->show($id)
         ]);
     }
 
