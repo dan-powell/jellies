@@ -18,10 +18,10 @@ class CreateEncountersTable extends Migration
             $table->integer('incursion_id')->unsigned();
             $table->integer('zone_id')->unsigned()->nullable();
 
-            $table->json('minions_before')->nullable();
-            $table->json('minions_after')->nullable();
-            $table->json('enemies')->nullable();
-            $table->json('log')->nullable();
+            $table->longText('minions_before')->nullable();
+            $table->longText('minions_after')->nullable();
+            $table->longText('enemies')->nullable();
+            $table->longText('log')->nullable();
             $table->boolean('victory');
 
             $table->integer('minion_damage')->unsigned()->default(0);
