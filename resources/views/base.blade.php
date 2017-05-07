@@ -64,24 +64,11 @@
                                     </a>
                                 </li>
 
-                                <li class="dropdown" data-toggle="tooltip" data-placement="left" title="{{ trans('jellies::message.index.tooltip') }}">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <li class="" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::message.index.tooltip') }}">
+                                    <a href="{{ route('message.index') }}" class="">
                                         <span class="fa fa-envelope"></span>
-                                        @if(isset($messages)) {{ count($messages) }}@endif
+                                        @if(isset($messages)) {{ count($messages->where('read', false)) }}@endif
                                     </a>
-
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{{ route('message.index') }}">View all messages</a></li>
-                                        @if(isset($messages) && count($messages))
-                                            <li role="separator" class="divider"></li>
-                                            @foreach($messages as $message)
-                                                <li>
-                                                    <a href="{{ route('message.show', $message->id) }}">
-                                                    {{ $message->subject }}</a>
-                                                </li>
-                                            @endforeach
-                                        @endif
-                                    </ul>
                                 </li>
 
 

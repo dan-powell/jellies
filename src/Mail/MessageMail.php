@@ -13,16 +13,16 @@ class MessageMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $message;
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(Message $data)
     {
-        $this->message = $message;
+        $this->data = $data;
     }
 
     /**
@@ -32,6 +32,6 @@ class MessageMail extends Mailable
      */
     public function build()
     {
-        return $this->view('jellies::message.email.messageEmail')->subject($this->message->subject);;
+        return $this->view('jellies::email.basic.emailBasic')->subject($this->data->subject);;
     }
 }

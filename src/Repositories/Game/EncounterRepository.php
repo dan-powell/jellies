@@ -52,10 +52,10 @@ class EncounterRepository extends AbstractModelRepository
             }
         });
 
-        $this->postEncounterCheck($incursion);
+        $this->postEncounterCheck($incursion, $minions);
     }
 
-    private function postEncounterCheck($incursion)
+    private function postEncounterCheck($incursion, $minions)
     {
         if(count($incursion->encounters->where('zone_id', $incursion->zone->id)) >= $incursion->zone->size) {
             $incursion->previous_zones()->attach($incursion->zone);
@@ -69,10 +69,30 @@ class EncounterRepository extends AbstractModelRepository
             $incursion->save();
 
             if(isset($incursion->user)) {
-                app('message')->subject('Incursion Zone Completed')->id($incursion->user->id)->send();
+                app('message')
+                    ->subject(trans('jellies::email.zone_complete.subject'))
+                    ->message(trans('jellies::email.zone_complete.message'))
+                    ->id($incursion->user->id)
+                    ->type('success')
+                    ->action_name(trans('jellies::email.zone_complete.action'))
+                    ->action_url(route('incursion.show', $incursion->id))
+                    ->send();
             }
 
         }
+
+        /*
+        if($false) {
+
+            app('message')
+                ->subject(trans('jellies::email.incursion_defeated.subject'))
+                ->message(trans('jellies::email.incursion_defeated.message'))
+                ->id($incursion->user->id)
+                ->action_name(trans('jellies::email.incursion_defeated.action'))
+                ->action_url(route('incursion.show', $incursion->id))
+                ->send();
+        }
+        */
 
     }
 

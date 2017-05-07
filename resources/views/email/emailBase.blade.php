@@ -3,7 +3,6 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -247,7 +246,7 @@
           <div class="content">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+            <span class="preheader">@yield('preheader')</span>
             <table class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -256,8 +255,9 @@
                   <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Hi there,</p>
-                        <p>Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
+
+                          @yield('message')
+
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -265,7 +265,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://htmlemail.io" target="_blank">Call To Action</a> </td>
+                                      <td>@yield('cta')</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -273,8 +273,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p>
+
                       </td>
                     </tr>
                   </table>
@@ -284,6 +283,7 @@
               <!-- END MAIN CONTENT AREA -->
               </table>
 
+             {{--
             <!-- START FOOTER -->
             <div class="footer">
               <table border="0" cellpadding="0" cellspacing="0">
@@ -301,6 +301,7 @@
               </table>
             </div>
             <!-- END FOOTER -->
+            --}}
 
           <!-- END CENTERED WHITE CONTAINER -->
           </div>

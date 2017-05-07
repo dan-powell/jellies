@@ -11,31 +11,56 @@ return [
         'points' => 'Points',
     ],
 
-    'index' => [
-        'action' => 'View Incursions',
-        'title' => 'Your Active Incursions',
-        'tooltip' => 'Your Active Incursions',
-        'help' => 'An incursion is a raid on another world. Send your minions in to battle via an incursion.',
-        'empty' => 'You have no active incursions, send some minions in to battle!',
+    'labels' => [
+        'active' => 'Incursions currently underway',
+        'defeated' => 'Defeated Incursions',
+        'waiting' => 'Incursions waiting to proceed'
     ],
 
-    'indexdeleted' => [
-        'action' => 'View Previous Incursions',
-        'title' => 'Your Previous Incursions',
-        'tooltip' => '',
-        'help' => '',
-        'empty' => 'You have no previous incursions.',
+    'index' => [
+        'action' => 'View Incursions',
+        'title' => 'Your Incursions',
+        'tooltip' => 'Your Incursions',
+        'help' => 'An incursion is a raid on another world. Send your minions in to battle via an incursion. An incursion continues automatically until all minions are dead.',
+        'empty' => 'You have none',
     ],
 
     'show' => [
         'action' => 'View Incursion',
         'title' => 'Incursion Details',
         'tooltip' => 'Incursion Details',
-        'help' => 'An incursion continues automatically until all minions are dead. Minions will encounter enemies over time. You may view the details of previous encounters here.',
-        'active' => 'This incursion is currently happening',
-        'inactive' => 'This incursion is now complete',
+        'help' => '',
+        'messages' => [
+            'active' => 'This incursion is currently happening. Minions will encounter enemies over time, come back later to check on their progress.',
+            'waiting' => 'This incursion is waiting to proceed. Choose to cash-in any points accrued, or proceed to the next zone and risk it all.',
+            'defeated' => 'Your minions have been defeated!',
+            'inactive' => 'This incursion is now inactive',
+        ],
         'empty' => 'No encounters yet',
         'log' => 'Encounter Log',
+        'boxes' => [
+            'zone' => [
+                'title' => 'Zones',
+                'current' => 'Current Zone',
+                'encounters' => 'Encounters Completed',
+                'defeated' => 'Defeated Zones',
+            ],
+            'minions' => [
+                'title' => 'Minions',
+                'remaining' => 'Minion Remaining|Minions Remaining',
+                'rounds' => 'Combat Round|Combat Rounds'
+            ],
+            'points' => [
+                'title' => 'Points',
+                'gathered' => 'Point Gathered|Points Gathered'
+            ],
+        ],
+        'actions' => [
+            'proceed' => 'Proceed to the next zone',
+            'finish' => 'Finish and cash-in points',
+            'delete' => 'Finish the incursion',
+            'process' => 'Force an encounter (Cheat)'
+        ]
     ],
 
     'create' => [
@@ -43,7 +68,6 @@ return [
         'title' => 'Create Incursion',
         'tooltip' => 'Create a new incursion',
         'help' => 'Choose minions to send on an incursion. Minions will then progress through various encounters until they are dead.',
-        'danger' => 'Incursions cost ' . config('jellies.incursion.cost') . ' ' . trans_choice('jellies::game.point.plural', config('jellies.incursion.cost')),
         'setup' => 'Setup your incursion',
         'minions' => 'Choose minions to send',
         'realm' => 'Choose a realm to invade',
@@ -74,8 +98,5 @@ return [
         'help' => '',
     ],
 
-    'remaining' => 'remaining',
-    'completed' => 'complete',
-    'gathered' => 'gathered',
 
 ];

@@ -30,7 +30,6 @@ return [
         'title' => 'Your Dead Minions',
         'tooltip' => 'Your Dead Minions',
         'help' => 'These are minions that have been killed. You may resurrect them.',
-        'danger' => 'Resurrecting a minion costs ' . config('jellies.minion.cost_heal') . ' ' . trans_choice('jellies::game.point.plural', config('jellies.minion.cost_heal')),
         'empty' => 'You have no dead minions.',
     ],
 

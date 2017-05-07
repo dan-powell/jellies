@@ -69,8 +69,6 @@ class IncursionRepository extends AbstractModelRepository
             // Spend points
             $this->userRepo->subtractPoints(config('jellies.incursion.cost'));
 
-            app('message')->subject('Incursion Started')->send();
-
             return $this->incursion;
         } else {
             return false;

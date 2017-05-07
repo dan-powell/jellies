@@ -16,7 +16,20 @@ return [
         'log' => 'Battle log'
     ],
 
-
+    'show' => [
+        'action' => 'View Encounter Log',
+        'title' => 'Encounter Details',
+        'tooltip' => 'Encounter Details',
+        'help' => '',
+        'boxes' => [
+            'zone' => [
+                'title' => 'Zones',
+                'current' => 'Current Zone',
+                'encounters' => 'Encounters Completed',
+                'defeated' => 'Defeated Zones',
+            ],
+        ],
+    ],
 
     'log' => [
         'attack' => ':attacker attacked :defender for :damage damage.',
@@ -24,13 +37,9 @@ return [
         'death' => ':creature was killed.'
     ],
 
-
-
     'rounds' => [
         'title' => 'Combat Round',
         'plural' => 'combat round|combat rounds',
     ]
-
-
 
 ];

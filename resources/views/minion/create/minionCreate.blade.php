@@ -50,7 +50,4 @@
     <div class="alert alert-info">
         <span class="fa fa-info-circle"></span> {{ trans('jellies::minion.create.help') }}
     </div>
-    <div class="alert alert-danger">
-        <span class="fa fa-exclamation-circle"></span> {{ trans('jellies::minion.create.danger') }}
-    </div>
 @endsection

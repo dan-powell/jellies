@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="list-group">
                 @foreach ($models as $model)
-                    <a href="{{ route('message.show', $model->id) }}" class="list-group-item list-group-item-{{ $model->type }}">
+                    <a href="{{ route('message.show', $model->id) }}" class="list-group-item list-group-item-{{ !$model->read ? $model->type : '' }}">
                         <small class="pull-right">
                             <i class="fa fa-calendar"></i> {{ $model->created_at->format(config('jellies.ui.date_format')) }}
                             <i class="fa fa-clock-o"></i> {{ $model->created_at->format(config('jellies.ui.time_format')) }}
@@ -19,7 +19,7 @@
                         @else
                             <h4><span class="fa fa-envelope-open"></span> {{ $model->subject }}</h4>
                         @endif
-                        
+
                     </a>
                 @endforeach
             </div>

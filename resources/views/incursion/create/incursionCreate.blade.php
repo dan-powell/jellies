@@ -59,7 +59,4 @@
     <div class="alert alert-info">
         <span class="fa fa-info-circle"></span> {{ trans('jellies::incursion.create.help') }}
     </div>
-    <div class="alert alert-danger">
-        <span class="fa fa-exclamation-circle"></span> {{ trans('jellies::incursion.create.danger') }}
-    </div>
 @endsection
