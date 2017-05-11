@@ -24,7 +24,11 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
         // Tell Laravel where to load the views from
         $this->app->register('DanPowell\Jellies\Providers\ViewComposerServiceProvider');
 
+        // Bind some simple services
         $this->app->singleton('message', 'DanPowell\Jellies\Services\MessageService');
+
+        // Bind a random encounter
+        $this->app->bind('DanPowell\Jellies\Encounters\EncounterInterface', $this->getRandomEncounter());
 
     }
 
@@ -86,5 +90,13 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
             __DIR__ . '/../database' => $this->app->databasePath()
         ], 'database');
 
+    }
+
+    private function getRandomEncounter()
+    {
+        // TODO - Base this on a probability value
+        $types = config('jellies.encounter.types');
+        $encounter_key = array_rand($types);
+        return $types[$encounter_key]['implementation'];
     }
 }

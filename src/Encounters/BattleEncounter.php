@@ -1,13 +1,17 @@
 <?php
 
-namespace DanPowell\Jellies\Helpers;
+namespace DanPowell\Jellies\Encounters;
 
-class EncounterCombat
+use DanPowell\Jellies\Repositories\Game\EnemyRepository;
+
+class BattleEncounter implements EncounterInterface
 {
 
     private $minions;
     private $enemies;
     private $creatures;
+
+    private $enemyRepo;
 
     private $log;
 
@@ -17,16 +21,20 @@ class EncounterCombat
     private $rounds = 0;
     private $points = 0;
 
-    public function __construct($minions, $enemies)
+    public function __construct(EnemyRepository $enemyRepo)
     {
-        $this->minions = $minions;
-        $this->enemies = $enemies;
+
+        $this->enemyRepo = $enemyRepo;
+
+    }
+
+    public function engage($incursion) {
+
+        $this->minions = $incursion->minions;
+        $this->enemies = $this->enemyRepo->getRandomEnemies(rand(1,5), $incursion->zone->id);
         $this->creatures = $this->minions->merge($this->enemies);
 
         $this->log = collect([]);
-    }
-
-    public function engage() {
 
         $this->resolveCombatRound();
 

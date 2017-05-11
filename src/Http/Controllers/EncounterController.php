@@ -14,7 +14,7 @@ class EncounterController extends Controller
     protected $repo;
     protected $incursionRepo;
 
-    public function __construct(EncounterRepository $repo,IncursionRepository $incursionRepo)
+    public function __construct(EncounterRepository $repo, IncursionRepository $incursionRepo)
     {
         $this->repo = $repo;
         $this->incursionRepo = $incursionRepo;

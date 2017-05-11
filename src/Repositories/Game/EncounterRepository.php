@@ -6,21 +6,21 @@ use DanPowell\Jellies\Repositories\AbstractModelRepository;
 
 use DanPowell\Jellies\Models\Game\Encounter;
 
-use DanPowell\Jellies\Repositories\Game\EnemyRepository;
-use DanPowell\Jellies\Helpers\EncounterCombat;
+use DanPowell\Jellies\Encounters\EncounterInterface;
 
 class EncounterRepository extends AbstractModelRepository
 {
 
     private $minionRepo;
     private $userRepo;
-    private $enemyRepo;
+    private $encounterInterface;
 
-    public function __construct(EnemyRepository $enemyRepo)
+    public function __construct(EncounterInterface $interface)
     {
         $this->model = new Encounter();
 
-        $this->enemyRepo = $enemyRepo;
+        $this->encounterInterface = $interface;
+
     }
 
     public function encounter($incursion)
@@ -28,14 +28,14 @@ class EncounterRepository extends AbstractModelRepository
         // Setup
         $minions = $incursion->minions;
 
-        $enemies = $this->enemyRepo->getRandomEnemies(rand(1,5), $incursion->zone->id);
-
         $this->model->minions_before = $minions;
-        $this->model->enemies = $enemies;
+        $this->model->enemies = null;
         $this->model->zone_id = $incursion->zone->id;
 
-        $encounterCombat = new EncounterCombat($minions, $enemies);
-        $details = $encounterCombat->engage();
+
+
+        $details = $this->encounterInterface->engage($incursion);
+
 
         $this->model->fill($details);
 
