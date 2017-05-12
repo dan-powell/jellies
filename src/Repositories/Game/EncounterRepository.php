@@ -15,12 +15,9 @@ class EncounterRepository extends AbstractModelRepository
     private $userRepo;
     private $encounterInterface;
 
-    public function __construct(EncounterInterface $interface)
+    public function __construct()
     {
         $this->model = new Encounter();
-
-        $this->encounterInterface = $interface;
-
     }
 
     public function encounter($incursion)
@@ -32,10 +29,9 @@ class EncounterRepository extends AbstractModelRepository
         $this->model->enemies = null;
         $this->model->zone_id = $incursion->zone->id;
 
-
-
-        $details = $this->encounterInterface->engage($incursion);
-
+        // Get a random encounter & engage
+        $encounter_type = app('encounter')->getRandomEncounter();
+        $details = $encounter_type->engage($incursion);
 
         $this->model->fill($details);
 
