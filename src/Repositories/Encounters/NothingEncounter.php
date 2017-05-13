@@ -1,17 +1,21 @@
 <?php
 
-namespace DanPowell\Jellies\Encounters;
+namespace DanPowell\Jellies\Repositories\Encounters;
 
-class NothingEncounter implements EncounterInterface
+use DanPowell\Jellies\Repositories\Encounters\AbstractEncounter;
+
+class NothingEncounter extends AbstractEncounter
 {
 
     private $minions;
     private $enemies;
     private $creatures;
 
+    private $enemyRepo;
+
     private $log;
 
-    private $victory = true;
+    private $victory = false;
     private $enemy_damage = 0;
     private $minion_damage = 0;
     private $rounds = 0;
@@ -23,6 +27,7 @@ class NothingEncounter implements EncounterInterface
     }
 
     public function engage($incursion) {
+
         return [
             'log' => $this->log,
             'victory' => $this->victory,

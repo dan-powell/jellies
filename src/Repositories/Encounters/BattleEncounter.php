@@ -1,10 +1,11 @@
 <?php
 
-namespace DanPowell\Jellies\Encounters;
+namespace DanPowell\Jellies\Repositories\Encounters;
 
+use DanPowell\Jellies\Repositories\Encounters\AbstractEncounter;
 use DanPowell\Jellies\Repositories\Game\EnemyRepository;
 
-class BattleEncounter implements EncounterInterface
+class BattleEncounter extends AbstractEncounter
 {
 
     private $minions;

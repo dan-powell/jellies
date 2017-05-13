@@ -6,13 +6,13 @@ return [
     'logging' => true,
 
     'types' => [
-        [
-            'implementation' => DanPowell\Jellies\Encounters\BattleEncounter::class,
-            'probability' => 0.5
+        'battle' => [
+            'implementation' => DanPowell\Jellies\Repositories\Encounters\BattleEncounter::class,
+            'probability' => 1
         ],
-        [
-            'implementation' => DanPowell\Jellies\Encounters\NothingEncounter::class,
-            'probability' => 0.5
+        'nothing' => [
+            'implementation' => DanPowell\Jellies\Repositories\Encounters\NothingEncounter::class,
+            'probability' => 1
         ]
     ]
 
