@@ -6,8 +6,5 @@
         <li role="presentation" class="">
             <a href="{{ route('realm.index') }}">{{ trans('jellies::realm.index.action') }}</a>
         </li>
-        <li role="presentation" class="">
-            <a href="{{ route('enemy.index') }}">{{ trans('jellies::enemy.index.action') }}</a>
-        </li>
     </ul>
 @endsection

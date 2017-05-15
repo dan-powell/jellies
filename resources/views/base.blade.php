@@ -47,7 +47,9 @@
                         <ul class="nav navbar-nav">
                             <li class=""><a href="{{ route('dashboard') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::dashboard.show.tooltip') }}">Dashboard</a></li>
                             <li class=""><a href="{{ route('minion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::minion.index.tooltip') }}">{{ trans('jellies::minion.title') }}</a></li>
-                            <li class=""><a href="{{ route('incursion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::incursion.index.tooltip') }}">{{ trans('jellies::incursion.title') }}</a></li>
+                            <li class=""><a href="{{ route('attack.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::attack.index.tooltip') }}">{{ trans('jellies::attack.title') }}</a></li>
+                            <li class=""><a href="{{ route('defence.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::defence.index.tooltip') }}">{{ trans('jellies::defence.title') }}</a></li>
+                            <li class=""><a href="{{ route('type.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::type.index.tooltip') }}">{{ trans('jellies::type.title') }}</a></li>
                             <li class=""><a href="{{ route('realm.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::realm.index.tooltip') }}">{{ trans('jellies::realm.title') }}</a></li>
                         </ul>
 
@@ -59,8 +61,23 @@
                                 <li><a href="{{ route('register') }}">Register</a></li>
                             @else
                                 <li class="dropdown">
-                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::game.point.title') }}">
-                                        <span class="fa fa-star"></span> {{ auth()->user()->points }}
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ trans('jellies::game.point.title') }}">
+                                        <span class="fa fa-car"></span> {{ auth()->user()->types->sum('pivot.quantity') }}
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        @foreach(auth()->user()->types as $type)
+                                            <li>
+                                                <a href="{{ route('user.types') }}">
+                                                    {{ $type->name }} - {{ $type->pivot->quantity }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+
+                                <li class="">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::user.action.title') }}">
+                                        <span class="fa fa-star"></span> {{ auth()->user()->actions }}
                                     </a>
                                 </li>
 
@@ -79,23 +96,21 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                                            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                Logout
+                                            </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">

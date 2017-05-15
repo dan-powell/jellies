@@ -7,65 +7,66 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use DanPowell\Jellies\Repositories\Game\MinionRepository;
-use DanPowell\Jellies\Repositories\Game\MiniontypeRepository;
+use DanPowell\Jellies\Repositories\UserRepository;
+
 use DanPowell\Jellies\Http\Requests\Minion\MinionStoreRequest;
 use DanPowell\Jellies\Http\Requests\Minion\MinionUpdateRequest;
-use DanPowell\Jellies\Http\Requests\Minion\MinionHealRequest;
 
 class MinionController extends Controller
 {
 
     protected $repo;
-    protected $miniontypeRepo;
 
-    public function __construct(MinionRepository $repo, MiniontypeRepository $miniontypeRepo)
+    public function __construct(MinionRepository $repo, UserRepository $userRepo)
     {
         $this->repo = $repo;
-        $this->miniontypeRepo = $miniontypeRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function index()
     {
         return view('jellies::minion.index.minionIndex')->with([
-            'models' => $this->repo->query()->with(['incursions'])->get()
+            'models' => $this->repo->query()->with(['types'])->get()
+        ]);
+    }
+
+    public function indexDeleted()
+    {
+        return view('jellies::minion.index.minionIndexDeleted')->with([
+            'models' => $this->repo->query()->onlyTrashed()->with(['types'])->get()
         ]);
     }
 
     public function show($id)
     {
         return view('jellies::minion.show.minionShow')->with([
-            'model' => $this->repo->query()->withTrashed()->with(['incursions', 'miniontype'])->find($id)
+            'model' => $this->repo->query()->withTrashed()->with(['types'])->find($id)
         ]);
     }
 
     public function create()
     {
         return view('jellies::minion.create.minionCreate')->with([
-            'models' => $this->miniontypeRepo->query()->get()
+            'types' => $this->userRepo->getTypes()
         ]);
     }
 
     public function store(MinionStoreRequest $request)
     {
 
-        $id = $request->get('id');
+        $types = $request->get('type');
 
-        $minion = $this->repo->store($id);
+        $minion = $this->repo->store($types);
 
         if($minion) {
             \Notification::success(__('jellies::minion.create.success'));
+            return redirect(route('minion.show', $minion->id));
         } else {
             \Notification::error(__('jellies::minion.create.error'));
+            return redirect(route('minion.create'));
         }
 
-        return redirect(route('minion.show', $minion->id));
-    }
 
-    public function indexDeleted()
-    {
-        return view('jellies::minion.index.minionIndexDeleted')->with([
-            'models' => $this->repo->query()->onlyTrashed()->with(['incursions'])->get()
-        ]);
     }
 
     public function edit($id)
@@ -90,20 +91,5 @@ class MinionController extends Controller
 
         return redirect(route('minion.show', $id));
     }
-
-    public function heal($id, MinionHealRequest $request)
-    {
-
-        $success = $this->repo->heal($id);
-
-        if($success) {
-            \Notification::success(__('jellies::minion.heal.success'));
-        } else {
-            \Notification::error(__('jellies::minion.heal.error'));
-        }
-
-        return redirect(route('minion.show', $id));
-    }
-
 
 }

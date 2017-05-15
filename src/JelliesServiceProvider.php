@@ -12,21 +12,19 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
     {
 
         // Merge configs
-        $this->mergeConfigFrom(__DIR__ . '/../config/encounter.php', 'jellies.encounter');
-        $this->mergeConfigFrom(__DIR__ . '/../config/enemy.php', 'jellies.enemy');
-        $this->mergeConfigFrom(__DIR__ . '/../config/incursion.php', 'jellies.incursion');
-        $this->mergeConfigFrom(__DIR__ . '/../config/minion.php', 'jellies.minion');
+        $this->mergeConfigFrom(__DIR__ . '/../config/logic.php', 'jellies.logic');
         $this->mergeConfigFrom(__DIR__ . '/../config/ui.php', 'jellies.ui');
+        $this->mergeConfigFrom(__DIR__ . '/../config/minion.php', 'jellies.minion');
         $this->mergeConfigFrom(__DIR__ . '/../config/user.php', 'jellies.user');
         $this->mergeConfigFrom(__DIR__ . '/../config/realm.php', 'jellies.realm');
-        $this->mergeConfigFrom(__DIR__ . '/../config/zone.php', 'jellies.zone');
 
         // Tell Laravel where to load the views from
         $this->app->register('DanPowell\Jellies\Providers\ViewComposerServiceProvider');
 
         // Bind some simple services
         $this->app->singleton('message', 'DanPowell\Jellies\Services\MessageService');
-        $this->app->singleton('encounter', 'DanPowell\Jellies\Services\EncounterService');
+
+        $this->app->bind('DanPowell\Jellies\Repositories\Logic\BattleLogicInterface', config('jellies.logic.classes.battle'));
 
     }
 

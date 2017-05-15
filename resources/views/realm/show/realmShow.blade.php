@@ -7,29 +7,12 @@
     </h1>
 
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans('jellies::zone.title') }}</h3>
+        <div class="panel-heading"><strong>{{ trans('jellies::realm.attribute.types') }}</strong></div>
+        <div class="panel-body">
+            @if(isset($model->types) && count($model->types))
+                @include('jellies::type.list.typeList', ['models' => $model->types])
+            @endif
         </div>
-        @if(isset($model->zones) && count($model->zones))
-            @include('jellies::zone.list.zoneList', ['zones' => $model->zones])
-        @else
-            <div class="panel-body">
-                <p>{{ trans('jellies::zone.index.empty') }}</p>
-            </div>
-        @endif
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans('jellies::enemy.title') }}</h3>
-        </div>
-        @if(isset($model->enemies) && count($model->enemies))
-            @include('jellies::enemy.list.enemyList', ['enemies' => $model->enemies])
-        @else
-            <div class="panel-body">
-                <p>{{ trans('jellies::enemy.index.empty') }}</p>
-            </div>
-        @endif
     </div>
 
 @endsection

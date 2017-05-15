@@ -37,9 +37,19 @@ class User extends Authenticatable
         return $this->hasMany('DanPowell\Jellies\Models\Game\Minion');
     }
 
-    public function incursions()
+    public function types()
     {
-        return $this->hasMany('DanPowell\Jellies\Models\Game\Incursion');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'user_type')->withPivot('quantity');
+    }
+
+    public function attacks()
+    {
+        return $this->hasMany('DanPowell\Jellies\Models\Game\Attack');
+    }
+
+    public function defences()
+    {
+        return $this->hasMany('DanPowell\Jellies\Models\Game\Defence');
     }
 
 

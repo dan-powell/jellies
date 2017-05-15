@@ -12,13 +12,11 @@ class MinionRepository extends AbstractModelRepository
 {
 
     protected $userRepo;
-    protected $miniontypeRepo;
 
-    public function __construct(UserRepository $userRepo, MiniontypeRepository $miniontypeRepo)
+    public function __construct(UserRepository $userRepo)
     {
         $this->model = new Minion();
         $this->userRepo = $userRepo;
-        $this->miniontypeRepo = $miniontypeRepo;
     }
 
     // Get all if owned by user
@@ -27,26 +25,31 @@ class MinionRepository extends AbstractModelRepository
         return auth()->user()->minions();
     }
 
-    public function store($id)
+    public function store($types)
     {
 
-        $type = $this->miniontypeRepo->query()->findOrFail($id);
+        if($this->userRepo->spendAction()) {
 
-        // Check if the user has enough points
-        if(auth()->user()->points >= $type->cost) {
+            if($this->userRepo->adjustTypes($types)) {
 
-            $this->userRepo->subtractPoints($type->cost);
+                $types_sorted = [];
+                foreach($types as $key => $type) {
+                    if($type) {
+                        $types_sorted[$key] = ['quantity' => $type];
+                    }
+                }
 
-            return factory(\DanPowell\Jellies\Models\Game\Minion::class)->create([
-                'user_id' => auth()->user()->id,
-                'miniontype_id' => $id,
-                'attack' => $type->attack,
-                'defence' => $type->defence,
-                'initiative' => $type->initiative,
-                'health' => $type->health,
-            ]);
-        } else {
-            return false;
+                $minion = factory(\DanPowell\Jellies\Models\Game\Minion::class)->create([
+                    'user_id' => auth()->user()->id,
+                ]);
+
+                $minion->types()->sync($types_sorted);
+
+                return $minion;
+
+            } else {
+                return false;
+            }
         }
 
     }
@@ -114,30 +117,4 @@ class MinionRepository extends AbstractModelRepository
         }
 
     }
-
-    public function heal($id)
-    {
-
-        $minion = $this->query()->withTrashed()->findOrFail($id);
-
-        $cost = $minion->health - $minion->hp;
-
-        // Check if the user has enough points
-        if(auth()->user()->points >= $cost) {
-
-            $this->userRepo->subtractPoints($cost);
-
-            $minion->hp = $minion->health;
-            $minion->deleted_at = null;
-
-            $minion->save();
-
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-
 }

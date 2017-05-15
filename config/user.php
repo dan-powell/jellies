@@ -2,6 +2,7 @@
 
 return [
 
-    'points' => 50,
+    'actions_initial' => 30,
+    'actions_max' => 30
 
 ];

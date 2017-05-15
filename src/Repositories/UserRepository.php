@@ -28,24 +28,61 @@ class UserRepository extends AbstractModelRepository
     }
 
 
-    public function subtractPoints($points)
+    public function getTypes()
     {
-        if($this->current()->points >= $points) {
-            auth()->user()->points -= $points;
-            auth()->user()->save();
-        } else {
-            abort(403, 'Not enough points');
+        return $this->current()->types()->get();
+    }
+
+    public function getWithMinions()
+    {
+        return $this->query()->with('minions')->get();
+    }
+
+
+
+
+    public function adjustTypes($types, $subtract = true)
+    {
+
+        $user_types = $this->getTypes();
+
+        $stuff = [];
+        foreach($user_types as $user_type) {
+
+            if($subtract) {
+                $quantity = $user_type->pivot->quantity - $types[$user_type->id];
+            } else {
+                $quantity = $user_type->pivot->quantity + $types[$user_type->id];
+            }
+
+            if ($quantity < 0) {
+                return false;
+            }
+
+            $stuff[$user_type->id] = ['quantity' => $quantity];
+
         }
+
+        $this->current()->types()->sync($stuff);
+
+        return true;
+
     }
 
 
-    public function addPoints($points)
+    public function spendAction($points = 1)
     {
-        auth()->user()->points += $points;
-        auth()->user()->save();
+
+        if($this->current()->actions > 0) {
+            $this->current()->actions -= $points;
+            $this->current()->save();
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
-
-
 
 
 }

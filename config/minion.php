@@ -18,7 +18,6 @@ return [
         'attack',
         'defence',
         'initiative',
-        'health'
     ],
 
 

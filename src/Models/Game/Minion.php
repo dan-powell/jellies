@@ -18,25 +18,17 @@ class Minion extends Model
     *
     * @return void
     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Only return characters that are owned by user
-        static::addGlobalScope(new OwnedByUserScope());
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //
+    //     // Only return characters that are owned by user
+    //     static::addGlobalScope(new OwnedByUserScope());
+    // }
 
     protected $fillable = [
         // Details
         'name',
-
-        // Stats
-        'attack',
-        'defence',
-        'initiative',
-        'health',
-
-        'hp',
     ];
 
     protected $dates = [
@@ -58,24 +50,16 @@ class Minion extends Model
         return $this->belongsTo('DanPowell\Jellies\Models\User');
     }
 
-    public function miniontype()
+    public function types()
     {
-        return $this->belongsTo('DanPowell\Jellies\Models\Game\Miniontype');
-    }
-
-    public function incursions()
-    {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Incursion', 'incursion_minion', 'minion_id', 'incursion_id');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'minion_type')->withPivot('quantity');
     }
 
     /****************
     * Local Scopes
     ****************/
 
-    public function scopeAvailable($query)
-    {
-        return $query->doesntHave('incursions');
-    }
+
 
     /****************
     * Attributes
@@ -96,59 +80,58 @@ class Minion extends Model
         return $this->stats->max();
     }
 
-    public function getLevelAttribute()
+    public function getLevelAttribute($value)
     {
-        $stats = $this->getStatsAttribute();
-        return $stats->sum();
+        return $this->types->sum('pivot.quantity');
     }
 
-    // Returns HP limited by the maximum
-    public function getHpAttribute($value)
+    public function getAttackAttribute()
     {
-        $hp = min($value, $this->health);
-
-        if($hp < 0) {
-            return 0;
-        } else {
-            return $hp;
-        }
-
+        return $this->calcAttribute('attack', 10);
     }
 
-    public function getPointsAttribute()
+    public function getDefenceAttribute()
     {
-        return 1;
+        return $this->calcAttribute('defence', 10);
     }
 
-    public function getInjuredAttribute()
+    public function getInitiativeAttribute()
     {
-        if ($this->hp < $this->health/4) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->calcAttribute('initiative', 10);
     }
 
-    public function getAliveAttribute()
-    {
-        if ($this->hp > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    private function calcAttribute($attribute, $base = 1) {
+        $array = [];
+        foreach($this->types as $type) {
+            foreach($type->modifiers as $modifier) {
+                if ($modifier->attribute == $attribute) {
+                    for($i = 0; $i < $type->pivot->quantity; $i++) {
+                        switch ($modifier->adjustment) {
+                            case '+':
+                                $change = $base + $modifier->value;
+                                break;
+                            case '-':
+                                $change = $base - $modifier->value;
+                                break;
+                            case '*':
+                                $change = $base * $modifier->value;
+                                break;
+                            case '/':
+                                $change = $base / $modifier->value;
+                                break;
+                            default:
+                                $change = $base;
+                        }
 
-    public function getActiveAttribute()
-    {
-        $incursions = $this->incursions;
+                        $array[] = $change - $base;
 
-        foreach($incursions as $incursion) {
-            if($incursion->active) {
-                return true;
+                    }
+                }
             }
         }
-        return false;
+        return $base + array_sum($array);
     }
+
 
     /****************
     * Handy Methods

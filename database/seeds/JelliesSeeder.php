@@ -19,10 +19,9 @@ class JelliesSeeder extends Seeder
             $this->clearData();
         }
 
-        $this->call('MinionSeeder');
+        $this->call('TypeSeeder');
         $this->call('UserSeeder');
         $this->call('RealmSeeder');
-        //$this->call('IncursionSeeder');
 
         Model::reguard();
     }
@@ -40,17 +39,17 @@ class JelliesSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         DB::table('users')->truncate();
+        DB::table('user_type')->truncate();
         DB::table('messages')->truncate();
         DB::table('settings')->truncate();
         DB::table('minions')->truncate();
-        DB::table('miniontypes')->truncate();
+        DB::table('minion_type')->truncate();
         DB::table('realms')->truncate();
-        DB::table('zones')->truncate();
-        DB::table('zone_enemies')->truncate();
-        DB::table('enemies')->truncate();
-        DB::table('incursions')->truncate();
-        DB::table('incursion_minion')->truncate();
-        DB::table('encounters')->truncate();
+        DB::table('realm_type')->truncate();
+        DB::table('types')->truncate();
+        DB::table('type_effective')->truncate();
+        DB::table('type_ineffective')->truncate();
+        DB::table('modifiers')->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

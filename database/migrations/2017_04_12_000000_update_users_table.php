@@ -14,8 +14,18 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('points')->default(config('jellies.user.points'));
+            $table->integer('actions')->default(config('jellies.user.actions_initial'));
         });
+
+        Schema::create('user_type', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('type_id')->unsigned();
+            $table->integer('quantity')->unsigned()->default(1);
+            $table->unique(['user_id', 'type_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+        });
+
     }
 
     /**
@@ -26,7 +36,8 @@ class UpdateUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('points');
+            $table->dropColumn('actions');
         });
+        Schema::dropIfExists('user_type');
     }
 }

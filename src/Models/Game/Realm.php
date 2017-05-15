@@ -20,9 +20,9 @@ class Realm extends Model
     * Relationships
     ****************/
 
-    public function zones()
+    public function types()
     {
-        return $this->hasMany('DanPowell\Jellies\Models\Game\Zone');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type');
     }
 
     /****************

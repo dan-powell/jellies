@@ -9,84 +9,54 @@
         </small>
     </h1>
 
-    @if($model->active === false && $model->alive)
-        <a href="{{ route('minion.edit', $model->id) }}" class="btn btn-info">
-            {{ trans('jellies::minion.edit.action') }}
-        </a>
-    @endif
-
-    @if($model->hp < $model->health)
-        {!! Form::open(['route' => ['minion.heal', $model->id], 'method' => 'post']) !!}
-        <button type="submit" class="btn btn-danger">
-            {{ trans('jellies::minion.heal.action') }}
-        </button>
-        {!! Form::close() !!}
-    @endif
-
-    <hr/>
-
-    @if($model->active)
-        <div class="alert alert-info"><strong><span class="game-icon game-icon-swordman fa-lg"></span> {{ trans('jellies::minion.show.active') }} </strong></div>
-    @endif
-
-    @if($model->miniontype)
-        <div class="panel panel-default">
-            <div class="panel-heading">Type: <strong>{{ $model->miniontype->name }}</strong></div>
-        </div>
-    @endif
 
 
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::minion.attribute.hp') }}</strong></div>
+        <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.types') }}</strong></div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-10">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger"
-                        role="progressbar"
-                        aria-valuenow="{{ $model->hp }}"
-                        aria-valuemin="0"
-                        aria-valuemax="{{ $model->health }}"
-                        style="width: {{ $model->hp / $model->health * 100 }}%;">
-                            {{ $model->hp }} / {{ $model->health }}
-                    </div>
-                    </div>
-                </div>
-                <div class="col-xs-2">
-                    @if($model->hp == $model->health)
-                        <strong class="badge">Max</strong>
-                    @endif
-                    @if($model->hp <= 0)
-                        <strong class="badge">Dead</strong>
-                    @endif
-                </div>
+            <div>
+                Attack: {{ $model->attack }}
+            </div>
+            <div>
+                Defence: {{ $model->defence }}
+            </div>
+            <div>
+                Initiative: {{ $model->initiative }}
             </div>
         </div>
     </div>
 
+
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::minion.attribute.stats') }}</strong></div>
+        <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.types') }}</strong></div>
         <div class="panel-body">
-            <div class="row">
-                @foreach($model->stats as $key => $stat)
-                    <div class="col-xs-4 text-right">
-                        {{ trans('jellies::minion.attribute.' . $key) }}
-                        <span class="{{ config('jellies.ui.stat_icons.' . $key) }}"></span>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="progress">
-                            <div class="progress-bar"
-                            role="progressbar"
-                            aria-valuenow="{{ $stat }}"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            style="width: {{ $stat / $model->max_stat_value * 100 }}%; min-width: 10%;">
-                                {{ $stat }}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            @if(isset($model->types) && count($model->types))
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th></th>
+                        <th>{{ trans('jellies::type.attribute.name') }}</th>
+                        <th>{{ trans('jellies::type.attribute.effective') }}</th>
+                    </tr>
+
+                    @foreach ($model->types as $model)
+                        <tr onclick="window.open('{{ route('type.show', $model->id) }}', '_self')">
+                            <td>
+                                <span class="game-icon game-icon-vile-fluid"></span>
+                            </td>
+                            <td>
+                                <a href="{{ route('type.show', $model->id) }}">
+                                    {{ $model->name }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ $model->pivot->quantity }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+
+            @endif
+
         </div>
     </div>
 
