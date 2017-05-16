@@ -15,13 +15,13 @@
         <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.types') }}</strong></div>
         <div class="panel-body">
             <div>
-                Attack: {{ $model->attack }}
+                Attack: {{ $model->getStat('attack') }}
             </div>
             <div>
-                Defence: {{ $model->defence }}
+                Defence: {{ $model->getStat('defence') }}
             </div>
             <div>
-                Initiative: {{ $model->initiative }}
+                Initiative: {{ $model->getStat('initiative]') }}
             </div>
         </div>
     </div>

@@ -1,8 +1,8 @@
 <?php
 
-namespace DanPowell\Jellies\Helpers;
+namespace DanPowell\Jellies\Repositories\Helpers;
 
-class Utilities
+class MiscHelper
 {
 
     // Distributes an integer $amount amongst x number of $points

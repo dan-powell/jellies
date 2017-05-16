@@ -50,8 +50,9 @@ class AttackRepository extends AbstractModelRepository
 
             $attack = $this->model;
 
-            $attack->minion = $minion->toJson();
-            $attack->successful = $battle;
+            $attack->minion = '$minion';
+            $attack->log = $battle['log'];
+            $attack->successful = $battle['successful'];
             $attack->defender_id = $user->id;
 
             $this->userRepo->current()->attacks()->save($attack);
@@ -59,8 +60,9 @@ class AttackRepository extends AbstractModelRepository
 
             $defence = $this->defenceRepo->model;
 
-            $defence->minion = $minion->toJson();
-            $defence->successful = $battle ? false : true;
+            $defence->minion = '$minion';
+            $defence->log = $battle['log'];
+            $defence->successful = $battle['successful'] ? false : true;
             $defence->attacker_id = $this->userRepo->current()->id;
 
             $user->defences()->save($defence);

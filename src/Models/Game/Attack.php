@@ -59,7 +59,29 @@ class Attack extends Model
     * Attributes
     ****************/
 
+    public function getMinionAttribute($value)
+    {
+        return json_decode($value);
+    }
 
+    public function getLogAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    /****************
+    * Mutators
+    ****************/
+
+    public function setMinionAttribute($value)
+    {
+        $this->attributes['minion'] = json_encode($value);
+    }
+
+    public function setLogAttribute($value)
+    {
+        $this->attributes['log'] = json_encode($value);
+    }
 
     /****************
     * Handy Methods

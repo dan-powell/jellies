@@ -13,6 +13,8 @@ class Minion extends Model
 
     use SoftDeletes;
 
+    public $health = null;
+
     /**
     * The "booting" method of the model.
     *
@@ -23,7 +25,8 @@ class Minion extends Model
     //     parent::boot();
     //
     //     // Only return characters that are owned by user
-    //     static::addGlobalScope(new OwnedByUserScope());
+    //     //static::addGlobalScope(new OwnedByUserScope());
+    //
     // }
 
     protected $fillable = [
@@ -65,12 +68,34 @@ class Minion extends Model
     * Attributes
     ****************/
 
+    public function getLevelAttribute()
+    {
+        return $this->types->sum('pivot.quantity');
+    }
+
+    public function getHealthAttribute()
+    {
+
+        if(isset($this->types) && count($this->types)) {
+            $this->health = $this->types->sum('pivot.quantity');
+        } else {
+            $this->health = 1;
+        }
+
+        return $this->health;
+    }
+
+    public function getStat($stat)
+    {
+        return $this->calcAttribute($stat, 10);
+    }
+
     // Returns just the stats of the character
     public function getStatsAttribute()
     {
         $array = [];
         foreach(config('jellies.minion.stats') as $stat) {
-            $array[$stat] = round($this->$stat);
+            $array[$stat] = round($this->getStat($stat));
         }
         return collect($array);
     }
@@ -80,24 +105,27 @@ class Minion extends Model
         return $this->stats->max();
     }
 
-    public function getLevelAttribute($value)
+    public function setHealthAttribute($value)
     {
-        return $this->types->sum('pivot.quantity');
+        $this->health = $value;
     }
 
-    public function getAttackAttribute()
+    public function alive()
     {
-        return $this->calcAttribute('attack', 10);
+        if($this->health > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function getDefenceAttribute()
+    public function adjustHealth($value, $subtract = true)
     {
-        return $this->calcAttribute('defence', 10);
-    }
-
-    public function getInitiativeAttribute()
-    {
-        return $this->calcAttribute('initiative', 10);
+        if($subtract) {
+            $this->setHealthAttribute(max($this->health - $value, 0));
+        } else {
+            $this->setHealthAttribute(max($this->health + $value, 0));
+        }
     }
 
     private function calcAttribute($attribute, $base = 1) {
@@ -113,11 +141,11 @@ class Minion extends Model
                             case '-':
                                 $change = $base - $modifier->value;
                                 break;
-                            case '*':
-                                $change = $base * $modifier->value;
+                            case '+%':
+                                $change = $base + \MathHelper::percentage($modifier->value, $base);
                                 break;
-                            case '/':
-                                $change = $base / $modifier->value;
+                            case '-%':
+                                $change = $base - \MathHelper::percentage($modifier->value, $base);
                                 break;
                             default:
                                 $change = $base;
