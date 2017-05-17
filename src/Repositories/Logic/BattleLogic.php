@@ -24,7 +24,17 @@ class BattleLogic implements BattleLogicInterface
         $this->attacker = $attacker;
         $this->defender = $defender;
 
+        \Debugbar::info('engage attacker h: ' . $this->attacker->health);
+        \Debugbar::info('engage defender h: ' . $this->defender->health);
+
         $this->resolveCombatRound();
+
+        if ($this->attacker->isAlive() && !$this->defender->isAlive()) {
+            $this->successful = true;
+        }
+
+        \Debugbar::info('complete attacker h: ' . $this->attacker->health);
+        \Debugbar::info('complete defender h: ' . $this->defender->health);
 
         return [
             'log' => $this->log,
@@ -38,6 +48,7 @@ class BattleLogic implements BattleLogicInterface
         // Setup
         $this->rounds++;
 
+        \Debugbar::info('start round: ' . $this->rounds);
         $this->log('Round ' . $this->rounds);
 
         // Resolve combat in initiative order
@@ -45,51 +56,42 @@ class BattleLogic implements BattleLogicInterface
 
             $this->fight($this->attacker, $this->defender);
 
-            if($this->attacker->alive && $this->defender->alive) {
+            if($this->attacker->isAlive() && $this->defender->isAlive()) {
                 $this->fight($this->defender, $this->attacker);
             }
+
         } else {
             $this->fight($this->defender, $this->attacker);
-            if($this->attacker->alive && $this->defender->alive) {
+
+            if($this->attacker->isAlive() && $this->defender->isAlive()) {
                 $this->fight($this->attacker, $this->defender);
             }
+
         }
 
+        \Debugbar::info('round complete attacker h: ' . $this->attacker->health);
+        \Debugbar::info('round complete defender h: ' . $this->defender->health);
 
-
-        \Debugbar::info($this->attacker->health);
-        \Debugbar::info($this->defender->health);
+        \Debugbar::info('attacker alive? ' . $this->attacker->isAlive());
+        \Debugbar::info('defender alive? ' . $this->defender->isAlive());
 
         // If there are creatures still alive, go for another round
-        if($this->attacker->alive || $this->defender->alive) {
-            $this->resolveCombatRound();
-        } else {
-            if ($this->attacker->health > 0) {
-                $this->successful = true;
+        if($this->rounds < 30) {
+            if(($this->attacker->isAlive() && $this->defender->isAlive())) {
+                $this->resolveCombatRound();
             }
         }
+
     }
 
     private function fight($attacker, $defender)
     {
-        // Resolve attack
-        $damage = $this->attack($attacker, $defender);
+        \Debugbar::info($attacker->name . ' vs ' . $defender->name);
 
-        // Make a record of the damage;
-
-        // Add a 50% chance for retaliation
-        // if(rand(0,1)) {
-        //     // Resolve retaliation
-        //     $damage = $this->counter($attacker, $defender);
-        //
-        // }
-    }
-
-
-    private function attack($attacker, $defender)
-    {
         // Resolve attack
         $damage = $attacker->getStat('attack') / $defender->getStat('defence');
+
+        \Debugbar::info('round damage: ' . $damage);
 
         $defender->adjustHealth($damage);
 
@@ -99,27 +101,6 @@ class BattleLogic implements BattleLogicInterface
             [
                 'attacker' => $attacker->name,
                 'defender' => $defender->name,
-                'damage' => $damage,
-            ]
-            )
-        );
-
-    }
-
-    private function counter($attacker, $defender)
-    {
-        // Resolve retaliation
-        $damage = $defender->getStat('attack') / $attacker->getStat('defence');
-
-        // Subtract health (make sure it doesn't go below 0)
-        $defender->adjustHealth($damage);
-
-        // Save to log
-        $this->log(
-            trans('jellies::encounter.log.counter',
-            [
-                'attacker' => $defender->name,
-                'defender' => $attacker->name,
                 'damage' => $damage,
             ]
             )

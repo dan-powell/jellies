@@ -68,26 +68,55 @@ class Minion extends Model
     * Attributes
     ****************/
 
-    public function getLevelAttribute()
+
+
+
+    public function getHealthAttribute()
     {
-        return $this->types->sum('pivot.quantity');
+        return $this->getHp();
+    }
+
+    public function isAlive()
+    {
+        if($this->getHp() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function adjustHealth($value, $subtract = true)
+    {
+        if($subtract) {
+            $this->setHealthAttribute(max($this->getHp() - $value, 0));
+        } else {
+            $this->setHealthAttribute(max($this->getHp() + $value, 0));
+        }
     }
 
     public function setHealthAttribute($value)
     {
         $this->hp = $value;
+        if($this->hp <= 0) {
+            $this->delete();
+        }
     }
 
-    public function getHealthAttribute()
+    private function getHp()
     {
-
-        if(count($this->types())) {
-            $this->hp = $this->types->sum('pivot.quantity');
-        } else {
-            $this->hp = 1;
+        if($this->hp === null) {
+            if(count($this->types())) {
+                $this->hp = 10 + $this->types->sum('pivot.quantity');
+            } else {
+                $this->hp = 10;
+            }
         }
-
         return $this->hp;
+    }
+
+    public function getLevelAttribute()
+    {
+        return $this->types->sum('pivot.quantity');
     }
 
     public function getStat($stat)
@@ -110,24 +139,6 @@ class Minion extends Model
         return $this->stats->max();
     }
 
-    public function alive()
-    {
-        if($this->health > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function adjustHealth($value, $subtract = true)
-    {
-        if($subtract) {
-            $this->setHealthAttribute(max($this->hp - $value, 0));
-        } else {
-            $this->setHealthAttribute(max($this->hp + $value, 0));
-        }
-    }
-
     private function calcAttribute($attribute, $base = 1) {
         $array = [];
         foreach($this->types as $type) {
@@ -142,10 +153,11 @@ class Minion extends Model
                                 $change = $base - $modifier->value;
                                 break;
                             case '+%':
-                                $change = $base + app('MathHelper')::percentage($modifier->value, $base);
+                                $percentage = app('MathHelper')->percentage($modifier->value, $base);
+                                $change = $base + $percentage;
                                 break;
                             case '-%':
-                                $change = $base - app('MathHelper')::percentage($modifier->value, $base);
+                                $change = $base - app('MathHelper')->percentage($modifier->value, $base);
                                 break;
                             default:
                                 $change = $base;
@@ -157,7 +169,7 @@ class Minion extends Model
                 }
             }
         }
-        return $base + array_sum($array);
+        return max($base + array_sum($array), 0);
     }
 
 

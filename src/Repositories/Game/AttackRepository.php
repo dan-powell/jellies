@@ -48,6 +48,8 @@ class AttackRepository extends AbstractModelRepository
 
             $battle = $this->battleLogic->engage($minion, $user->minions->random());
 
+    
+
             $attack = $this->model;
 
             $attack->minion = '$minion';
