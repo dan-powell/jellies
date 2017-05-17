@@ -21,7 +21,7 @@
                 Defence: {{ $model->getStat('defence') }}
             </div>
             <div>
-                Initiative: {{ $model->getStat('initiative]') }}
+                Initiative: {{ $model->getStat('initiative') }}
             </div>
         </div>
     </div>

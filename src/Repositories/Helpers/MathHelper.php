@@ -5,10 +5,10 @@ namespace DanPowell\Jellies\Repositories\Helpers;
 class MathHelper
 {
 
-    static function percentage($total, $number)
+    static function percentage($percentage, $value)
     {
-        if ( $total > 0 ) {
-            return round($number / ($total / 100),2);
+        if ( $value > 0 ) {
+            return ($percentage / 100) * $value;
         } else {
             return 0;
         }

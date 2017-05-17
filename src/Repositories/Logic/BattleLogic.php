@@ -42,15 +42,26 @@ class BattleLogic implements BattleLogicInterface
 
         // Resolve combat in initiative order
         if ($this->attacker->getStat('initiative') >= $this->defender->getStat('initiative')) {
+
             $this->fight($this->attacker, $this->defender);
-            $this->fight($this->defender, $this->attacker);
+
+            if($this->attacker->alive && $this->defender->alive) {
+                $this->fight($this->defender, $this->attacker);
+            }
         } else {
             $this->fight($this->defender, $this->attacker);
-            $this->fight($this->attacker, $this->defender);
+            if($this->attacker->alive && $this->defender->alive) {
+                $this->fight($this->attacker, $this->defender);
+            }
         }
 
+
+
+        \Debugbar::info($this->attacker->health);
+        \Debugbar::info($this->defender->health);
+
         // If there are creatures still alive, go for another round
-        if($this->attacker->health > 0 || $this->defender->health > 0) {
+        if($this->attacker->alive || $this->defender->alive) {
             $this->resolveCombatRound();
         } else {
             if ($this->attacker->health > 0) {
@@ -66,13 +77,12 @@ class BattleLogic implements BattleLogicInterface
 
         // Make a record of the damage;
 
-
         // Add a 50% chance for retaliation
-        if(rand(0,1)) {
-            // Resolve retaliation
-            $damage = $this->counter($attacker, $defender);
-
-        }
+        // if(rand(0,1)) {
+        //     // Resolve retaliation
+        //     $damage = $this->counter($attacker, $defender);
+        //
+        // }
     }
 
 

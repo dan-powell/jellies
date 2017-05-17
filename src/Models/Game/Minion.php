@@ -13,7 +13,7 @@ class Minion extends Model
 
     use SoftDeletes;
 
-    public $health = null;
+    public $hp = null;
 
     /**
     * The "booting" method of the model.
@@ -73,16 +73,21 @@ class Minion extends Model
         return $this->types->sum('pivot.quantity');
     }
 
+    public function setHealthAttribute($value)
+    {
+        $this->hp = $value;
+    }
+
     public function getHealthAttribute()
     {
 
-        if(isset($this->types) && count($this->types)) {
-            $this->health = $this->types->sum('pivot.quantity');
+        if(count($this->types())) {
+            $this->hp = $this->types->sum('pivot.quantity');
         } else {
-            $this->health = 1;
+            $this->hp = 1;
         }
 
-        return $this->health;
+        return $this->hp;
     }
 
     public function getStat($stat)
@@ -105,11 +110,6 @@ class Minion extends Model
         return $this->stats->max();
     }
 
-    public function setHealthAttribute($value)
-    {
-        $this->health = $value;
-    }
-
     public function alive()
     {
         if($this->health > 0) {
@@ -122,9 +122,9 @@ class Minion extends Model
     public function adjustHealth($value, $subtract = true)
     {
         if($subtract) {
-            $this->setHealthAttribute(max($this->health - $value, 0));
+            $this->setHealthAttribute(max($this->hp - $value, 0));
         } else {
-            $this->setHealthAttribute(max($this->health + $value, 0));
+            $this->setHealthAttribute(max($this->hp + $value, 0));
         }
     }
 
@@ -142,10 +142,10 @@ class Minion extends Model
                                 $change = $base - $modifier->value;
                                 break;
                             case '+%':
-                                $change = $base + \MathHelper::percentage($modifier->value, $base);
+                                $change = $base + app('MathHelper')::percentage($modifier->value, $base);
                                 break;
                             case '-%':
-                                $change = $base - \MathHelper::percentage($modifier->value, $base);
+                                $change = $base - app('MathHelper')::percentage($modifier->value, $base);
                                 break;
                             default:
                                 $change = $base;

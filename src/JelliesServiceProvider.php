@@ -26,6 +26,10 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->app->bind('DanPowell\Jellies\Repositories\Logic\BattleLogicInterface', config('jellies.logic.classes.battle'));
 
+        //$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $this->app->singleton('MathHelper', 'DanPowell\Jellies\Repositories\Helpers\MathHelper');
+
+
     }
 
     /**
