@@ -6,12 +6,13 @@
         {{ trans('jellies::minion.create.title') }}
     </h1>
 
-    @if(isset($types) && count($types))
 
-        {!! Form::open(['route' => 'minion.store']) !!}
 
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.types') }}</strong></div>
+    {!! Form::open(['route' => 'minion.store']) !!}
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.types') }}</strong></div>
+            @if(isset($types) && count($types))
                 <div class="panel-body">
 
                     {{ trans('jellies::type.attribute.name') }}
@@ -26,18 +27,19 @@
                     @endforeach
 
                 </div>
+            @endif
 
-                <div class="panel-footer">
-                    <button type="submit" class="btn btn-primary">
-                        {{ trans('jellies::incursion.create.action') }}
-                    </button>
-                </div>
-
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-primary">
+                    {{ trans('jellies::incursion.create.action') }}
+                </button>
             </div>
 
-        {!! Form::close() !!}
+        </div>
 
-    @endif
+    {!! Form::close() !!}
+
+
 
 @endsection
 

@@ -54,7 +54,11 @@ class MinionController extends Controller
     public function store(MinionStoreRequest $request)
     {
 
-        $types = $request->get('type');
+        if(!$request->get('type')) {
+            $types = [];
+        } else {
+            $request->get('type');
+        }
 
         $minion = $this->repo->store($types);
 

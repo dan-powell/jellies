@@ -37,8 +37,6 @@ class UserRepository extends AbstractModelRepository
     public function adjustTypes($types, $subtract = true, $user = null)
     {
 
-
-
         // If a user is not given, assume that the current one is required
         if(!$user) {
             $user = $this->current();
