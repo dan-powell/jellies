@@ -12,7 +12,7 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        $types = factory(DanPowell\Jellies\Models\Game\Type::class, rand(6,12))->create();
+        $types = factory(DanPowell\Jellies\Models\Game\Type::class, rand(32,64))->create();
 
         foreach($types as $type) {
             for ($i = 0; $i < rand(0, 3); $i++) {

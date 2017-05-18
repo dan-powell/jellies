@@ -40,22 +40,33 @@ class AttackRepository extends AbstractModelRepository
     public function store($user_id, $minion_id)
     {
 
-        $user = $this->userRepo->query()->with('minions')->find($user_id);
+        $target_user = $this->userRepo->query()->with('minions')->find($user_id);
 
-        $minion = $this->minionRepo->query()->find($minion_id);
+        $minion_attacker = $this->minionRepo->query()->find($minion_id);
+        $minion_defender = $target_user->minions->random();
 
         if($this->userRepo->spendAction()) {
 
-            $battle = $this->battleLogic->engage($minion, $user->minions->random());
+            $battle = $this->battleLogic->engage($minion_attacker, $minion_defender);
 
-    
+            if(!$minion_attacker->isAlive()) {
+                //$target_user->adjustTypes($minion_attacker->types->keyBy('id')->pluck('pivot.quantity'));
+            }
+
+
+            if(!$minion_defender->isAlive()) {
+                $this->userRepo->adjustTypes($minion_defender->types->keyBy('id')->pluck('pivot.quantity'));
+            }
+
+
+
 
             $attack = $this->model;
 
             $attack->minion = '$minion';
             $attack->log = $battle['log'];
             $attack->successful = $battle['successful'];
-            $attack->defender_id = $user->id;
+            $attack->defender_id = $target_user->id;
 
             $this->userRepo->current()->attacks()->save($attack);
 
@@ -67,7 +78,7 @@ class AttackRepository extends AbstractModelRepository
             $defence->successful = $battle['successful'] ? false : true;
             $defence->attacker_id = $this->userRepo->current()->id;
 
-            $user->defences()->save($defence);
+            $target_user->defences()->save($defence);
 
 
 
