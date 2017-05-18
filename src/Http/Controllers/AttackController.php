@@ -39,7 +39,7 @@ class AttackController extends Controller
     public function create()
     {
         return view('jellies::attack.create.attackCreate')->with([
-            'users' => $this->userRepo->getWithMinions(),
+            'users' => $this->userRepo->query()->available()->with('minions')->get(),
             'minions' => $this->userRepo->current()->minions()->get()
         ]);
     }

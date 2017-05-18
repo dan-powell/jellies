@@ -52,6 +52,15 @@ class User extends Authenticatable
         return $this->hasMany('DanPowell\Jellies\Models\Game\Defence');
     }
 
+    /****************
+    * Local Scopes
+    ****************/
+
+    public function scopeAvailable($query)
+    {
+        return $query->has('minions');
+    }
+
 
     /****************
     * Attributes

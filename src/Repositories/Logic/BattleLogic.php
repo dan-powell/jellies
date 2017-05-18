@@ -89,7 +89,12 @@ class BattleLogic implements BattleLogicInterface
         \Debugbar::info($attacker->name . ' vs ' . $defender->name);
 
         // Resolve attack
-        $damage = $attacker->getStat('attack') / $defender->getStat('defence');
+        if($attacker->getStat('attack') != 0 && $defender->getStat('defence') != 0) {
+            $damage = $attacker->getStat('attack') / $defender->getStat('defence');
+        } else {
+            $damage = 0;
+        }
+
 
         \Debugbar::info('round damage: ' . $damage);
 

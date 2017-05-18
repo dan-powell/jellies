@@ -33,37 +33,56 @@ class UserRepository extends AbstractModelRepository
         return $this->current()->types()->get();
     }
 
-    public function getWithMinions()
-    {
-        return $this->query()->with('minions')->get();
-    }
 
-
-
-
-    public function adjustTypes($types, $subtract = true)
+    public function adjustTypes($types, $subtract = true, $user = null)
     {
 
-        $user_types = $this->getTypes();
 
-        $stuff = [];
-        foreach($user_types as $user_type) {
 
-            if($subtract) {
-                $quantity = $user_type->pivot->quantity - $types[$user_type->id];
-            } else {
-                $quantity = $user_type->pivot->quantity + $types[$user_type->id];
-            }
+        // If a user is not given, assume that the current one is required
+        if(!$user) {
+            $user = $this->current();
+        }
+
+
+
+        // Get an array of the user's existing types & quantities
+        $user_types = $user->types->pluck('pivot.quantity', 'id');
+
+        foreach($types as $type_id => $quantity) {
 
             if ($quantity < 0) {
                 return false;
             }
 
-            $stuff[$user_type->id] = ['quantity' => $quantity];
+            if(isset($user_types[$type_id])) {
+
+                if($subtract) {
+                    $user_types[$type_id] -= $quantity;
+                } else {
+                    $user_types[$type_id] += $quantity;
+                }
+
+            } else {
+                $user_types[$type_id] = $quantity;
+            }
+
+            if ($user_types[$type_id] < 0) {
+                $user_types[$type_id] = 0;
+            }
 
         }
 
-        $this->current()->types()->sync($stuff);
+        $filtered = $user_types->reject(function ($value, $key) {
+            return $value <= 0;
+        });
+
+        $array = [];
+        foreach($filtered as $type_id => $quantity) {
+            $array[$type_id] = ['quantity' => $quantity];
+        }
+
+        $user->types()->sync($array);
 
         return true;
 
