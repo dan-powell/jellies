@@ -51,6 +51,7 @@
                             <li class=""><a href="{{ route('defence.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::defence.index.tooltip') }}">{{ trans('jellies::defence.title') }}</a></li>
                             <li class=""><a href="{{ route('type.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::type.index.tooltip') }}">{{ trans('jellies::type.title') }}</a></li>
                             <li class=""><a href="{{ route('realm.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::realm.index.tooltip') }}">{{ trans('jellies::realm.title') }}</a></li>
+                            <li class=""><a href="{{ route('incursion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::incursion.index.tooltip') }}">{{ trans('jellies::incursion.title') }}</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

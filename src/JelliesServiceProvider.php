@@ -28,7 +28,7 @@ class JelliesServiceProvider extends \Illuminate\Support\ServiceProvider
 
         //$loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $this->app->singleton('MathHelper', 'DanPowell\Jellies\Repositories\Helpers\MathHelper');
-
+        $this->app->singleton('MiscHelper', 'DanPowell\Jellies\Repositories\Helpers\MiscHelper');
 
     }
 

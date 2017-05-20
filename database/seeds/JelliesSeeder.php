@@ -45,7 +45,14 @@ class JelliesSeeder extends Seeder
         DB::table('minions')->truncate();
         DB::table('minion_type')->truncate();
         DB::table('realms')->truncate();
-        DB::table('realm_type')->truncate();
+        DB::table('zones')->truncate();
+        DB::table('zone_enemy')->truncate();
+        DB::table('zone_type')->truncate();
+        DB::table('enemies')->truncate();
+        DB::table('enemy_type')->truncate();
+        DB::table('incursions')->truncate();
+        DB::table('incursion_minion')->truncate();
+        DB::table('encounters')->truncate();
         DB::table('types')->truncate();
         DB::table('type_effective')->truncate();
         DB::table('type_ineffective')->truncate();

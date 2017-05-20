@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasMany('DanPowell\Jellies\Models\Game\Defence');
     }
 
+    public function incursions()
+    {
+        return $this->hasMany('DanPowell\Jellies\Models\Game\Incursion');
+    }
+
     /****************
     * Local Scopes
     ****************/

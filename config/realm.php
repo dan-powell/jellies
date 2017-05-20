@@ -9,4 +9,11 @@ return [
     ],
 
 
+    'zone_encounters' => [
+        'min' => '4',
+        'max' => '10'
+    ],
+
+
+
 ];

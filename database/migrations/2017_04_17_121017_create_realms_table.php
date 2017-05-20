@@ -19,10 +19,21 @@ class CreateRealmsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('realm_type', function (Blueprint $table) {
+        Schema::create('zones', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('realm_id')->unsigned();
-            $table->integer('type_id')->unsigned();
+            $table->string('name');
+            $table->integer('number');
+            $table->integer('size');
+            $table->integer('level');
+            $table->timestamps();
             $table->foreign('realm_id')->references('id')->on('realms')->onDelete('cascade');
+        });
+
+        Schema::create('zone_type', function (Blueprint $table) {
+            $table->integer('zone_id')->unsigned();
+            $table->integer('type_id')->unsigned();
+            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
@@ -34,7 +45,8 @@ class CreateRealmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('realm_type');
+        Schema::dropIfExists('zone_type');
+        Schema::dropIfExists('zones');
         Schema::dropIfExists('realms');
     }
 }

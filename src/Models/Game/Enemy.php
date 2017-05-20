@@ -3,29 +3,11 @@
 namespace DanPowell\Jellies\Models\Game;
 
 use Illuminate\Database\Eloquent\Model;
-use DanPowell\Jellies\Models\Scopes\OwnedByUserScope;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Minion extends Model
+class Enemy extends Model
 {
 
-    use SoftDeletes;
-
     public $hp = null;
-
-    /**
-    * The "booting" method of the model.
-    *
-    * @return void
-    */
-    // protected static function boot()
-    // {
-    //     parent::boot();
-    //
-    //     // Only return characters that are owned by user
-    //     //static::addGlobalScope(new OwnedByUserScope());
-    //
-    // }
 
     protected $fillable = [
         // Details
@@ -46,33 +28,26 @@ class Minion extends Model
     * Relationships
     ****************/
 
-    public function user()
+    public function zone()
     {
-        return $this->belongsTo('DanPowell\Jellies\Models\User');
+        return $this->belongsTo('DanPowell\Jellies\Models\Game\Zone');
     }
 
     public function types()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'minion_type')->withPivot('quantity');
-    }
-
-    public function incursions()
-    {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Incursion', 'incursion_minion', 'minion_id', 'incursion_id');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'enemy_type')->withPivot('quantity');
     }
 
     /****************
     * Local Scopes
     ****************/
 
-    public function scopeAvailable($query)
-    {
-        return $query->doesntHave('incursions');
-    }
+
 
     /****************
     * Attributes
     ****************/
+
 
     public function getHealthAttribute()
     {
