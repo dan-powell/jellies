@@ -3,7 +3,8 @@
 return [
 
     'classes' => [
-        'battle' => 'DanPowell\Jellies\Repositories\Logic\BattleLogic',
+        'userbattle' => 'DanPowell\Jellies\Repositories\Logic\UserBattleLogic',
+        'zonebattle' => 'DanPowell\Jellies\Repositories\Logic\ZoneBattleLogic',
         'damage' => 'DanPowell\Jellies\Repositories\Logic\DamageLogic'
     ]
 

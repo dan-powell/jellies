@@ -2,11 +2,11 @@
 
 namespace DanPowell\Jellies\Repositories\Logic;
 
-use DanPowell\Jellies\Repositories\Logic\BattleLogicInterface;
+use DanPowell\Jellies\Repositories\Logic\UserBattleLogicInterface;
 
 use DanPowell\Jellies\Repositories\Logic\DamageLogicInterface;
 
-class BattleLogic implements BattleLogicInterface
+class UserBattleLogic implements UserBattleLogicInterface
 {
     private $damageLogic;
 

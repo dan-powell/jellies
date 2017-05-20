@@ -9,6 +9,8 @@ use DanPowell\Jellies\Models\Game\Encounter;
 use DanPowell\Jellies\Repositories\Game\EnemyRepository;
 use DanPowell\Jellies\Helpers\EncounterCombat;
 
+use DanPowell\Jellies\Repositories\Logic\ZoneBattleLogicInterface;
+
 class EncounterRepository extends AbstractModelRepository
 {
 
@@ -16,11 +18,12 @@ class EncounterRepository extends AbstractModelRepository
     private $userRepo;
     private $enemyRepo;
 
-    public function __construct(EnemyRepository $enemyRepo)
+    public function __construct(EnemyRepository $enemyRepo, ZoneBattleLogicInterface $battleLogic)
     {
         $this->model = new Encounter();
 
         $this->enemyRepo = $enemyRepo;
+        $this->battleLogic = $battleLogic;
     }
 
     public function encounter($incursion)
@@ -34,8 +37,7 @@ class EncounterRepository extends AbstractModelRepository
         $this->model->enemies = $enemies;
         $this->model->zone_id = $incursion->zone->id;
 
-        $encounterCombat = new EncounterCombat($minions, $enemies);
-        $details = $encounterCombat->engage();
+        $details = $this->battleLogic->engage($minions, $enemies);
 
         $this->model->fill($details);
 

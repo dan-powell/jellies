@@ -9,7 +9,7 @@ use DanPowell\Jellies\Models\Game\Attack;
 use DanPowell\Jellies\Repositories\UserRepository;
 use DanPowell\Jellies\Repositories\Game\MinionRepository;
 use DanPowell\Jellies\Repositories\Game\DefenceRepository;
-use DanPowell\Jellies\Repositories\Logic\BattleLogicInterface;
+use DanPowell\Jellies\Repositories\Logic\UserBattleLogicInterface;
 
 class AttackRepository extends AbstractModelRepository
 {
@@ -21,7 +21,7 @@ class AttackRepository extends AbstractModelRepository
         MinionRepository $minionRepo,
         UserRepository $userRepo,
         DefenceRepository $defenceRepo,
-        BattleLogicInterface $battleLogic
+        UserBattleLogicInterface $battleLogic
         )
     {
         $this->model = new Attack();

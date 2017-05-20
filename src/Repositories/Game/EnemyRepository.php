@@ -38,4 +38,19 @@ class EnemyRepository extends AbstractModelRepository
         return $enemies;
     }
 
+
+    // Returns a random collection of enemies
+    public function getRandomEnemy($zone_id = null) {
+
+        if($zone_id) {
+            $zone = $this->zoneRepo->query()->with('enemies')->find($zone_id);
+            $enemies = $zone->enemies;
+        } else {
+            $enemies = $this->query()->get();
+        }
+
+        return $enemies->random();
+    }
+
+
 }

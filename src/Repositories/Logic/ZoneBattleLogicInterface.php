@@ -2,7 +2,7 @@
 
 namespace DanPowell\Jellies\Repositories\Logic;
 
-interface BattleLogicInterface
+interface ZoneBattleLogicInterface
 {
 
     public function engage($attacker, $defender);

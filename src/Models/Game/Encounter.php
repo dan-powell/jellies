@@ -26,11 +26,10 @@ class Encounter extends Model
         'minions_after',
         'enemies',
         'log',
-        'victory',
+        'successful',
         'minion_damage',
         'enemy_damage',
         'rounds',
-        'points'
     ];
 
     protected $dates = [

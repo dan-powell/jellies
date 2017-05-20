@@ -75,9 +75,6 @@ class Enemy extends Model
     public function setHealthAttribute($value)
     {
         $this->hp = $value;
-        if($this->hp <= 0) {
-            $this->delete();
-        }
     }
 
     private function getHp()
