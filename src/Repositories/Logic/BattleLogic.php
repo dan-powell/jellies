@@ -4,8 +4,11 @@ namespace DanPowell\Jellies\Repositories\Logic;
 
 use DanPowell\Jellies\Repositories\Logic\BattleLogicInterface;
 
+use DanPowell\Jellies\Repositories\Logic\DamageLogicInterface;
+
 class BattleLogic implements BattleLogicInterface
 {
+    private $damageLogic;
 
     private $attacker;
     private $defender;
@@ -14,9 +17,10 @@ class BattleLogic implements BattleLogicInterface
     private $rounds = 0;
     private $log;
 
-    public function __construct()
+    public function __construct(DamageLogicInterface $damageLogic)
     {
         $this->log = collect([]);
+        $this->damageLogic = $damageLogic;
     }
 
     public function engage($attacker, $defender) {
@@ -89,12 +93,7 @@ class BattleLogic implements BattleLogicInterface
         \Debugbar::info($attacker->name . ' vs ' . $defender->name);
 
         // Resolve attack
-        if($attacker->getStat('attack') != 0 && $defender->getStat('defence') != 0) {
-            $damage = $attacker->getStat('attack') / $defender->getStat('defence');
-        } else {
-            $damage = 0;
-        }
-
+        $damage = $this->damageLogic->damage($attacker, $defender);
 
         \Debugbar::info('round damage: ' . $damage);
 
