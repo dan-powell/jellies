@@ -1,4 +1,4 @@
-@if(isset($zones) && count($zones))
+@if(isset($models) && count($models))
     <table class="table table-striped table-hover">
         <tr>
             <th></th>
@@ -8,10 +8,10 @@
             <th>{{ trans('jellies::zone.attribute.level') }}</th>
         </tr>
 
-        @foreach ($zones as $model)
+        @foreach ($models as $model)
             <tr onclick="window.open('{{ route('zone.show', $model->id) }}', '_self')">
                 <td>
-                    <span class="game-icon game-icon-annexation fa-2x"></span>
+                    <span class="fa fa-cloud fa-2x"></span>
                 </td>
                 <td>
                     {{ $model->number }}

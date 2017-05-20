@@ -1,15 +1,15 @@
-@if(isset($enemies) && count($enemies))
+@if(isset($models) && count($models))
     <table class="table table-striped table-hover">
         <tr>
             <th></th>
             <th>{{ trans('jellies::enemy.attribute.name') }}</th>
             <th>{{ trans('jellies::enemy.attribute.level') }}</th>
-            @foreach(config('jellies.enemy.stats') as $stat)
+            @foreach(config('jellies.minion.stats') as $key => $stat)
                 <th>{{ trans('jellies::enemy.attribute.' . $stat) }}</th>
             @endforeach
         </tr>
 
-        @foreach ($enemies as $model)
+        @foreach ($models as $model)
             <tr onclick="window.open('{{ route('enemy.show', $model->id) }}', '_self')">
                 <td>
                     <span class="fa fa-user"></span>

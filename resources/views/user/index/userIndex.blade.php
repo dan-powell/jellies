@@ -5,7 +5,7 @@
 
     <div class="panel panel-default">
         @if(isset($models) && count($models))
-            @include('jellies::user.list.userList', ['users' => $models])
+            @include('jellies::user.list.userList', ['users' => $models, 'details' => true])
         @else
             <div class="panel-body">
                 <p>{{ trans('jellies::user.index.empty') }}</p>

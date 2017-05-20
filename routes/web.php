@@ -7,9 +7,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('dashboard', 'DanPowell\Jellies\Http\Controllers\DashboardController@index')->name('dashboard');
 
         Route::resource('user', 'DanPowell\Jellies\Http\Controllers\UserController', ['only' => [
-            'show'
+            'index', 'show'
         ]]);
-        Route::get('showtypes', 'DanPowell\Jellies\Http\Controllers\UserController@showtypes')->name('user.types');
+        Route::get('usertypes', 'DanPowell\Jellies\Http\Controllers\UserController@showtypes')->name('user.types');
 
         Route::resource('message', 'DanPowell\Jellies\Http\Controllers\MessageController');
 

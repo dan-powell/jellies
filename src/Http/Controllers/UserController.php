@@ -19,9 +19,18 @@ class UserController extends Controller
         $this->repo = $repo;
     }
 
+    public function index()
+    {
+        return view('jellies::user.index.userIndex')->with([
+            'models' => $this->repo->query()->get()
+        ]);
+    }
+
     public function show($id)
     {
-
+        return view('jellies::user.show.userShow')->with([
+            'model' => $this->repo->query()->find($id)
+        ]);
     }
 
     public function showtypes()

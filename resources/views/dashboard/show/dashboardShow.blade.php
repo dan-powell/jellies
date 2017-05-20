@@ -92,26 +92,7 @@
 
     <h3 class="">{{ trans('jellies::leaderboard.title') }}</h3>
 
-    <table class="table">
-        <tr>
-            <th>{{ trans('jellies::leaderboard.attribute.rank') }}</th>
-            <th>{{ trans('jellies::leaderboard.attribute.name') }}</th>
-            <th>{{ trans('jellies::leaderboard.attribute.points') }}</th>
-        </tr>
-        @foreach ($leaderboard as $key => $user)
-            <tr>
-                <td>
-                    {{ $key + 1 }}
-                </td>
-                <td>
-                    <span class="fa fa-user"></span> {{ $user->name }}
-                </td>
-                <td>
-                    <span class="badge bg-blue">{{ $user->points }}</span>
-                </td>
-            </tr>
-        @endforeach
-    </table>
+    @include('jellies::user.list.userList', ['users' => $leaderboard])
 
 @endsection
 

@@ -1,4 +1,4 @@
-@extends('jellies::attack.attackBase')
+@extends('jellies::user.userBase')
 
 @section('main')
     <h1>{{ trans('jellies::attack.index.title') }}</h1>

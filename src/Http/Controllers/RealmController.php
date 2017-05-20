@@ -26,7 +26,7 @@ class RealmController extends Controller
     public function show($id)
     {
         return view('jellies::realm.show.realmShow')->with([
-            'model' => $this->repo->query()->with('types')->find($id)
+            'model' => $this->repo->query()->with('zones')->find($id)
         ]);
     }
 

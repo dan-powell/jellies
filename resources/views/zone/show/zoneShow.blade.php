@@ -3,7 +3,7 @@
 @section('main')
 
     <h1>
-        <span class="game-icon game-icon-annexation"></span> {{ $model->name }}
+        <span class="fa fa-cloud"></span> {{ $model->name }}
     </h1>
 
     <div class="panel panel-default">
@@ -20,7 +20,7 @@
             <h3 class="panel-title">{{ trans('jellies::enemy.title') }}</h3>
         </div>
         @if(isset($model->enemies) && count($model->enemies))
-            @include('jellies::enemy.list.enemyList', ['enemies' => $model->enemies])
+            @include('jellies::enemy.list.enemyList', ['models' => $model->enemies])
         @else
             <div class="panel-body">
                 <p>{{ trans('jellies::enemy.index.empty') }}</p>

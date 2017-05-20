@@ -15,6 +15,6 @@ $factory->define(DanPowell\Jellies\Models\Game\Zone::class, function (Faker\Gene
         'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
 
         'name' => $randomNameGen->getName(),
-        'size' => $faker->numberBetween(config('jellies.zone.encounters.min'), config('jellies.zone.encounters.max'))
+        'size' => $faker->numberBetween(config('jellies.realm.zone.size.min'), config('jellies.realm.zone.size.max'))
     ];
 });

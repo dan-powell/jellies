@@ -8,7 +8,7 @@
         @foreach ($realms as $model)
             <tr onclick="window.open('{{ route('realm.show', $model->id) }}', '_self')">
                 <td>
-                    <span class="game-icon game-icon-night-sky fa-2x"></span>
+                    <span class="fa fa-globe fa-2x"></span>
                 </td>
                 <td>
                     <a href="{{ route('realm.show', $model->id) }}">

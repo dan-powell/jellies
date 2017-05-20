@@ -1,18 +1,23 @@
 @extends('jellies::base')
 
 @section('sidebar')
-    <h2>{{ trans('jellies::minion.title') }}</h2>
+    <h2>{{ trans('jellies::user.title') }}</h2>
     <ul class="nav nav-pills nav-stacked">
+
         <li role="presentation" class="">
-            <a href="{{ route('minion.index') }}">{{ trans('jellies::minion.index.action') }}</a>
+            <a href="{{ route('user.index') }}">{{ trans('jellies::user.index.action') }}</a>
         </li>
 
         <li role="presentation" class="">
-            <a href="{{ route('minion.deleted') }}">{{ trans('jellies::minion.indexdeleted.action') }}</a>
+            <a href="{{ route('attack.index') }}">{{ trans('jellies::attack.index.action') }}</a>
         </li>
 
         <li role="presentation" class="">
-            <a href="{{ route('minion.create') }}">{{ trans('jellies::minion.create.action') }}</a>
+            <a href="{{ route('defence.index') }}">{{ trans('jellies::defence.index.action') }}</a>
+        </li>
+
+        <li role="presentation" class="">
+            <a href="{{ route('attack.create') }}">{{ trans('jellies::attack.create.action') }}</a>
         </li>
     </ul>
 @endsection

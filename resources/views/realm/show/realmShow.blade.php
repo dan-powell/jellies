@@ -3,14 +3,14 @@
 @section('main')
 
     <h1>
-        <span class="game-icon game-icon-night-sky"></span> {{ $model->name }}
+        <span class="fa fa-globe"></span> {{ $model->name }}
     </h1>
 
     <div class="panel panel-default">
         <div class="panel-heading"><strong>{{ trans('jellies::realm.attribute.types') }}</strong></div>
         <div class="panel-body">
-            @if(isset($model->types) && count($model->types))
-                @include('jellies::type.list.typeList', ['models' => $model->types])
+            @if(isset($model->zones) && count($model->zones))
+                @include('jellies::zone.list.zoneList', ['models' => $model->zones])
             @endif
         </div>
     </div>

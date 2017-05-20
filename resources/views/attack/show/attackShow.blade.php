@@ -1,4 +1,4 @@
-@extends('jellies::attack.attackBase')
+@extends('jellies::user.userBase')
 
 @section('main')
 
