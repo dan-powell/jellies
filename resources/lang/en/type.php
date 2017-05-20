@@ -2,20 +2,15 @@
 
 return [
 
-    'title' => 'Minions',
-    'plural' => 'minion|minions',
+    'title' => 'Types',
+    'plural' => 'type|types',
 
     'attribute' => [
         'name' => 'Name',
-        'stats' => 'Stats',
-        'attack' => 'Attack',
-        'defence' => 'Defence',
-        'initiative' => 'Initiative',
-        'health' => 'Health (max HP)',
-        'hp' => 'HP',
-        'level' => 'Level',
-        'active' => 'Raiding',
-        'types' => 'Ingredients',
+        'effective' => 'Strong Against',
+        'ineffective' => 'Weak Against',
+        'modifiers' => 'Attribute Modifiers',
+        'quantity' => 'Quantity',
     ],
 
     'index' => [
@@ -46,9 +41,9 @@ return [
         'action' => 'Create Minion',
         'title' => 'Create Minion',
         'tooltip' => 'Create Minion',
-        'types' => 'Choose some ingredients for your minion (optional)',
+        'types' => 'Choose the ingredients of your minion',
         'available' => 'Available',
-        'help' => 'Minions can be created to serve you. Choose the ingredients you would like to use and click create. Minions do not need to have any any ingredients, but will only have basic stats.',
+        'help' => 'Minions can be created to serve you.',
         'danger' => 'Creating a minion costs ' . config('jellies.minion.cost') . ' ' . trans_choice('jellies::game.point.plural', config('jellies.minion.cost')),
         'success' => 'Minion successfully summoned',
         'error' => 'Minion creation failed. Do you have enough points?',

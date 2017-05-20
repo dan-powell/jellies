@@ -71,7 +71,9 @@ class User extends Authenticatable
     * Attributes
     ****************/
 
-
+    public function getPointsAttribute() {
+        return $this->types->sum('pivot.quantity');
+    }
 
 
 }

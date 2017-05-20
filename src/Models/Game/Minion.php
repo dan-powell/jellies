@@ -11,7 +11,7 @@ class Minion extends Model
 
     use SoftDeletes;
 
-    public $hp = null;
+    private $hp = null;
 
     /**
     * The "booting" method of the model.
@@ -109,9 +109,9 @@ class Minion extends Model
     {
         if($this->hp === null) {
             if(count($this->types())) {
-                $this->hp = 10 + $this->types->sum('pivot.quantity');
+                $this->hp = config('jellies.minion.base_hp') + $this->types->sum('pivot.quantity');
             } else {
-                $this->hp = 10;
+                $this->hp = config('jellies.minion.base_hp');
             }
         }
         return $this->hp;
@@ -119,12 +119,12 @@ class Minion extends Model
 
     public function getLevelAttribute()
     {
-        return $this->types->sum('pivot.quantity');
+        return $this->types->sum('pivot.quantity') + 1;
     }
 
     public function getStat($stat)
     {
-        return $this->calcAttribute($stat, 10);
+        return $this->calcAttribute($stat, config('jellies.minion.base_stats.' . $stat));
     }
 
     // Returns just the stats of the character
@@ -175,6 +175,43 @@ class Minion extends Model
         return max($base + array_sum($array), 0);
     }
 
+    public function getEffectiveAttribute()
+    {
+        $collection = collect([]);
+
+        foreach($this->types as $key => $type) {
+            if(count($type->effective)) {
+                foreach($type->effective->keyBy('id') as $id => $effective) {
+                    if(!$collection->contains(function ($value, $key) use ($id){
+                        return $key == $id;
+                    })) {
+                        $collection->put($id, $effective->name);
+                    }
+                }
+            }
+        }
+
+        return $collection;
+    }
+
+    public function getIneffectiveAttribute()
+    {
+        $collection = collect([]);
+
+        foreach($this->types as $key => $type) {
+            if(count($type->ineffective)) {
+                foreach($type->ineffective->keyBy('id') as $id => $ineffective) {
+                    if(!$collection->contains(function ($value, $key) use ($id){
+                        return $key == $id;
+                    })) {
+                        $collection->put($id, $ineffective->name);
+                    }
+                }
+            }
+        }
+
+        return $collection;
+    }
 
     /****************
     * Handy Methods

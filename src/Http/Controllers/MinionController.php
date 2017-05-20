@@ -47,7 +47,7 @@ class MinionController extends Controller
     public function create()
     {
         return view('jellies::minion.create.minionCreate')->with([
-            'types' => $this->userRepo->getTypes()
+            'types' => $this->userRepo->current()->types()->with('modifiers', 'effective', 'ineffective')->get()
         ]);
     }
 

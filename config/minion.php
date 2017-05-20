@@ -20,5 +20,13 @@ return [
         'initiative',
     ],
 
+    'base_stats' => [
+        'attack' => 10,
+        'defence' => 10,
+        'initiative' => 10,
+    ],
+
+    'base_hp' => 10
+
 
 ];

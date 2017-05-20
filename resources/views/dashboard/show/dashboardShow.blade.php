@@ -101,7 +101,7 @@
         @foreach ($leaderboard as $key => $user)
             <tr>
                 <td>
-                    {{ $key }}
+                    {{ $key + 1 }}
                 </td>
                 <td>
                     <span class="fa fa-user"></span> {{ $user->name }}

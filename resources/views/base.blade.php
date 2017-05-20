@@ -63,12 +63,17 @@
                             @else
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ trans('jellies::game.point.title') }}">
-                                        <span class="fa fa-car"></span> {{ auth()->user()->types->sum('pivot.quantity') }}
+                                        <span class="fa fa-tint"></span> {{ auth()->user()->types->sum('pivot.quantity') }}
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ route('user.types') }}">
+                                                <strong>{{ trans('jellies::user.types.tooltip') }}</strong>
+                                            </a>
+                                        </li>
                                         @foreach(auth()->user()->types as $type)
                                             <li>
-                                                <a href="{{ route('user.types') }}">
+                                                <a href="{{ route('type.show', $type->id) }}">
                                                     {{ $type->name }} - {{ $type->pivot->quantity }}
                                                 </a>
                                             </li>
@@ -160,7 +165,8 @@
 
     <script>
         $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
         })
     </script>
 
