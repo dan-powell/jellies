@@ -9,7 +9,7 @@
         @foreach ($minions as $model)
             <tr onclick="window.open('{{ route('minion.show', $model->id) }}', '_self')">
                 <td>
-                    <span class="game-icon game-icon-vile-fluid"></span>
+                    <span class="fa fa-paw fa-2x"></span>
                 </td>
                 <td>
                     <a href="{{ route('minion.show', $model->id) }}">

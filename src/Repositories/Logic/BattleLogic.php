@@ -2,11 +2,11 @@
 
 namespace DanPowell\Jellies\Repositories\Logic;
 
-use DanPowell\Jellies\Repositories\Logic\ZoneBattleLogicInterface;
+use DanPowell\Jellies\Repositories\Logic\BattleLogicInterface;
 
 use DanPowell\Jellies\Repositories\Logic\DamageLogicInterface;
 
-class ZoneBattleLogic implements ZoneBattleLogicInterface
+class BattleLogic implements BattleLogicInterface
 {
     private $minions;
     private $enemies;
@@ -49,12 +49,15 @@ class ZoneBattleLogic implements ZoneBattleLogicInterface
         // Setup
         $this->rounds++;
 
+        \Debugbar::info('start round: ' . $this->rounds);
         $this->log('Round ' . $this->rounds);
 
         // Resolve combat in initiative order
         foreach($this->creatures->sortBy(function($creature) {
             return $creature->getStat('initiative');
         }) as $creature) {
+
+            \Debugbar::info('creature attacking. Alive? '. $creature->isAlive());
 
             if($creature->isAlive()) {
 
@@ -71,16 +74,20 @@ class ZoneBattleLogic implements ZoneBattleLogicInterface
 
         }
 
-        // If there are creatures still alive, go for another round
-        if(
-            count($this->minions->filter(function ($minion) {
-                return $minion->isAlive();
-            }))
-            &&
-            count($this->enemies->filter(function ($minion) {
-                return $minion->isAlive();
-            }))
-            ) {
+        $minions_alive = $this->minions->filter(function ($minion) {
+            return $minion->isAlive();
+        });
+
+        \Debugbar::info($minions_alive);
+
+        $enemies_alive = $this->enemies->filter(function ($enemy) {
+            return $enemy->isAlive();
+        });
+
+        \Debugbar::info($enemies_alive);
+
+        // If there are creatures on both sides still alive, go for another round
+        if(count($minions_alive) && count($enemies_alive)) {
             $this->resolveCombatRound();
         } else {
 
@@ -143,7 +150,7 @@ class ZoneBattleLogic implements ZoneBattleLogicInterface
     private function log($message) {
 
             $this->log->push($message);
-        
+
     }
 
     private function saveDamage($damage, $creature) {
