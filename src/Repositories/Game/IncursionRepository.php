@@ -107,11 +107,11 @@ class IncursionRepository extends AbstractModelRepository
     {
         $incursion = $this->query()->find($id);
 
-        $points = $incursion->points;
+        $types = $incursion->types;
 
         $incursion->delete();
 
-        $this->userRepo->addPoints($points);
+        $this->userRepo->adjustTypes($types->pluck('pivot.quantity', 'id'), false);
 
         return $incursion;
 
@@ -126,5 +126,7 @@ class IncursionRepository extends AbstractModelRepository
         $this->encounterRepo->encounter($incursion);
 
     }
+
+
 
 }

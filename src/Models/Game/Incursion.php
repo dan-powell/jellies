@@ -59,6 +59,11 @@ class Incursion extends Model
         return $this->hasMany('DanPowell\Jellies\Models\Game\Encounter');
     }
 
+    public function types()
+    {
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'incursion_type')->withPivot('quantity');
+    }
+
 
     /****************
     * Local Scopes
@@ -83,9 +88,8 @@ class Incursion extends Model
     * Attributes
     ****************/
 
-    public function getPointsAttribute()
-    {
-        return $this->encounters->sum('points');
+    public function getPointsAttribute() {
+        return $this->types->sum('pivot.quantity');
     }
 
     public function getRoundsAttribute()

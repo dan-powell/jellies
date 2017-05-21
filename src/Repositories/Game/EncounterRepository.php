@@ -7,6 +7,7 @@ use DanPowell\Jellies\Repositories\AbstractModelRepository;
 use DanPowell\Jellies\Models\Game\Encounter;
 
 use DanPowell\Jellies\Repositories\Game\EnemyRepository;
+use DanPowell\Jellies\Repositories\Game\IncursionRepository;
 use DanPowell\Jellies\Helpers\EncounterCombat;
 
 use DanPowell\Jellies\Repositories\Logic\BattleLogicInterface;
@@ -18,7 +19,9 @@ class EncounterRepository extends AbstractModelRepository
     private $userRepo;
     private $enemyRepo;
 
-    public function __construct(EnemyRepository $enemyRepo, BattleLogicInterface $battleLogic)
+    public function __construct(
+        EnemyRepository $enemyRepo,
+        BattleLogicInterface $battleLogic)
     {
         $this->model = new Encounter();
 
@@ -44,6 +47,20 @@ class EncounterRepository extends AbstractModelRepository
         $this->model->minions_after = $minions;
 
         $incursion->encounters()->save($this->model);
+
+        $types = collect([]);
+        foreach($enemies->filter(function($enemy) {return !$enemy->isAlive();}) as $enemy) {
+            foreach($enemy->types as $type) {
+                if($types->has($type->id)) {
+                    $id = $type->id;
+                    $types[$id] += 1;
+                } else {
+                    $types->put($type->id, 1);
+                }
+            }
+        }
+
+        $this->addTypes($types, $incursion);
 
         $this->postEncounterCheck($incursion, $minions);
     }
@@ -86,6 +103,41 @@ class EncounterRepository extends AbstractModelRepository
                 ->send();
         }
         */
+
+    }
+
+    public function addTypes($types, $incursion)
+    {
+
+        // Get an array of the user's existing types & quantities
+        $incursion_types = $incursion->types->pluck('pivot.quantity', 'id');
+
+        foreach($types as $type_id => $quantity) {
+
+            if ($quantity < 0) {
+                return false;
+            }
+
+            if(isset($incursion_types[$type_id])) {
+                $incursion_types[$type_id] += $quantity;
+            } else {
+                $incursion_types[$type_id] = $quantity;
+            }
+
+        }
+
+        $filtered = $incursion_types->reject(function ($value, $key) {
+            return $value <= 0;
+        });
+
+        $array = [];
+        foreach($filtered as $type_id => $quantity) {
+            $array[$type_id] = ['quantity' => $quantity];
+        }
+
+        $incursion->types()->sync($array);
+
+        return true;
 
     }
 
