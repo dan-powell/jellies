@@ -28,7 +28,6 @@ Krucas\Notification\NotificationServiceProvider::class,
 
 ```
 // Jellies
-'Utilities' => DanPowell\Jellies\Helpers\Utilities::class,
 
 // Third Party
 'Form' => Collective\Html\FormFacade::class,
@@ -70,11 +69,13 @@ Kernel middleware array (must be placed after 'Illuminate\Session\Middleware\Sta
 
 ```
 use DanPowell\Jellies\Console\Commands\Incursion\IncursionProcessEncounters;
+use DanPowell\Jellies\Console\Commands\User\UserAddAction;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
         IncursionProcessEncounters::class,
+        UserAddAction::class,
     ];
 ```
 
@@ -84,6 +85,7 @@ class Kernel extends ConsoleKernel
 protected function schedule(Schedule $schedule)
 {
     $schedule->command('incursion:encounters --queue')->everyFiveMinutes();
+    $schedule->command('user:actions --queue')->hourly();
 }
 ```
 

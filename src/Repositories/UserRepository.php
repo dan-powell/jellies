@@ -98,8 +98,23 @@ class UserRepository extends AbstractModelRepository
             return false;
         }
 
+    }
+
+
+    public function addAction($user = null)
+    {
+        if(!$user) {
+            $user = $this->current();
+        }
+
+        if($user->actions < config('jellies.user.actions_max') ) {
+            $user->actions += 1;
+            $user->save();
+        }
 
     }
+
+
 
 
 }
