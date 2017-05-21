@@ -14,7 +14,7 @@
                     <tr>
                         <th></th>
                         <th>{{ trans('jellies::type.attribute.name') }}</th>
-                        <th>{{ trans('jellies::type.attribute.effective') }}</th>
+                        <th>{{ trans('jellies::type.attribute.quantity') }}</th>
                     </tr>
 
                     @foreach ($model->types as $model)

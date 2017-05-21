@@ -30,9 +30,9 @@
 
     <div class="panel panel-default">
         <div class="panel-heading"><strong>{{ trans('jellies::type.attribute.modifiers') }}</strong></div>
-            @if(isset($model->modifiers) && count($model->modifiers))
-                @include('jellies::modifier.list.modifierList', ['models' => $model->modifiers])
-            @endif
+        @if(isset($model->modifiers) && count($model->modifiers))
+            @include('jellies::modifier.list.modifierList', ['models' => $model->modifiers])
+        @endif
     </div>
 
 
