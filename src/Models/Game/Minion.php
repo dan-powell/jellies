@@ -213,6 +213,9 @@ class Minion extends Model
         return $collection;
     }
 
+
+
+
     /****************
     * Handy Methods
     ****************/

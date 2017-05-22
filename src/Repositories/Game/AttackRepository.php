@@ -40,6 +40,11 @@ class AttackRepository extends AbstractModelRepository
     public function store($user_id, $minion_id, $user = null)
     {
 
+        if(!$user) {
+            $user = $this->userRepo->current();
+        }
+
+
         $target_user = $this->userRepo->query()->with('minions')->find($user_id);
 
         $minion_attacker = $this->minionRepo->queryAll()->find($minion_id);
