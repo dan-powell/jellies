@@ -15,6 +15,7 @@ class UpdateUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('actions')->default(config('jellies.user.actions_initial'));
+            $table->boolean('npc')->default(false);
         });
 
         Schema::create('user_type', function (Blueprint $table) {

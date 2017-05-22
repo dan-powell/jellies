@@ -70,12 +70,14 @@ Kernel middleware array (must be placed after 'Illuminate\Session\Middleware\Sta
 ```
 use DanPowell\Jellies\Console\Commands\Incursion\IncursionProcessEncounters;
 use DanPowell\Jellies\Console\Commands\User\UserAddAction;
+use DanPowell\Jellies\Console\Commands\User\UserAttack;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
         IncursionProcessEncounters::class,
         UserAddAction::class,
+        UserAttack::class
     ];
 ```
 

@@ -66,6 +66,15 @@ class User extends Authenticatable
         return $query->has('minions');
     }
 
+    public function scopeNpc($query)
+    {
+        return $query->where('npc', true);
+    }
+
+    public function scopePlayer($query)
+    {
+        return $query->where('npc', false);
+    }
 
     /****************
     * Attributes

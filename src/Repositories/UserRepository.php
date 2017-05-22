@@ -87,12 +87,16 @@ class UserRepository extends AbstractModelRepository
     }
 
 
-    public function spendAction($points = 1)
+    public function spendAction($points = 1, $user = null)
     {
 
-        if($this->current()->actions > 0) {
-            $this->current()->actions -= $points;
-            $this->current()->save();
+        if(!$user) {
+            $user = $this->current();
+        }
+
+        if($user->actions > 0) {
+            $user->actions -= $points;
+            $user->save();
             return true;
         } else {
             return false;

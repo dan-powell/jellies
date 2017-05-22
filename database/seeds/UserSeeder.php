@@ -42,8 +42,8 @@ class UserSeeder extends Seeder
         // Create a new user with a blank account
         factory(DanPowell\Jellies\Models\User::class, 1)->states('new')->create();
 
-        // Create a few other users
-        factory(DanPowell\Jellies\Models\User::class, rand(20, 30))->create()->each(function($user) use ($types) {
+        // Create some NPC's
+        factory(DanPowell\Jellies\Models\User::class, rand(20, 30))->states('npc')->create()->each(function($user) use ($types) {
             for($i=0; $i < rand(0,10); $i++) {
                 $minion = $user->minions()->save(factory(DanPowell\Jellies\Models\Game\Minion::class)->make());
 

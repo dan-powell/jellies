@@ -26,3 +26,9 @@ $factory->state(DanPowell\Jellies\Models\User::class, 'new', function ($faker) {
         'email' => 'new@example.com'
     ];
 });
+
+$factory->state(DanPowell\Jellies\Models\User::class, 'npc', function ($faker) {
+    return [
+        'npc' => true
+    ];
+});
