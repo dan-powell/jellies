@@ -7,23 +7,23 @@
     </h1>
 
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.types') }}</strong></div>
+        <div class="panel-heading"><strong>{{ trans('jellies::user.attribute.materials') }}</strong></div>
         <div class="panel-body">
-            @if(isset($model->types) && count($model->types))
+            @if(isset($model->materials) && count($model->materials))
                 <table class="table table-striped table-hover">
                     <tr>
                         <th></th>
-                        <th>{{ trans('jellies::type.attribute.name') }}</th>
-                        <th>{{ trans('jellies::type.attribute.quantity') }}</th>
+                        <th>{{ trans('jellies::material.attribute.name') }}</th>
+                        <th>{{ trans('jellies::material.attribute.quantity') }}</th>
                     </tr>
 
-                    @foreach ($model->types as $model)
-                        <tr onclick="window.open('{{ route('type.show', $model->id) }}', '_self')">
+                    @foreach ($model->materials as $model)
+                        <tr onclick="window.open('{{ route('material.show', $model->id) }}', '_self')">
                             <td>
                                 <span class="game-icon game-icon-vile-fluid"></span>
                             </td>
                             <td>
-                                <a href="{{ route('type.show', $model->id) }}">
+                                <a href="{{ route('material.show', $model->id) }}">
                                     {{ $model->name }}
                                 </a>
                             </td>

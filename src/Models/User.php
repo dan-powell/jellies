@@ -37,9 +37,9 @@ class User extends Authenticatable
         return $this->hasMany('DanPowell\Jellies\Models\Game\Minion');
     }
 
-    public function types()
+    public function materials()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'user_type')->withPivot('quantity');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'user_material')->withPivot('quantity');
     }
 
     public function attacks()
@@ -81,7 +81,7 @@ class User extends Authenticatable
     ****************/
 
     public function getPointsAttribute() {
-        return $this->types->sum('pivot.quantity');
+        return $this->materials->sum('pivot.quantity');
     }
 
 

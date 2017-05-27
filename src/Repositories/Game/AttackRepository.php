@@ -55,12 +55,12 @@ class AttackRepository extends AbstractModelRepository
             $battle = $this->battleLogic->engage($minion_attacker, $minion_defender);
 
             if(!$minion_attacker->isAlive()) {
-                $this->userRepo->adjustTypes($minion_attacker->types->pluck('pivot.quantity', 'id'), false, $target_user);
+                $this->userRepo->adjustMaterials($minion_attacker->materials->pluck('pivot.quantity', 'id'), false, $target_user);
             }
 
 
             if(!$minion_defender->isAlive()) {
-                $this->userRepo->adjustTypes($minion_defender->types->pluck('pivot.quantity', 'id'), false, $user);
+                $this->userRepo->adjustMaterials($minion_defender->materials->pluck('pivot.quantity', 'id'), false, $user);
             }
 
             $attack = $this->model;

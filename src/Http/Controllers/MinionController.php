@@ -26,41 +26,41 @@ class MinionController extends Controller
     public function index()
     {
         return view('jellies::minion.index.minionIndex')->with([
-            'models' => $this->repo->query()->with(['types'])->get()
+            'models' => $this->repo->query()->with(['materials'])->get()
         ]);
     }
 
     public function indexDeleted()
     {
         return view('jellies::minion.index.minionIndexDeleted')->with([
-            'models' => $this->repo->query()->onlyTrashed()->with(['types'])->get()
+            'models' => $this->repo->query()->onlyTrashed()->with(['materials'])->get()
         ]);
     }
 
     public function show($id)
     {
         return view('jellies::minion.show.minionShow')->with([
-            'model' => $this->repo->query()->withTrashed()->with(['types'])->find($id)
+            'model' => $this->repo->query()->withTrashed()->with(['materials'])->find($id)
         ]);
     }
 
     public function create()
     {
         return view('jellies::minion.create.minionCreate')->with([
-            'types' => $this->userRepo->current()->types()->with('modifiers', 'effective', 'ineffective')->get()
+            'materials' => $this->userRepo->current()->materials()->with('modifiers', 'effective', 'ineffective')->get()
         ]);
     }
 
     public function store(MinionStoreRequest $request)
     {
 
-        if(!$request->get('type')) {
-            $types = [];
+        if(!$request->get('material')) {
+            $materials = [];
         } else {
-            $types = $request->get('type');
+            $materials = $request->get('material');
         }
 
-        $minion = $this->repo->store($types);
+        $minion = $this->repo->store($materials);
 
         if($minion) {
             \Notification::success(__('jellies::minion.create.success'));

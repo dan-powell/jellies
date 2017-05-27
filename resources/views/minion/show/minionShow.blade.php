@@ -47,46 +47,46 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::type.attribute.effective') }}</strong></div>
+        <div class="panel-heading"><strong>{{ trans('jellies::material.attribute.effective') }}</strong></div>
 
         <div class="list-group">
             @foreach($model->effective as $key => $effective)
-                <a href="{{ route('type.show', $key) }}" class="list-group-item">{{ $effective }}</a>
+                <a href="{{ route('material.show', $key) }}" class="list-group-item">{{ $effective }}</a>
             @endforeach
         </div>
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::type.attribute.ineffective') }}</strong></div>
+        <div class="panel-heading"><strong>{{ trans('jellies::material.attribute.ineffective') }}</strong></div>
 
         <div class="list-group">
             @foreach($model->ineffective as $key => $ineffective)
-                <a href="{{ route('type.show', $key) }}" class="list-group-item">{{ $ineffective }}</a>
+                <a href="{{ route('material.show', $key) }}" class="list-group-item">{{ $ineffective }}</a>
             @endforeach
         </div>
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::minion.attribute.types') }}</strong></div>
-        @if(isset($model->types) && count($model->types))
+        <div class="panel-heading"><strong>{{ trans('jellies::minion.attribute.materials') }}</strong></div>
+        @if(isset($model->materials) && count($model->materials))
             <table class="table table-striped table-hover">
                 <tr>
                     <th></th>
-                    <th>{{ trans('jellies::type.attribute.name') }}</th>
-                    <th>{{ trans('jellies::type.attribute.quantity') }}</th>
+                    <th>{{ trans('jellies::material.attribute.name') }}</th>
+                    <th>{{ trans('jellies::material.attribute.quantity') }}</th>
                 </tr>
-                @foreach ($model->types as $type)
-                    <tr onclick="window.open('{{ route('type.show', $type->id) }}', '_self')">
+                @foreach ($model->materials as $material)
+                    <tr onclick="window.open('{{ route('material.show', $material->id) }}', '_self')">
                         <td>
                             <span class="fa fa-tint"></span>
                         </td>
                         <td>
-                            <a href="{{ route('type.show', $type->id) }}">
-                                {{ $type->name }}
+                            <a href="{{ route('material.show', $material->id) }}">
+                                {{ $material->name }}
                             </a>
                         </td>
                         <td>
-                            {{ $type->pivot->quantity }}
+                            {{ $material->pivot->quantity }}
                         </td>
                     </tr>
                 @endforeach

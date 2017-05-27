@@ -41,9 +41,9 @@ class Zone extends Model
         return $this->belongsToMany('DanPowell\Jellies\Models\Game\Enemy', 'zone_enemy');
     }
 
-    public function types()
+    public function materials()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'zone_type');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'zone_material');
     }
 
 

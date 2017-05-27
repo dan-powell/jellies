@@ -24,15 +24,15 @@ class EnemyRepository extends AbstractModelRepository
 
         if($zone_id) {
             $zone = $this->zoneRepo->query()->with('enemies')->find($zone_id);
-            $types = $zone->enemies;
+            $materials = $zone->enemies;
         } else {
-            $types = $this->query()->get();
+            $materials = $this->query()->get();
         }
 
         $enemies = collect([]);
 
         for($i=0; $i < $num; $i++) {
-            $enemies->push($types->random());
+            $enemies->push($materials->random());
         }
 
         return $enemies;

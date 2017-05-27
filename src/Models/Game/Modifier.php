@@ -28,9 +28,9 @@ class Modifier extends Model
     * Relationships
     ****************/
 
-    public function type()
+    public function material()
     {
-        return $this->belongsTo('DanPowell\Jellies\Models\Type');
+        return $this->belongsTo('DanPowell\Jellies\Models\Material');
     }
 
     /****************

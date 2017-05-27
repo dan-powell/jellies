@@ -59,9 +59,9 @@ class Incursion extends Model
         return $this->hasMany('DanPowell\Jellies\Models\Game\Encounter');
     }
 
-    public function types()
+    public function materials()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'incursion_type')->withPivot('quantity');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'incursion_material')->withPivot('quantity');
     }
 
 
@@ -89,7 +89,7 @@ class Incursion extends Model
     ****************/
 
     public function getPointsAttribute() {
-        return $this->types->sum('pivot.quantity');
+        return $this->materials->sum('pivot.quantity');
     }
 
     public function getRoundsAttribute()

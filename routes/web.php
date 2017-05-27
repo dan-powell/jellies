@@ -9,7 +9,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('user', 'DanPowell\Jellies\Http\Controllers\UserController', ['only' => [
             'index', 'show'
         ]]);
-        Route::get('usertypes', 'DanPowell\Jellies\Http\Controllers\UserController@showtypes')->name('user.types');
+        Route::get('usermaterials', 'DanPowell\Jellies\Http\Controllers\UserController@showmaterials')->name('user.materials');
 
         Route::resource('message', 'DanPowell\Jellies\Http\Controllers\MessageController');
 
@@ -26,7 +26,7 @@ Route::group(['middleware' => ['web']], function () {
             'index', 'show'
         ]]);
 
-        Route::resource('type', 'DanPowell\Jellies\Http\Controllers\TypeController', ['only' => [
+        Route::resource('material', 'DanPowell\Jellies\Http\Controllers\MaterialController', ['only' => [
             'index', 'show'
         ]]);
 

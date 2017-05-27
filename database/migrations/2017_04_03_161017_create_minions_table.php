@@ -24,13 +24,13 @@ class CreateMinionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('minion_type', function (Blueprint $table) {
+        Schema::create('minion_material', function (Blueprint $table) {
             $table->integer('minion_id')->unsigned();
-            $table->integer('type_id')->unsigned();
+            $table->integer('material_id')->unsigned();
             $table->integer('quantity')->unsigned()->default(1);
-            $table->unique(['minion_id', 'type_id']);
+            $table->unique(['minion_id', 'material_id']);
             $table->foreign('minion_id')->references('id')->on('minions')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
         });
 
     }
@@ -42,7 +42,7 @@ class CreateMinionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('minion_type');
+        Schema::dropIfExists('minion_material');
         Schema::dropIfExists('minions');
     }
 }

@@ -29,7 +29,7 @@
                     <div class="navbar-header">
 
                         <!-- Collapsed Hamburger -->
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <button material="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                             <span class="sr-only">Toggle Navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -67,7 +67,7 @@
                                 </ul>
                             </li>
 
-                            <li class=""><a href="{{ route('type.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::type.index.tooltip') }}">{{ trans('jellies::type.title') }}</a></li>
+                            <li class=""><a href="{{ route('material.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::material.index.tooltip') }}">{{ trans('jellies::material.title') }}</a></li>
                             <li class=""><a href="{{ route('realm.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::realm.index.tooltip') }}">{{ trans('jellies::realm.title') }}</a></li>
                             <li class=""><a href="{{ route('incursion.index') }}" data-toggle="tooltip" data-placement="bottom" title="{{ trans('jellies::incursion.index.tooltip') }}">{{ trans('jellies::incursion.title') }}</a></li>
                         </ul>
@@ -81,18 +81,18 @@
                             @else
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ trans('jellies::game.point.title') }}">
-                                        <span class="fa fa-tint"></span> {{ auth()->user()->types->sum('pivot.quantity') }}
+                                        <span class="fa fa-tint"></span> {{ auth()->user()->materials->sum('pivot.quantity') }}
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="{{ route('user.types') }}">
-                                                <strong>{{ trans('jellies::user.types.tooltip') }}</strong>
+                                            <a href="{{ route('user.materials') }}">
+                                                <strong>{{ trans('jellies::user.materials.tooltip') }}</strong>
                                             </a>
                                         </li>
-                                        @foreach(auth()->user()->types as $type)
+                                        @foreach(auth()->user()->materials as $material)
                                             <li>
-                                                <a href="{{ route('type.show', $type->id) }}">
-                                                    {{ $type->name }} - {{ $type->pivot->quantity }}
+                                                <a href="{{ route('material.show', $material->id) }}">
+                                                    {{ $material->name }} - {{ $material->pivot->quantity }}
                                                 </a>
                                             </li>
                                         @endforeach

@@ -22,7 +22,7 @@
             <!-- /.box-body -->
 
             <div class="panel-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button material="submit" class="btn btn-primary">Update</button>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
                             <div class="col-xs-4">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-plus"></i></span>
-                                    <input type="number" name="{{ $key }}" id="{{ $key }}" class="form-control" placeholder="0">
+                                    <input material="number" name="{{ $key }}" id="{{ $key }}" class="form-control" placeholder="0">
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
             <!-- /.box-body -->
 
             <div class="panel-footer">
-                <button type="submit" class="btn btn-primary">Add to stats</button>
+                <button material="submit" class="btn btn-primary">Add to stats</button>
             </div>
         </div>
 

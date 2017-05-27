@@ -19,13 +19,13 @@ class CreateEnemiesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('enemy_type', function (Blueprint $table) {
+        Schema::create('enemy_material', function (Blueprint $table) {
             $table->integer('enemy_id')->unsigned();
-            $table->integer('type_id')->unsigned();
+            $table->integer('material_id')->unsigned();
             $table->integer('quantity')->unsigned()->default(1);
-            $table->unique(['enemy_id', 'type_id']);
+            $table->unique(['enemy_id', 'material_id']);
             $table->foreign('enemy_id')->references('id')->on('enemies')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
         });
 
         Schema::create('zone_enemy', function (Blueprint $table) {
@@ -44,7 +44,7 @@ class CreateEnemiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enemy_type');
+        Schema::dropIfExists('enemy_material');
         Schema::dropIfExists('zone_enemy');
         Schema::dropIfExists('enemies');
     }

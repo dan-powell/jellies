@@ -6,18 +6,18 @@ use DanPowell\Jellies\Repositories\AbstractModelRepository;
 
 use DanPowell\Jellies\Models\Game\Realm;
 use DanPowell\Jellies\Repositories\Game\ZoneRepository;
-use DanPowell\Jellies\Repositories\Game\TypeRepository;
+use DanPowell\Jellies\Repositories\Game\MaterialRepository;
 
 class RealmRepository extends AbstractModelRepository
 {
 
     private $zoneRepo;
 
-    public function __construct(ZoneRepository $zoneRepo, TypeRepository $typeRepo)
+    public function __construct(ZoneRepository $zoneRepo, MaterialRepository $materialRepo)
     {
         $this->model = new Realm();
         $this->zoneRepo = $zoneRepo;
-        $this->typeRepo = $typeRepo;
+        $this->materialRepo = $materialRepo;
     }
 
     // Returns the first
@@ -32,7 +32,7 @@ class RealmRepository extends AbstractModelRepository
         // Generate some realms
         $realms = factory(\DanPowell\Jellies\Models\Game\Realm::class, $num)->create();
 
-        $types = $this->typeRepo->query()->get();
+        $materials = $this->materialRepo->query()->get();
 
         foreach($realms as $realm) {
 
@@ -57,16 +57,16 @@ class RealmRepository extends AbstractModelRepository
                     $stats[$stats_array[$i]] = $distribution[$i] + 1;
                 }
 
-                // Assign some types
-                $zone_types = $types->random(rand(1, 3));
-                $zone->types()->attach($zone_types);
+                // Assign some materials
+                $zone_materials = $materials->random(rand(1, 3));
+                $zone->materials()->attach($zone_materials);
 
                 //Add some enemies
                 for($i=0; $i < rand(1,3); $i++) {
                     $enemy = $zone->enemies()->save(factory(\DanPowell\Jellies\Models\Game\Enemy::class)->make());
 
-                    foreach ($zone_types as $type) {
-                        $enemy->types()->save($type, ['quantity' => rand(1,3)]);
+                    foreach ($zone_materials as $material) {
+                        $enemy->materials()->save($material, ['quantity' => rand(1,3)]);
                     }
 
                 }

@@ -4,7 +4,7 @@ namespace DanPowell\Jellies\Models\Game;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Type extends Model
+class Material extends Model
 {
 
     public $timestamps = false;
@@ -28,12 +28,12 @@ class Type extends Model
 
     public function effective()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'type_effective', 'type_id', 'against_id');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'material_effective', 'material_id', 'against_id');
     }
 
     public function ineffective()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'type_ineffective', 'type_id', 'against_id');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'material_ineffective', 'material_id', 'against_id');
     }
 
     public function modifiers()

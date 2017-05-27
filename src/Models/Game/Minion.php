@@ -53,9 +53,9 @@ class Minion extends Model
         return $this->belongsTo('DanPowell\Jellies\Models\User');
     }
 
-    public function types()
+    public function materials()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'minion_type')->withPivot('quantity');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'minion_material')->withPivot('quantity');
     }
 
     public function incursions()
@@ -81,7 +81,13 @@ class Minion extends Model
     * Handy Methods
     ****************/
 
-
+    public function setHealthAttribute($value)
+    {
+        $this->hp = $value;
+        if($this->hp <= 0) {
+            $this->delete();
+        }
+    }
 
 
 }

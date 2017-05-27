@@ -75,7 +75,7 @@
 
         @if($model->defeated)
             {!! Form::open(['route' => ['incursion.destroy', $model->id ], 'method' => 'delete', 'class' => 'col-sm-3']) !!}
-                <button type="submit" class="btn btn-danger">
+                <button material="submit" class="btn btn-danger">
                     {{ trans('jellies::incursion.show.actions.delete') }}
                 </button>
             {!! Form::close() !!}
@@ -83,7 +83,7 @@
 
         @if($model->waiting && !$model->complete)
             {!! Form::open(['route' => ['incursion.proceed', $model->id ], 'class' => 'col-sm-3']) !!}
-                <button type="submit" class="btn btn-primary">
+                <button material="submit" class="btn btn-primary">
                     {{ trans('jellies::incursion.show.actions.proceed') }}
                 </button>
             {!! Form::close() !!}
@@ -91,7 +91,7 @@
 
         @if($model->complete || $model->waiting)
             {!! Form::open(['route' => ['incursion.finish', $model->id ], 'method' => 'delete', 'class' => 'col-sm-3']) !!}
-                <button type="submit" class="btn btn-info">
+                <button material="submit" class="btn btn-info">
                     {{ trans('jellies::incursion.show.actions.finish') }}
                 </button>
             {!! Form::close() !!}

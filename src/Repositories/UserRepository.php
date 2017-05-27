@@ -28,13 +28,13 @@ class UserRepository extends AbstractModelRepository
     }
 
 
-    public function getTypes()
+    public function getMaterials()
     {
-        return $this->current()->types()->get();
+        return $this->current()->materials()->get();
     }
 
 
-    public function adjustTypes($types, $subtract = true, $user = null)
+    public function adjustMaterials($materials, $subtract = true, $user = null)
     {
 
         // If a user is not given, assume that the current one is required
@@ -44,43 +44,43 @@ class UserRepository extends AbstractModelRepository
 
 
 
-        // Get an array of the user's existing types & quantities
-        $user_types = $user->types->pluck('pivot.quantity', 'id');
+        // Get an array of the user's existing materials & quantities
+        $user_materials = $user->materials->pluck('pivot.quantity', 'id');
 
-        foreach($types as $type_id => $quantity) {
+        foreach($materials as $material_id => $quantity) {
 
             if ($quantity < 0) {
                 return false;
             }
 
-            if(isset($user_types[$type_id])) {
+            if(isset($user_materials[$material_id])) {
 
                 if($subtract) {
-                    $user_types[$type_id] -= $quantity;
+                    $user_materials[$material_id] -= $quantity;
                 } else {
-                    $user_types[$type_id] += $quantity;
+                    $user_materials[$material_id] += $quantity;
                 }
 
             } else {
-                $user_types[$type_id] = $quantity;
+                $user_materials[$material_id] = $quantity;
             }
 
-            if ($user_types[$type_id] < 0) {
-                $user_types[$type_id] = 0;
+            if ($user_materials[$material_id] < 0) {
+                $user_materials[$material_id] = 0;
             }
 
         }
 
-        $filtered = $user_types->reject(function ($value, $key) {
+        $filtered = $user_materials->reject(function ($value, $key) {
             return $value <= 0;
         });
 
         $array = [];
-        foreach($filtered as $type_id => $quantity) {
-            $array[$type_id] = ['quantity' => $quantity];
+        foreach($filtered as $material_id => $quantity) {
+            $array[$material_id] = ['quantity' => $quantity];
         }
 
-        $user->types()->sync($array);
+        $user->materials()->sync($array);
 
         return true;
 

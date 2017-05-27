@@ -33,9 +33,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function showtypes()
+    public function showmaterials()
     {
-        return view('jellies::user.show.userShowTypes')->with([
+        return view('jellies::user.show.userShowMaterials')->with([
             'model' => $this->repo->current()
         ]);
     }

@@ -48,19 +48,19 @@ class EncounterRepository extends AbstractModelRepository
 
         $incursion->encounters()->save($this->model);
 
-        $types = collect([]);
+        $materials = collect([]);
         foreach($enemies->filter(function($enemy) {return !$enemy->isAlive();}) as $enemy) {
-            foreach($enemy->types as $type) {
-                if($types->has($type->id)) {
-                    $id = $type->id;
-                    $types[$id] += 1;
+            foreach($enemy->materials as $material) {
+                if($materials->has($material->id)) {
+                    $id = $material->id;
+                    $materials[$id] += 1;
                 } else {
-                    $types->put($type->id, 1);
+                    $materials->put($material->id, 1);
                 }
             }
         }
 
-        $this->addTypes($types, $incursion);
+        $this->addMaterials($materials, $incursion);
 
         $this->postEncounterCheck($incursion, $minions);
     }
@@ -106,36 +106,36 @@ class EncounterRepository extends AbstractModelRepository
 
     }
 
-    public function addTypes($types, $incursion)
+    public function addMaterials($materials, $incursion)
     {
 
-        // Get an array of the user's existing types & quantities
-        $incursion_types = $incursion->types->pluck('pivot.quantity', 'id');
+        // Get an array of the user's existing materials & quantities
+        $incursion_materials = $incursion->materials->pluck('pivot.quantity', 'id');
 
-        foreach($types as $type_id => $quantity) {
+        foreach($materials as $material_id => $quantity) {
 
             if ($quantity < 0) {
                 return false;
             }
 
-            if(isset($incursion_types[$type_id])) {
-                $incursion_types[$type_id] += $quantity;
+            if(isset($incursion_materials[$material_id])) {
+                $incursion_materials[$material_id] += $quantity;
             } else {
-                $incursion_types[$type_id] = $quantity;
+                $incursion_materials[$material_id] = $quantity;
             }
 
         }
 
-        $filtered = $incursion_types->reject(function ($value, $key) {
+        $filtered = $incursion_materials->reject(function ($value, $key) {
             return $value <= 0;
         });
 
         $array = [];
-        foreach($filtered as $type_id => $quantity) {
-            $array[$type_id] = ['quantity' => $quantity];
+        foreach($filtered as $material_id => $quantity) {
+            $array[$material_id] = ['quantity' => $quantity];
         }
 
-        $incursion->types()->sync($array);
+        $incursion->materials()->sync($array);
 
         return true;
 

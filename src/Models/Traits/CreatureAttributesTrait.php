@@ -28,16 +28,13 @@ trait CreatureAttributesTrait {
     public function setHealthAttribute($value)
     {
         $this->hp = $value;
-        if($this->hp <= 0) {
-            $this->delete();
-        }
     }
 
     private function getHp()
     {
         if($this->hp === null) {
-            if(count($this->types())) {
-                $this->hp = config('jellies.minion.base_hp') + $this->types->sum('pivot.quantity');
+            if(count($this->materials())) {
+                $this->hp = config('jellies.minion.base_hp') + $this->materials->sum('pivot.quantity');
             } else {
                 $this->hp = config('jellies.minion.base_hp');
             }
@@ -47,7 +44,7 @@ trait CreatureAttributesTrait {
 
     public function getLevelAttribute()
     {
-        return $this->types->sum('pivot.quantity') + 1;
+        return $this->materials->sum('pivot.quantity') + 1;
     }
 
     public function getStat($stat)
@@ -72,10 +69,10 @@ trait CreatureAttributesTrait {
 
     private function calcAttribute($attribute, $base = 1) {
         $array = [];
-        foreach($this->types as $type) {
-            foreach($type->modifiers as $modifier) {
+        foreach($this->materials as $material) {
+            foreach($material->modifiers as $modifier) {
                 if ($modifier->attribute == $attribute) {
-                    for($i = 0; $i < $type->pivot->quantity; $i++) {
+                    for($i = 0; $i < $material->pivot->quantity; $i++) {
                         switch ($modifier->adjustment) {
                             case '+':
                             $change = $base + $modifier->value;
@@ -107,9 +104,9 @@ trait CreatureAttributesTrait {
     {
         $collection = collect([]);
 
-        foreach($this->types as $key => $type) {
-            if(count($type->effective)) {
-                foreach($type->effective->keyBy('id') as $id => $effective) {
+        foreach($this->materials as $key => $material) {
+            if(count($material->effective)) {
+                foreach($material->effective->keyBy('id') as $id => $effective) {
                     if(!$collection->contains(function ($value, $key) use ($id){
                         return $key == $id;
                     })) {
@@ -126,9 +123,9 @@ trait CreatureAttributesTrait {
     {
         $collection = collect([]);
 
-        foreach($this->types as $key => $type) {
-            if(count($type->ineffective)) {
-                foreach($type->ineffective->keyBy('id') as $id => $ineffective) {
+        foreach($this->materials as $key => $material) {
+            if(count($material->ineffective)) {
+                foreach($material->ineffective->keyBy('id') as $id => $ineffective) {
                     if(!$collection->contains(function ($value, $key) use ($id){
                         return $key == $id;
                     })) {

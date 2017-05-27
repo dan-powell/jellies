@@ -37,9 +37,9 @@ class Enemy extends Model
         return $this->belongsTo('DanPowell\Jellies\Models\Game\Zone');
     }
 
-    public function types()
+    public function materials()
     {
-        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Type', 'enemy_type')->withPivot('quantity');
+        return $this->belongsToMany('DanPowell\Jellies\Models\Game\Material', 'enemy_material')->withPivot('quantity');
     }
 
     /****************
@@ -51,11 +51,6 @@ class Enemy extends Model
     /****************
     * Attributes
     ****************/
-
-    public function setHealthAttribute($value)
-    {
-        $this->hp = $value;
-    }
 
 
     /****************

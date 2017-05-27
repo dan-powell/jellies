@@ -107,11 +107,11 @@ class IncursionRepository extends AbstractModelRepository
     {
         $incursion = $this->query()->find($id);
 
-        $types = $incursion->types;
+        $materials = $incursion->materials;
 
         $incursion->delete();
 
-        $this->userRepo->adjustTypes($types->pluck('pivot.quantity', 'id'), false);
+        $this->userRepo->adjustMaterials($materials->pluck('pivot.quantity', 'id'), false);
 
         return $incursion;
 

@@ -47,7 +47,7 @@ class DashboardController extends Controller
             'minions' => $this->minionRepo->query()->get(),
             'enemies' => $this->enemyRepo->query()->get(),
             'messages' => $this->messageRepo->query()->get(),
-            'leaderboard' => $this->userRepo->query()->withCount('types')->orderByDesc('types_count')->limit(10)->get(),
+            'leaderboard' => $this->userRepo->query()->withCount('materials')->orderByDesc('materials_count')->limit(10)->get(),
         ]);
     }
 

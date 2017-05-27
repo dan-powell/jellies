@@ -65,13 +65,13 @@ class CreateIncursionsTable extends Migration
             $table->foreign('incursion_id')->references('id')->on('incursions')->onDelete('cascade');
         });
 
-        Schema::create('incursion_type', function (Blueprint $table) {
+        Schema::create('incursion_material', function (Blueprint $table) {
             $table->integer('incursion_id')->unsigned();
-            $table->integer('type_id')->unsigned();
+            $table->integer('material_id')->unsigned();
             $table->integer('quantity')->unsigned()->default(1);
-            $table->unique(['type_id', 'incursion_id']);
+            $table->unique(['material_id', 'incursion_id']);
             $table->foreign('incursion_id')->references('id')->on('incursions')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
         });
     }
 
@@ -82,7 +82,7 @@ class CreateIncursionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incursion_type');
+        Schema::dropIfExists('incursion_material');
         Schema::dropIfExists('encounters');
         Schema::dropIfExists('incursion_previouszones');
         Schema::dropIfExists('incursion_minion');

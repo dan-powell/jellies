@@ -3,14 +3,14 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use DanPowell\Jellies\Repositories\Game\TypeRepository;
+use DanPowell\Jellies\Repositories\Game\MaterialRepository;
 
 class UserSeeder extends Seeder
 {
 
     private $repo;
 
-    public function __construct(TypeRepository $repo)
+    public function __construct(MaterialRepository $repo)
     {
         $this->repo = $repo;
     }
@@ -31,11 +31,11 @@ class UserSeeder extends Seeder
             $test_user->messages()->save($i);
         });
 
-        $types = $this->repo->query()->get();
+        $materials = $this->repo->query()->get();
 
-        foreach ($types as $type) {
+        foreach ($materials as $material) {
             if(rand(0,3) > 2) {
-                $test_user->types()->save($type, ['quantity' => rand(3,12)]);
+                $test_user->materials()->save($material, ['quantity' => rand(3,12)]);
             }
         }
 
@@ -43,13 +43,13 @@ class UserSeeder extends Seeder
         factory(DanPowell\Jellies\Models\User::class, 1)->states('new')->create();
 
         // Create some NPC's
-        factory(DanPowell\Jellies\Models\User::class, rand(20, 30))->states('npc')->create()->each(function($user) use ($types) {
+        factory(DanPowell\Jellies\Models\User::class, rand(20, 30))->states('npc')->create()->each(function($user) use ($materials) {
             for($i=0; $i < rand(0,10); $i++) {
                 $minion = $user->minions()->save(factory(DanPowell\Jellies\Models\Game\Minion::class)->make());
 
-                foreach ($types as $type) {
+                foreach ($materials as $material) {
                     if(rand(0,3) > 2) {
-                        $minion->types()->save($type, ['quantity' => rand(1,3)]);
+                        $minion->materials()->save($material, ['quantity' => rand(1,3)]);
                     }
                 }
 

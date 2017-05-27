@@ -7,7 +7,7 @@
     </h1>
 
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>{{ trans('jellies::realm.attribute.types') }}</strong></div>
+        <div class="panel-heading"><strong>{{ trans('jellies::realm.attribute.materials') }}</strong></div>
         <div class="panel-body">
             @if(isset($model->zones) && count($model->zones))
                 @include('jellies::zone.list.zoneList', ['models' => $model->zones])

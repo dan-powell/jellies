@@ -35,7 +35,7 @@
             </div>
 
             <div class="panel-footer">
-                <button type="submit" class="btn btn-primary">
+                <button material="submit" class="btn btn-primary">
                     {{ trans('jellies::attack.create.action') }}
                 </button>
             </div>

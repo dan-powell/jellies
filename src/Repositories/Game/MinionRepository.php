@@ -25,17 +25,17 @@ class MinionRepository extends AbstractModelRepository
         return auth()->user()->minions();
     }
 
-    public function store($types)
+    public function store($materials)
     {
 
         if($this->userRepo->spendAction()) {
 
-            if($this->userRepo->adjustTypes($types)) {
+            if($this->userRepo->adjustMaterials($materials)) {
 
-                $types_sorted = [];
-                foreach($types as $key => $type) {
-                    if($type) {
-                        $types_sorted[$key] = ['quantity' => $type];
+                $materials_sorted = [];
+                foreach($materials as $key => $material) {
+                    if($material) {
+                        $materials_sorted[$key] = ['quantity' => $material];
                     }
                 }
 
@@ -43,7 +43,7 @@ class MinionRepository extends AbstractModelRepository
                     'user_id' => auth()->user()->id,
                 ]);
 
-                $minion->types()->sync($types_sorted);
+                $minion->materials()->sync($materials_sorted);
 
                 return $minion;
 

@@ -33,14 +33,14 @@ class DamageLogic implements DamageLogicInterface
     {
 
         $bonus = 1;
-        foreach($attacker->getEffectiveAttribute() as $key => $type) {
-            if ($defender->types->pluck('id')->contains($key)) {
+        foreach($attacker->getEffectiveAttribute() as $key => $material) {
+            if ($defender->materials->pluck('id')->contains($key)) {
                 $bonus += 0.25; // 25% Buff
             }
         }
 
-        foreach($attacker->getIneffectiveAttribute() as $key => $type) {
-            if ($defender->types->pluck('id')->contains($key)) {
+        foreach($attacker->getIneffectiveAttribute() as $key => $material) {
+            if ($defender->materials->pluck('id')->contains($key)) {
                 $bonus -= 0.15; // 15% Nerf
             }
         }
