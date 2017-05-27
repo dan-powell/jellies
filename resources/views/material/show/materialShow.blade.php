@@ -11,7 +11,7 @@
         <div class="list-group">
             @if(isset($model->effective) && count($model->effective))
                 @foreach($model->effective as $key => $effective)
-                    <a href="{{ route('material.show', $key) }}" class="list-group-item">{{ $effective->name }}</a>
+                    <a href="{{ route('material.show', $effective->id) }}" class="list-group-item">{{ $effective->name }}</a>
                 @endforeach
             @endif
         </div>
@@ -22,7 +22,7 @@
         <div class="list-group">
             @if(isset($model->ineffective) && count($model->ineffective))
                 @foreach($model->ineffective as $key => $ineffective)
-                    <a href="{{ route('material.show', $key) }}" class="list-group-item">{{ $ineffective->name }}</a>
+                    <a href="{{ route('material.show', $ineffective->id) }}" class="list-group-item">{{ $ineffective->name }}</a>
                 @endforeach
             @endif
         </div>
